@@ -1,24 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import Button from "./components/MainButton";
+import styled from "styled-components";
+import './index.css'
+
+const Wrapper = styled.div`
+  background: var(--tg-theme-bg-color);
+  color: var(--tg-theme-text-color) !important;
+  border-radius: 10px;
+  margin: 5px 0;
+  padding: 20px;
+  box-sizing: border-box;
+`
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Wrapper className="App">
+      Text
+    </Wrapper>
   );
 }
 
