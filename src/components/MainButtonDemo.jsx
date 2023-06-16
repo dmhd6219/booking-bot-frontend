@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 import {Form, Input, Switch, Typography} from "antd";
+import styled from "styled-components";
 
+const TgColorConstants = styled.div`
+  background: var(--tg-theme-bg-color);
+  color: var(--tg-theme-text-color) !important;
+`
 class MainButtonDemo extends Component{
     state = {
         progress: false,
@@ -14,7 +19,7 @@ class MainButtonDemo extends Component{
 
     render(){
         return (
-            <div>
+            <TgColorConstants>
                 <Typography.Title level={3}>MainButton</Typography.Title>
                 <Form
                     labelCol={{ span: 6 }}
@@ -31,7 +36,7 @@ class MainButtonDemo extends Component{
                     </Form.Item>
 
                 </Form>
-            </div>
+            </TgColorConstants>
         );
     }
 }
