@@ -16,6 +16,7 @@ class MainButtonDemo extends Component{
     render(){
         return (
             <div>
+                <p>Text just to check colors (but in Button Demo)</p>
                 <Typography.Title level={3}>MainButton</Typography.Title>
                 <Form
                     labelCol={{ span: 6 }}
