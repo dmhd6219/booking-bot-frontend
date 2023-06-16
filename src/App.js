@@ -8,6 +8,9 @@ const Wrapper = styled.div`
   margin: 5px 0;
   padding: 20px;
   box-sizing: border-box;
+  
+  position: absolute;
+  bottom: 0;
 `
 
 function App() {
