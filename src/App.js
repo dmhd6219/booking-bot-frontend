@@ -2,6 +2,8 @@ import styled from "styled-components";
 import './index.css'
 import {Component} from "react";
 import MainButtonDemo from "./components/MainButtonDemo";
+import {ConfigProvider} from "antd";
+import {useThemeParams} from '@vkruglikov/react-telegram-web-app';
 
 const Wrapper = styled.div`
   background: var(--tg-theme-bg-color);
@@ -12,15 +14,16 @@ const Wrapper = styled.div`
   box-sizing: border-box;
 `
 
-class App extends Component{
+class App extends Component {
 
     render() {
+
         return (
             <Wrapper>
-                <p>Text just to check colors</p>
-                <MainButtonDemo />
+                <MainButtonDemo/>
             </Wrapper>
         );
     }
 }
+
 export default App;
