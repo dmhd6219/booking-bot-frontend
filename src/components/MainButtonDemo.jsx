@@ -2,14 +2,14 @@ import React, {Component} from 'react';
 import {Form, Input, Switch, Typography} from "antd";
 import styled from "styled-components";
 
-const TgColorConstants = styled.div`
-  background: var(--tg-theme-bg-color);
-  color: var(--tg-theme-text-color) !important;
-`
+const StyledTitle = styled(Typography.Title)`
+  color: var(--tg-theme-text-color);
+`;
 class MainButtonDemo extends Component{
     state = {
         progress: false,
     };
+
 
     handleChange = (event) => {
         this.setState({
@@ -19,8 +19,8 @@ class MainButtonDemo extends Component{
 
     render(){
         return (
-            <TgColorConstants>
-                <Typography.Title level={3}>MainButton</Typography.Title>
+            <div>
+                <StyledTitle level={3}>MainButton</StyledTitle>
                 <Form
                     labelCol={{ span: 6 }}
                     name="basic"
@@ -36,7 +36,7 @@ class MainButtonDemo extends Component{
                     </Form.Item>
 
                 </Form>
-            </TgColorConstants>
+            </div>
         );
     }
 }
