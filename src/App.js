@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import './index.css'
+import {Typography} from "antd";
+import {Component} from "react";
+import MainButtonDemo from "./components/MainButtonDemo";
 
 const Wrapper = styled.div`
   background: var(--tg-theme-bg-color);
@@ -8,17 +11,16 @@ const Wrapper = styled.div`
   margin: 5px 0;
   padding: 20px;
   box-sizing: border-box;
-  
-  position: absolute;
-  bottom: 0;
 `
 
-function App() {
-  return (
-    <Wrapper className="App">
-      Text
-    </Wrapper>
-  );
-}
+class App extends Component{
 
+    render() {
+        return (
+            <Wrapper>
+                <MainButtonDemo />
+            </Wrapper>
+        );
+    }
+}
 export default App;
