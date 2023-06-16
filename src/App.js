@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import './index.css'
-import {Typography} from "antd";
 import {Component} from "react";
 import MainButtonDemo from "./components/MainButtonDemo";
 

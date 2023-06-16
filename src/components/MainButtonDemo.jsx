@@ -1,5 +1,4 @@
-import React, {useState, useEffect, Component} from 'react';
-import { MainButton, BackButton } from '@vkruglikov/react-telegram-web-app';
+import React, {Component} from 'react';
 import {Form, Input, Switch, Typography} from "antd";
 
 class MainButtonDemo extends Component{
