@@ -1,10 +1,6 @@
 import React, {Component} from 'react';
 import {Form, Input, Switch, Typography} from "antd";
-import styled from "styled-components";
 
-const StyledTitle = styled(Typography.Title)`
-  color: var(--tg-theme-text-color);
-`;
 class MainButtonDemo extends Component{
     state = {
         progress: false,
@@ -20,7 +16,7 @@ class MainButtonDemo extends Component{
     render(){
         return (
             <div>
-                <StyledTitle level={3}>MainButton</StyledTitle>
+                <Typography.Title level={3}>MainButton</Typography.Title>
                 <Form
                     labelCol={{ span: 6 }}
                     name="basic"

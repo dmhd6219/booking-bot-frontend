@@ -17,6 +17,7 @@ class App extends Component{
     render() {
         return (
             <Wrapper>
+                <p>Text just to check colors</p>
                 <MainButtonDemo />
             </Wrapper>
         );
