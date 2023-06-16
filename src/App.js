@@ -1,4 +1,3 @@
-import Button from "./components/MainButton";
 import styled from "styled-components";
 import './index.css'
 
