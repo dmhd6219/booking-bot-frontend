@@ -4,7 +4,6 @@ import MainButtonDemo from "./components/MainButtonDemo";
 import {ConfigProvider, theme} from 'antd';
 import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
 import ShowPopupDemo from "./components/ShowPopupDemo";
-import HapticFeedbackDemo from "./components/HapticFeedbackDemo";
 import TimePickerTest from "./components/TimePickerTest";
 
 import locale from 'antd/locale/ru_RU';
@@ -47,8 +46,6 @@ function App() {
             <MainButtonDemo/>
 
             <ShowPopupDemo />
-
-            <HapticFeedbackDemo/>
 
             <TimePickerTest/>
         </Wrapper>
