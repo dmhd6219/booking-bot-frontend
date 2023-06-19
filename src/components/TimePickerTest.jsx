@@ -14,15 +14,7 @@ const TimePickerTest = () => {
     return (
         <Space>
             <Typography.Title level={3}>Pick some time</Typography.Title>
-            <Select value={type} onChange={setType}>
-                <Option value="time">Time</Option>
-                <Option value="date">Date</Option>
-                <Option value="week">Week</Option>
-                <Option value="month">Month</Option>
-                <Option value="quarter">Quarter</Option>
-                <Option value="year">Year</Option>
-            </Select>
-            <PickerWithType type={type} onChange={(value) => console.log(value)} />
+            <TimePicker onChange={(value) => console.log(value)} inputReadOnly={true}/>
         </Space>
     );
 };

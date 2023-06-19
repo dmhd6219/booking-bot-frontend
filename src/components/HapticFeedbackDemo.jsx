@@ -25,11 +25,11 @@ const HapticFeedbackDemo = () => {
                         <Select.Option value="soft">soft</Select.Option>
                     </Select>
                 </Form.Item>
-                <Form.Item>
-                    <Button block type="primary" onClick={() => impactOccurred(style)}>
-                        impactOccurred
-                    </Button>
-                </Form.Item>
+                {/*<Form.Item>*/}
+                {/*    <Button block type="primary" onClick={() => impactOccurred(style)}>*/}
+                {/*        impactOccurred*/}
+                {/*    </Button>*/}
+                {/*</Form.Item>*/}
 
                 <Form.Item label="type">
                     <Select value={type} onChange={value => setType(value)}>
@@ -44,11 +44,11 @@ const HapticFeedbackDemo = () => {
                         notificationOccurred
                     </Button>
                 </Form.Item>
-                <Form.Item>
-                    <Button block type="primary" onClick={() => selectionChanged()}>
-                        selectionChanged
-                    </Button>
-                </Form.Item>
+                {/*<Form.Item>*/}
+                {/*    <Button block type="primary" onClick={() => selectionChanged()}>*/}
+                {/*        selectionChanged*/}
+                {/*    </Button>*/}
+                {/*</Form.Item>*/}
             </Form>
 
         </>

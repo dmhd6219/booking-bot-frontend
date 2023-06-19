@@ -7,6 +7,8 @@ import ShowPopupDemo from "./components/ShowPopupDemo";
 import HapticFeedbackDemo from "./components/HapticFeedbackDemo";
 import TimePickerTest from "./components/TimePickerTest";
 
+import locale from 'antd/locale/ru_RU';
+
 const Wrapper = styled.div`
   background: var(--tg-theme-bg-color);
   color: var(--tg-theme-text-color) !important;
@@ -38,6 +40,8 @@ function App() {
                     }
                     : undefined
             }
+
+            locale={locale}
         >
         <Wrapper>
             <MainButtonDemo/>
