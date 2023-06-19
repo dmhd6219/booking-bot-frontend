@@ -3,7 +3,7 @@ import {useState} from 'react';
 import {useHapticFeedback} from '@vkruglikov/react-telegram-web-app';
 
 const HapticFeedbackDemo = () => {
-    const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback();
+    const notificationOccurred = useHapticFeedback()[2];
     const [style, setStyle] = useState('light');
     const [type, setType] = useState('error');
 
