@@ -3,7 +3,7 @@ import {useState} from 'react';
 import {useHapticFeedback} from '@vkruglikov/react-telegram-web-app';
 
 const HapticFeedbackDemo = () => {
-    const notificationOccurred = useHapticFeedback()[2];
+    const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback();
     const [style, setStyle] = useState('light');
     const [type, setType] = useState('error');
 
@@ -11,6 +11,7 @@ const HapticFeedbackDemo = () => {
         <>
             <Typography.Title level={3}>useHapticFeedback</Typography.Title>
             <Form
+                labelCol={{span: 6}}
                 name="basic"
                 layout="horizontal"
                 autoComplete="off"
@@ -24,7 +25,11 @@ const HapticFeedbackDemo = () => {
                         <Select.Option value="soft">soft</Select.Option>
                     </Select>
                 </Form.Item>
-
+                <Form.Item>
+                    <Button block type="primary" onClick={() => impactOccurred(style)}>
+                        impactOccurred
+                    </Button>
+                </Form.Item>
 
                 <Form.Item label="type">
                     <Select value={type} onChange={value => setType(value)}>
@@ -39,7 +44,11 @@ const HapticFeedbackDemo = () => {
                         notificationOccurred
                     </Button>
                 </Form.Item>
-
+                <Form.Item>
+                    <Button block type="primary" onClick={() => selectionChanged()}>
+                        selectionChanged
+                    </Button>
+                </Form.Item>
             </Form>
         </>
     );
