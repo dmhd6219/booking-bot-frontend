@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import './index.css'
 import MainButtonDemo from "./components/MainButtonDemo";
-import {ConfigProvider, theme, TimePicker} from 'antd';
+import {ConfigProvider, theme} from 'antd';
 import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
 import ShowPopupDemo from "./components/ShowPopupDemo";
 import HapticFeedbackDemo from "./components/HapticFeedbackDemo";
