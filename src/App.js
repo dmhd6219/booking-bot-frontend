@@ -4,6 +4,7 @@ import MainButtonDemo from "./components/MainButtonDemo";
 import { ConfigProvider, theme } from 'antd';
 import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
 import ShowPopupDemo from "./components/ShowPopupDemo";
+import HapticFeedbackDemo from "./components/HapticFeedbackDemo";
 
 const Wrapper = styled.div`
   background: var(--tg-theme-bg-color);
@@ -41,6 +42,8 @@ function App() {
             <MainButtonDemo/>
 
             <ShowPopupDemo />
+
+            <HapticFeedbackDemo/>
         </Wrapper>
 
         </ConfigProvider>
