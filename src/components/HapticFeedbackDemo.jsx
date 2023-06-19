@@ -3,7 +3,7 @@ import {useState} from 'react';
 import {useHapticFeedback} from '@vkruglikov/react-telegram-web-app';
 
 const HapticFeedbackDemo = () => {
-    const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback();
+    const notificationOccurred = useHapticFeedback()[2];
     const [style, setStyle] = useState('light');
     const [type, setType] = useState('error');
 
@@ -11,7 +11,6 @@ const HapticFeedbackDemo = () => {
         <>
             <Typography.Title level={3}>useHapticFeedback</Typography.Title>
             <Form
-                labelCol={{span: 6}}
                 name="basic"
                 layout="horizontal"
                 autoComplete="off"
@@ -25,11 +24,8 @@ const HapticFeedbackDemo = () => {
                         <Select.Option value="soft">soft</Select.Option>
                     </Select>
                 </Form.Item>
-                <Form.Item>
-                    <Button block type="primary" onClick={() => impactOccurred(style)}>
-                        impactOccurred
-                    </Button>
-                </Form.Item>
+
+
                 <Form.Item label="type">
                     <Select value={type} onChange={value => setType(value)}>
                         <Select.Option value="error">error</Select.Option>
@@ -37,20 +33,13 @@ const HapticFeedbackDemo = () => {
                         <Select.Option value="warning">warning</Select.Option>
                     </Select>
                 </Form.Item>
+
                 <Form.Item>
-                    <Button
-                        block
-                        type="primary"
-                        onClick={() => notificationOccurred(type)}
-                    >
+                    <Button block type="primary" onClick={() => notificationOccurred(type)}>
                         notificationOccurred
                     </Button>
                 </Form.Item>
-                <Form.Item>
-                    <Button block type="primary" onClick={() => selectionChanged()}>
-                        selectionChanged
-                    </Button>
-                </Form.Item>
+
             </Form>
         </>
     );
