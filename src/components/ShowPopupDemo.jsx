@@ -13,14 +13,15 @@ const ShowPopupDemo = () => {
             ...values,
             buttons: [
                 {
+                    text: 'fine',
                     type: 'ok',
                 },
-                {
-                    type: 'close',
-                },
+                // {
+                //     type: 'close',
+                // },
                 {
                     type: 'destructive',
-                    text: 'destructive',
+                    text: 'cancel',
                 },
             ],
         }).catch(e => {
