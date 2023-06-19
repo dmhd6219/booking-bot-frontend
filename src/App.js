@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import './index.css'
-import {Component} from "react";
 import MainButtonDemo from "./components/MainButtonDemo";
 import { ConfigProvider, theme } from 'antd';
 import {useThemeParams} from "@vkruglikov/react-telegram-web-app";

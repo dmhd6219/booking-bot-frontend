@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {useState} from 'react';
 import {Form, Input, Switch, Typography} from "antd";
 
 function MainButtonDemo() {
