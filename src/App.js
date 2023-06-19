@@ -3,6 +3,7 @@ import './index.css'
 import MainButtonDemo from "./components/MainButtonDemo";
 import { ConfigProvider, theme } from 'antd';
 import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
+import ShowPopupDemo from "./components/ShowPopupDemo";
 
 const Wrapper = styled.div`
   background: var(--tg-theme-bg-color);
@@ -38,6 +39,8 @@ function App() {
         >
         <Wrapper>
             <MainButtonDemo/>
+
+            <ShowPopupDemo />
         </Wrapper>
 
         </ConfigProvider>
