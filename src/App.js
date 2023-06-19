@@ -2,6 +2,8 @@ import styled from "styled-components";
 import './index.css'
 import {Component} from "react";
 import MainButtonDemo from "./components/MainButtonDemo";
+import { ConfigProvider, theme } from 'antd';
+import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
 
 const Wrapper = styled.div`
   background: var(--tg-theme-bg-color);
@@ -12,16 +14,35 @@ const Wrapper = styled.div`
   box-sizing: border-box;
 `
 
-class App extends Component {
+function App() {
 
-    render() {
+    const [colorScheme, themeParams] = useThemeParams();
 
-        return (
-            <Wrapper>
-                <MainButtonDemo/>
-            </Wrapper>
-        );
-    }
+    return (
+
+        <ConfigProvider
+            theme={
+                themeParams.text_color
+                    ? {
+                        algorithm:
+                            colorScheme === 'dark'
+                                ? theme.darkAlgorithm
+                                : theme.defaultAlgorithm,
+                        token: {
+                            colorText: themeParams.text_color,
+                            colorPrimary: themeParams.button_color,
+                            colorBgBase: themeParams.bg_color,
+                        },
+                    }
+                    : undefined
+            }
+        >
+        <Wrapper>
+            <MainButtonDemo/>
+        </Wrapper>
+
+        </ConfigProvider>
+    )
 }
 
 export default App;

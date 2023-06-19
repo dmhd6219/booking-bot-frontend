@@ -1,42 +1,36 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {Form, Input, Switch, Typography} from "antd";
 
-class MainButtonDemo extends Component{
-    state = {
-        progress: false,
+function MainButtonDemo() {
+
+    const [progress, setProgress] = useState(false);
+
+    const handleChange = (event) => {
+        setProgress(event);
     };
 
+    return (
+        <div>
+            <Typography.Title level={3}>MainButton</Typography.Title>
+            <Form
+                labelCol={{span: 6}}
+                name="basic"
+                layout="horizontal"
+                autoComplete="off"
+            >
+                <Form.Item label="Text" name="text">
+                    <Input disabled/>
+                </Form.Item>
 
-    handleChange = (event) => {
-        this.setState({
-            progress: event,
-        });
-    };
+                <Form.Item name="progress" label="progress" valuePropName="checked">
+                    <Switch onChange={handleChange}/>
+                </Form.Item>
 
-    render(){
-        return (
-            <div>
-                <Typography.Title level={3}>MainButton</Typography.Title>
-                <Form
-                    labelCol={{ span: 6 }}
-                    name="basic"
-                    layout="horizontal"
-                    autoComplete="off"
-                >
-                    <Form.Item label="Text" name="text">
-                        <Input disabled />
-                    </Form.Item>
+                {progress && <p>Sus text</p>}
 
-                    <Form.Item name="progress" label="progress" valuePropName="checked">
-                        <Switch onChange={this.handleChange}/>
-                    </Form.Item>
-
-                    {this.state.progress && <p>Sus text</p>}
-
-                </Form>
-            </div>
-        );
-    }
+            </Form>
+        </div>
+    );
 }
 
 export default MainButtonDemo;
