@@ -50,6 +50,7 @@ const HapticFeedbackDemo = () => {
                     </Button>
                 </Form.Item>
             </Form>
+
         </>
     );
 };

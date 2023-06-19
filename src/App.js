@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import './index.css'
 import MainButtonDemo from "./components/MainButtonDemo";
-import { ConfigProvider, theme } from 'antd';
+import {ConfigProvider, theme, TimePicker} from 'antd';
 import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
 import ShowPopupDemo from "./components/ShowPopupDemo";
 import HapticFeedbackDemo from "./components/HapticFeedbackDemo";
+import TimePickerTest from "./components/TimePickerTest";
 
 const Wrapper = styled.div`
   background: var(--tg-theme-bg-color);
@@ -44,6 +45,8 @@ function App() {
             <ShowPopupDemo />
 
             <HapticFeedbackDemo/>
+
+            <TimePickerTest/>
         </Wrapper>
 
         </ConfigProvider>
