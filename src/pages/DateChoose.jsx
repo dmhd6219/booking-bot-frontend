@@ -16,7 +16,7 @@ const disabledDateTime = () => ({
 });
 
 const ButtonWithMargin = styled(Button)`
-    margin : 10px;
+    margin : 5px;
 `;
 
 const DateChoose = () => {
