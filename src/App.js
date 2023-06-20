@@ -57,9 +57,7 @@ function App() {
         >
 
             <BigHeader>
-                {
-                    colorScheme === "dark" && <Logo lang={"en"} fill={"white"}/>
-                }
+                {colorScheme === "dark" && <Logo lang={"en"} fill={"white"}/>}
 
                 {colorScheme !== "dark" && <Logo lang={"en"} fill={"black"}/>}
             </BigHeader>

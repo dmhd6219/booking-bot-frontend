@@ -1,21 +1,13 @@
 import React, {useState} from 'react';
-import {Button, Select, TimePicker, Typography} from 'antd';
+import {Button} from 'antd';
 import styled from "styled-components";
 import { HashLink } from 'react-router-hash-link';
 import {tg} from "../tg";
+import ByEndTime from "../components/sortings/ByEndTime";
+import ByRoom from "../components/sortings/ByRoom";
+import ByStartTime from "../components/sortings/ByStartTime";
 
-const range = (start, end) => {
-    const result = [];
-    for (let i = start; i < end; i++) {
-        result.push(i);
-    }
-    return result;
-};
-const disabledDateTime = () => ({
-    // disabledHours: () => range(0, 24).splice(4, 20),
-    disabledHours: () => range(7, 19),
-    disabledMinutes: () => [1, 2, 3, 4, 5],
-});
+
 
 const HorizontalList = styled.div`
 
@@ -28,13 +20,10 @@ const HorizontalList = styled.div`
 
 `
 
-const WidthSelect = styled(Select)`
-  width : 200px;
-`
+
 
 const DateChoose = () => {
     const [choice, setChoice] = useState("time-start");
-    const [day, setDay] = useState("20.06.2023");
 
     return (
         <div>
@@ -61,102 +50,11 @@ const DateChoose = () => {
                 </HashLink>
             </HorizontalList>
 
-            {choice === "time-start" &&
-                <div id={"sort-by-start-time"}>
-                    <Typography.Title>Select Date</Typography.Title>
-                    <WidthSelect onChange={value => {
-                        setDay(value);
-                        console.log(day)
-                    }} size={"large"}>
-                        <Select.Option value="20.06.2022">20.06.2022</Select.Option>
-                        <Select.Option value="21.06.2022">21.06.2022</Select.Option>
-                        <Select.Option value="22.06.2022">22.06.2022</Select.Option>
-                    </WidthSelect>
+            {choice === "time-start" && <ByStartTime/>}
 
-                    <Typography.Title>Select Time of Start</Typography.Title>
-                    <TimePicker onChange={(value) => console.log(value)} inputReadOnly={true}
-                                disabledTime={disabledDateTime} format={"HH:mm"} minuteStep={5} size={"large"}/>
+            {choice === "room" && <ByRoom/>}
 
-                    <Typography.Title>Select Time of Booking</Typography.Title>
-                    <WidthSelect onChange={value => setDay(value)} options={[
-                        {value: '30', label: '30 Minutes'},
-                        {value: '60', label: '1 Hour'},
-                        {value: '90', label: '1.5 Hours'},
-                        {value: '120', label: '2 Hours'},
-                        {value: '150', label: '2.5 Hours'},
-                        {value: '180', label: '3 Hours'},
-                    ]} size={"large"}/>
-
-                    <Typography.Title>Select Room</Typography.Title>
-                    <WidthSelect onChange={value => setDay(value)} options={[
-                        {value: '304', label: '304'},
-                    ]} size={"large"}/>
-
-                </div>}
-
-            {choice === "room" &&
-                <div id={"sort-by-room"}>
-                    <Typography.Title>Select Room</Typography.Title>
-                    <WidthSelect onChange={value => setDay(value)} options={[
-                        {value: '304', label: '304'},
-                        {value: '305', label: '305'}
-                    ]} size={"large"}/>
-
-                    <Typography.Title>Select Date</Typography.Title>
-                    <WidthSelect onChange={value => setDay(value)} size={"large"}>
-                        <Select.Option value="20.06.2022">20.06.2022</Select.Option>
-                        <Select.Option value="21.06.2022">21.06.2022</Select.Option>
-                        <Select.Option value="22.06.2022">22.06.2022</Select.Option>
-                    </WidthSelect>
-
-                    <Typography.Title>Select Time of Start</Typography.Title>
-                    <TimePicker onChange={(value) => console.log(value)} inputReadOnly={true}
-                                disabledTime={disabledDateTime} format={"HH:mm"} minuteStep={5} size={"large"}/>
-
-                    <Typography.Title>Select Time of Booking</Typography.Title>
-                    <WidthSelect onChange={value => setDay(value)} options={[
-                        {value: '30', label: '30 Minutes'},
-                        {value: '60', label: '1 Hour'},
-                        {value: '90', label: '1.5 Hours'},
-                        {value: '120', label: '2 Hours'},
-                        {value: '150', label: '2.5 Hours'},
-                        {value: '180', label: '3 Hours'},
-                    ]} size={"large"}/>
-
-                </div>}
-
-            {choice === "time-end" &&
-                <div id={"sort-by-end-time"}>
-                    <Typography.Title>Select Date</Typography.Title>
-                    <WidthSelect onChange={value => {
-                        setDay(value);
-                        console.log(day)
-                    }} size={"large"}>
-                        <Select.Option value="20.06.2022">20.06.2022</Select.Option>
-                        <Select.Option value="21.06.2022">21.06.2022</Select.Option>
-                        <Select.Option value="22.06.2022">22.06.2022</Select.Option>
-                    </WidthSelect>
-
-                    <Typography.Title>Select Time of End</Typography.Title>
-                    <TimePicker onChange={(value) => console.log(value)} inputReadOnly={true}
-                                disabledTime={disabledDateTime} format={"HH:mm"} minuteStep={5} size={"large"}/>
-
-                    <Typography.Title>Select Time of Booking</Typography.Title>
-                    <WidthSelect onChange={value => setDay(value)} options={[
-                        {value: '30', label: '30 Minutes'},
-                        {value: '60', label: '1 Hour'},
-                        {value: '90', label: '1.5 Hours'},
-                        {value: '120', label: '2 Hours'},
-                        {value: '150', label: '2.5 Hours'},
-                        {value: '180', label: '3 Hours'},
-                    ]} size={"large"}/>
-
-                    <Typography.Title>Select Room</Typography.Title>
-                    <WidthSelect onChange={value => setDay(value)} options={[
-                        {value: '304', label: '304'},
-                    ]} size={"large"}/>
-
-                </div>}
+            {choice === "time-end" && <ByEndTime/>}
         </div>
     )
 }
