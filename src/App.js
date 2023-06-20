@@ -58,10 +58,10 @@ function App() {
 
         <BigHeader>
             {
-                colorScheme === "dark" && <Logo fill={"black"}/>
+                colorScheme === "dark" && <Logo fill={"white"}/>
             }
 
-            {colorScheme !== "dark" && <Logo fill={"white"}/>}
+            {colorScheme !== "dark" && <Logo fill={"black"}/>}
         </BigHeader>
 
         <Wrapper>
