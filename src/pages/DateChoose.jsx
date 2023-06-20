@@ -15,8 +15,15 @@ const disabledDateTime = () => ({
     disabledMinutes: () => [1, 2, 3, 4, 5],
 });
 
-const ButtonWithMargin = styled(Button)`
-    margin : 5px;
+const ButtonWithRightMargin = styled(Button)`
+    margin-right : 5px;
+`;
+const ButtonWithLeftMargin = styled(Button)`
+    margin-left : 5px;
+`;
+const ButtonWithSideMargin = styled(Button)`
+    margin-right : 5px;
+  margin-left : 5px;
 `;
 
 const DateChoose = () => {
@@ -25,9 +32,9 @@ const DateChoose = () => {
 
     return (
         <div>
-            <ButtonWithMargin type="primary" onClick={() => setChoice("time-start")}>By Time of Start</ButtonWithMargin>
-            <ButtonWithMargin type="primary" onClick={() => setChoice("room")}>By Room</ButtonWithMargin>
-            <ButtonWithMargin type="primary" onClick={() => setChoice("time-end")}>By Time of End</ButtonWithMargin>
+            <ButtonWithRightMargin type="primary" onClick={() => setChoice("time-start")}>By Time of Start</ButtonWithRightMargin>
+            <ButtonWithSideMargin type="primary" onClick={() => setChoice("room")}>By Room</ButtonWithSideMargin>
+            <ButtonWithLeftMargin type="primary" onClick={() => setChoice("time-end")}>By Time of End</ButtonWithLeftMargin>
 
             {choice === "time-start" &&
                 <div>
