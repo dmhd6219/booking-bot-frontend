@@ -21,10 +21,10 @@ const ButtonWithRightMargin = styled(Button)`
 const ButtonWithLeftMargin = styled(Button)`
     margin-left : 5px;
 `;
-const ButtonWithSideMargin = styled(Button)`
-    margin-right : 5px;
-  margin-left : 5px;
-`;
+// const ButtonWithSideMargin = styled(Button)`
+//     margin-right : 5px;
+//   margin-left : 5px;
+// `;
 
 const DateChoose = () => {
     const [choice, setChoice] = useState("time-start");
@@ -33,7 +33,7 @@ const DateChoose = () => {
     return (
         <div>
             <ButtonWithRightMargin type="primary" onClick={() => setChoice("time-start")}>By Time of Start</ButtonWithRightMargin>
-            <ButtonWithSideMargin type="primary" onClick={() => setChoice("room")}>By Room</ButtonWithSideMargin>
+            <Button type="primary" onClick={() => setChoice("room")}>By Room</Button>
             <ButtonWithLeftMargin type="primary" onClick={() => setChoice("time-end")}>By Time of End</ButtonWithLeftMargin>
 
             {choice === "time-start" &&
