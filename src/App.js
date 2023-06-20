@@ -9,6 +9,7 @@ import DateChoose from "./pages/DateChoose";
 import {Logo} from "./components/Logo";
 import {BrowserRouter} from "react-router-dom";
 
+
 const Wrapper = styled.div`
   
   border-radius: 10px;
@@ -29,6 +30,7 @@ const BigHeader = styled.div`
   height:50vh;
   transform: scale(0.5, 0.5);
 `
+
 
 function App() {
 

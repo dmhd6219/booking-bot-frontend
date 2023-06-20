@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Button, Select, TimePicker, Typography} from 'antd';
 import styled from "styled-components";
 import { HashLink } from 'react-router-hash-link';
+import {tg} from "../tg";
 
 const range = (start, end) => {
     const result = [];
@@ -35,15 +36,24 @@ const DateChoose = () => {
         <div>
             <HorizontalList>
                 <HashLink to="#sort-by-start-time">
-                    <Button type="primary" onClick={() => setChoice("time-start")}>By Start Time</Button>
+                    <Button type="primary" onClick={() => {
+                        setChoice("time-start");
+                        tg.expand();
+                    }}>By Start Time</Button>
                 </HashLink>
 
                 <HashLink to='#sort-by-room'>
-                    <Button type="primary" onClick={() => setChoice("room")}>By Room</Button>
+                    <Button type="primary" onClick={() => {
+                        setChoice("room");
+                        tg.expand();
+                    }}>By Room</Button>
                 </HashLink>
 
                 <HashLink to='#sort-by-end-time'>
-                    <Button type="primary" onClick={() => setChoice("time-end")}>By End Time</Button>
+                    <Button type="primary" onClick={() => {
+                        setChoice("time-end");
+                        tg.expand();
+                    }}>By End Time</Button>
                 </HashLink>
             </HorizontalList>
 
