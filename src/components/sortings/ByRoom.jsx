@@ -38,7 +38,7 @@ function ByRoom() {
                 <Select.Option value="22.06.2022">22.06.2022</Select.Option>
             </WidthSelect>
 
-            <Typography.Title>Select Time of Start</Typography.Title>
+            <Typography.Title>Select Period of Start</Typography.Title>
             <TimePicker onChange={(value) => console.log(value)} onSelect={() => {
                 setTime(true);
                 console.log("On Select (Time)")
