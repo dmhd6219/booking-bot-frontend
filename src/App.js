@@ -9,8 +9,7 @@ import DateChoose from "./pages/DateChoose";
 import {Logo} from "./components/Logo";
 
 const Wrapper = styled.div`
-  background: var(--tg-theme-bg-color);
-  color: var(--tg-theme-text-color) !important;
+  
   border-radius: 10px;
   margin: 5px 0;
   padding: 20px;
@@ -19,7 +18,6 @@ const Wrapper = styled.div`
 
 
 const BigHeader = styled.div`
-  background: var(--tg-theme-bg-color);
   
   display: flex;
   flex-direction: column;
