@@ -32,9 +32,9 @@ const DateChoose = () => {
 
     return (
         <div>
-            <ButtonWithRightMargin type="primary" onClick={() => setChoice("time-start")}>By Time of Start</ButtonWithRightMargin>
+            <ButtonWithRightMargin type="primary" onClick={() => setChoice("time-start")}>By Start Time</ButtonWithRightMargin>
             <Button type="primary" onClick={() => setChoice("room")}>By Room</Button>
-            <ButtonWithLeftMargin type="primary" onClick={() => setChoice("time-end")}>By Time of End</ButtonWithLeftMargin>
+            <ButtonWithLeftMargin type="primary" onClick={() => setChoice("time-end")}>By End Time</ButtonWithLeftMargin>
 
             {choice === "time-start" &&
                 <div>
