@@ -8,7 +8,7 @@ function ByStartTime() {
     const [date, setDate] = useState(false);
     const [time, setTime] = useState(false);
     const [range, setRange] = useState(false);
-    const [room, setRoom] = useState(false);
+    const [setRoom] = useState(false)[2];
 
     const [buttonState, setButtonState] = useState({
         text: 'BUTTON TEXT',
@@ -17,28 +17,15 @@ function ByStartTime() {
         disable: false,
     });
 
-    const checkValues = () => {
-        console.log({
-            date: date,
-            time:time,
-            range:range,
-            room:room,
-        });
-        if (date && time && range && room) {
-            setButtonState({
-                text : "BOOK",
-                show : true,
-                progress: false,
-                disable: false,
-            })
-        }
-    }
 
     return (
         <div id={"sort-by-start-time"}>
             <Typography.Title>Select Date</Typography.Title>
             <WidthSelect onChange={
-                value => console.log(value)} size={"large"} onSelect={() => {setDate(true); console.log("On Select (Date)")}}>
+                value => console.log(value)} size={"large"} onSelect={() => {
+                setDate(true);
+                console.log("On Select (Date)")
+            }}>
                 <Select.Option value="20.06.2022">20.06.2022</Select.Option>
                 <Select.Option value="21.06.2022">21.06.2022</Select.Option>
                 <Select.Option value="22.06.2022">22.06.2022</Select.Option>
@@ -47,7 +34,10 @@ function ByStartTime() {
             <Typography.Title>Select Time of Start</Typography.Title>
             <TimePicker onChange={(value) => console.log(value)} inputReadOnly={true}
                         disabledTime={disabledDateTime} format={"HH:mm"}
-                        minuteStep={5} size={"large"} onSelect={() => {setTime(true); console.log("On Select (Time)")}} disabled={!date}/>
+                        minuteStep={5} size={"large"} onSelect={() => {
+                setTime(true);
+                console.log("On Select (Time)")
+            }} disabled={!date}/>
 
             <Typography.Title>Select Time of Booking</Typography.Title>
             <WidthSelect onChange={value => console.log(value)} options={[
@@ -57,12 +47,20 @@ function ByStartTime() {
                 {value: '120', label: '2 Hours'},
                 {value: '150', label: '2.5 Hours'},
                 {value: '180', label: '3 Hours'},
-            ]} size={"large"} onSelect={() => {setRange(true); console.log("On Select (Range)")}} disabled={(!(date && time))}/>
+            ]} size={"large"} onSelect={() => {
+                setRange(true);
+                console.log("On Select (Range)")
+            }} disabled={(!(date && time))}/>
 
             <Typography.Title>Select Room</Typography.Title>
             <WidthSelect onChange={value => console.log(value)} options={[
                 {value: '304', label: '304'},
-            ]} size={"large"} onSelect={() => {setRoom(true); console.log("On Select (Room)"); checkValues()}} disabled={!(date && time && range)}/>
+            ]} size={"large"} onSelect={() => {
+                setRoom(() => {
+                    setButtonState({text: "BOOK", show: true, progress: false, disable: false,});
+                    return true;
+                });
+            }} disabled={!(date && time && range)}/>
 
 
             <div>{buttonState?.show && <MainButton {...buttonState} />}</div>
