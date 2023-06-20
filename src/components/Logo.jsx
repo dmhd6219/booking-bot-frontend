@@ -56,6 +56,11 @@ export const EnglishLogo = (props) => (
     </svg>
 
 
+)
 
-
+export const Logo = (props) => (
+    <>
+            {props.lang === "en" && <EnglishLogo fill={props.fill}/> }
+            {props.lang === "ru" && <RussianLogo fill={props.fill}/> }
+    </>
 )

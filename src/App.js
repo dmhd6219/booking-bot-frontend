@@ -6,28 +6,26 @@ import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
 import locale from 'antd/locale/en_US';
 import DateChoose from "./pages/DateChoose";
 
-import {EnglishLogo} from "./components/Logo";
+import {Logo} from "./components/Logo";
 import {BrowserRouter} from "react-router-dom";
 
 
 const Wrapper = styled.div`
-  
-  border-radius: 10px;
-  margin: 5px 0;
+
   padding: 20px;
-  box-sizing: border-box;
+
 `
 
 
 const BigHeader = styled.div`
-  
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
+
   width: 100vw;
-  height:50vh;
+  height: 50vh;
   transform: scale(0.5, 0.5);
 `
 
@@ -58,20 +56,21 @@ function App() {
             locale={locale}
         >
 
-        <BigHeader>
-            {
-                colorScheme === "dark" && <EnglishLogo fill={"white"}/>
-            }
+            <BigHeader>
+                {
+                    colorScheme === "dark" && <Logo lang={"en"} fill={"white"}/>
+                }
 
-            {colorScheme !== "dark" && <EnglishLogo fill={"black"}/>}
-        </BigHeader>
+                {colorScheme !== "dark" && <Logo lang={"en"} fill={"black"}/>}
+            </BigHeader>
 
-        <Wrapper>
+            <Wrapper>
 
-            <BrowserRouter>
-                <DateChoose/>
-            </BrowserRouter>
-        </Wrapper>
+                <BrowserRouter>
+                    <DateChoose/>
+                </BrowserRouter>
+
+            </Wrapper>
 
         </ConfigProvider>
     )
