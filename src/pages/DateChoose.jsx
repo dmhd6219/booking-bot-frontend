@@ -15,16 +15,16 @@ const disabledDateTime = () => ({
     disabledMinutes: () => [1, 2, 3, 4, 5],
 });
 
-const ButtonWithRightMargin = styled(Button)`
-    margin-right : 5px;
-`;
-const ButtonWithLeftMargin = styled(Button)`
-    margin-left : 5px;
-`;
-// const ButtonWithSideMargin = styled(Button)`
-//     margin-right : 5px;
-//   margin-left : 5px;
-// `;
+const HorizontalList = styled.div`
+
+    width: 100vw;
+    display: flex;
+    
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+
+`
 
 const DateChoose = () => {
     const [choice, setChoice] = useState("time-start");
@@ -32,9 +32,11 @@ const DateChoose = () => {
 
     return (
         <div>
-            <ButtonWithRightMargin type="primary" onClick={() => setChoice("time-start")}>By Start Time</ButtonWithRightMargin>
-            <Button type="primary" onClick={() => setChoice("room")}>By Room</Button>
-            <ButtonWithLeftMargin type="primary" onClick={() => setChoice("time-end")}>By End Time</ButtonWithLeftMargin>
+            <HorizontalList>
+                <Button type="primary" onClick={() => setChoice("time-start")}>By Start Time</Button>
+                <Button type="primary" onClick={() => setChoice("room")}>By Room</Button>
+                <Button type="primary" onClick={() => setChoice("time-end")}>By End Time</Button>
+            </HorizontalList>
 
             {choice === "time-start" &&
                 <div>
