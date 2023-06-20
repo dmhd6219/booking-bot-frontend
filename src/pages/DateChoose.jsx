@@ -63,7 +63,7 @@ const DateChoose = () => {
                     <Select onChange={value => {
                         setDay(value);
                         console.log(day)
-                    }}>
+                    }} size={"large"}>
                         <Select.Option value="20.06.2022">20.06.2022</Select.Option>
                         <Select.Option value="21.06.2022">21.06.2022</Select.Option>
                         <Select.Option value="22.06.2022">22.06.2022</Select.Option>
@@ -71,7 +71,7 @@ const DateChoose = () => {
 
                     <Typography.Title>Select Time of Start</Typography.Title>
                     <TimePicker onChange={(value) => console.log(value)} inputReadOnly={true}
-                                disabledTime={disabledDateTime} format={"HH:mm"} minuteStep={5}/>
+                                disabledTime={disabledDateTime} format={"HH:mm"} minuteStep={5} size={"large"}/>
 
                     <Typography.Title>Select Time of Booking</Typography.Title>
                     <Select onChange={value => setDay(value)} options={[
@@ -81,12 +81,12 @@ const DateChoose = () => {
                         {value: '120', label: '2 Hours'},
                         {value: '150', label: '2.5 Hours'},
                         {value: '180', label: '3 Hours'},
-                    ]}/>
+                    ]} size={"large"}/>
 
                     <Typography.Title>Select Room</Typography.Title>
                     <Select onChange={value => setDay(value)} options={[
                         {value: '304', label: '304'},
-                    ]}/>
+                    ]} size={"large"}/>
 
                 </div>}
 
@@ -96,10 +96,10 @@ const DateChoose = () => {
                     <Select onChange={value => setDay(value)} options={[
                         {value: '304', label: '304'},
                         {value: '305', label: '305'}
-                    ]}/>
+                    ]} size={"large"}/>
 
                     <Typography.Title>Select Date</Typography.Title>
-                    <Select onChange={value => setDay(value)}>
+                    <Select onChange={value => setDay(value)} size={"large"}>
                         <Select.Option value="20.06.2022">20.06.2022</Select.Option>
                         <Select.Option value="21.06.2022">21.06.2022</Select.Option>
                         <Select.Option value="22.06.2022">22.06.2022</Select.Option>
@@ -107,7 +107,7 @@ const DateChoose = () => {
 
                     <Typography.Title>Select Time of Start</Typography.Title>
                     <TimePicker onChange={(value) => console.log(value)} inputReadOnly={true}
-                                disabledTime={disabledDateTime} format={"HH:mm"} minuteStep={5}/>
+                                disabledTime={disabledDateTime} format={"HH:mm"} minuteStep={5} size={"large"}/>
 
                     <Typography.Title>Select Time of Booking</Typography.Title>
                     <Select onChange={value => setDay(value)} options={[
@@ -117,7 +117,7 @@ const DateChoose = () => {
                         {value: '120', label: '2 Hours'},
                         {value: '150', label: '2.5 Hours'},
                         {value: '180', label: '3 Hours'},
-                    ]}/>
+                    ]} size={"large"}/>
 
                 </div>}
 
@@ -127,7 +127,7 @@ const DateChoose = () => {
                     <Select onChange={value => {
                         setDay(value);
                         console.log(day)
-                    }}>
+                    }} size={"large"}>
                         <Select.Option value="20.06.2022">20.06.2022</Select.Option>
                         <Select.Option value="21.06.2022">21.06.2022</Select.Option>
                         <Select.Option value="22.06.2022">22.06.2022</Select.Option>
@@ -135,7 +135,7 @@ const DateChoose = () => {
 
                     <Typography.Title>Select Time of Start</Typography.Title>
                     <TimePicker onChange={(value) => console.log(value)} inputReadOnly={true}
-                                disabledTime={disabledDateTime} format={"HH:mm"} minuteStep={5}/>
+                                disabledTime={disabledDateTime} format={"HH:mm"} minuteStep={5} size={"large"}/>
 
                     <Typography.Title>Select Time of Booking</Typography.Title>
                     <Select onChange={value => setDay(value)} options={[
@@ -145,12 +145,12 @@ const DateChoose = () => {
                         {value: '120', label: '2 Hours'},
                         {value: '150', label: '2.5 Hours'},
                         {value: '180', label: '3 Hours'},
-                    ]}/>
+                    ]} size={"large"}/>
 
                     <Typography.Title>Select Room</Typography.Title>
                     <Select onChange={value => setDay(value)} options={[
                         {value: '304', label: '304'},
-                    ]}/>
+                    ]} size={"large"}/>
 
                 </div>}
         </div>
