@@ -6,7 +6,7 @@ import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
 import locale from 'antd/locale/en_US';
 import DateChoose from "./pages/DateChoose";
 
-import {Logo} from "./components/Logo";
+import {EnglishLogo} from "./components/Logo";
 import {BrowserRouter} from "react-router-dom";
 
 
@@ -60,10 +60,10 @@ function App() {
 
         <BigHeader>
             {
-                colorScheme === "dark" && <Logo fill={"white"}/>
+                colorScheme === "dark" && <EnglishLogo fill={"white"}/>
             }
 
-            {colorScheme !== "dark" && <Logo fill={"black"}/>}
+            {colorScheme !== "dark" && <EnglishLogo fill={"black"}/>}
         </BigHeader>
 
         <Wrapper>
