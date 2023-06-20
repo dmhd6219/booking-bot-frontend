@@ -7,6 +7,7 @@ import ShowPopupDemo from "./components/ShowPopupDemo";
 import TimePickerTest from "./components/TimePickerTest";
 
 import locale from 'antd/locale/ru_RU';
+import DateChoose from "./components/DateChoose";
 
 const Wrapper = styled.div`
   background: var(--tg-theme-bg-color);
@@ -48,6 +49,8 @@ function App() {
             <ShowPopupDemo />
 
             <TimePickerTest/>
+
+            <DateChoose/>
         </Wrapper>
 
         </ConfigProvider>
