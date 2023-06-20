@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Button, Select, TimePicker, Typography} from 'antd';
+import styled from "styled-components";
 
 const range = (start, end) => {
     const result = [];
@@ -14,6 +15,9 @@ const disabledDateTime = () => ({
     disabledMinutes: () => [1, 2, 3, 4, 5],
 });
 
+const ButtonWithMargin = styled(Button)`
+    margin : 10px;
+`;
 
 const DateChoose = () => {
     const [choice, setChoice] = useState("time-start");
@@ -21,9 +25,9 @@ const DateChoose = () => {
 
     return (
         <div>
-            <Button type="primary" onClick={() => setChoice("time-start")}>By Time of Start</Button>
-            <Button type="primary" onClick={() => setChoice("room")}>By Room</Button>
-            <Button type="primary" onClick={() => setChoice("time-end")}>By Time of End</Button>
+            <ButtonWithMargin type="primary" onClick={() => setChoice("time-start")}>By Time of Start</ButtonWithMargin>
+            <ButtonWithMargin type="primary" onClick={() => setChoice("room")}>By Room</ButtonWithMargin>
+            <ButtonWithMargin type="primary" onClick={() => setChoice("time-end")}>By Time of End</ButtonWithMargin>
 
             {choice === "time-start" &&
                 <div>
