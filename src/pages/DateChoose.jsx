@@ -48,7 +48,7 @@ const DateChoose = () => {
             </HorizontalList>
 
             {choice === "time-start" &&
-                <div key={"sort-by-start-time"}>
+                <div id={"sort-by-start-time"}>
                     <Typography.Title>Select Date</Typography.Title>
                     <Select onChange={value => {
                         setDay(value);
@@ -81,7 +81,7 @@ const DateChoose = () => {
                 </div>}
 
             {choice === "room" &&
-                <div key={"sort-by-room"}>
+                <div id={"sort-by-room"}>
                     <Typography.Title>Select Room</Typography.Title>
                     <Select onChange={value => setDay(value)} options={[
                         {value: '304', label: '304'},
@@ -112,7 +112,7 @@ const DateChoose = () => {
                 </div>}
 
             {choice === "time-end" &&
-                <div key={"sort-by-end-time"}>
+                <div id={"sort-by-end-time"}>
                     <Typography.Title>Select Date</Typography.Title>
                     <Select onChange={value => {
                         setDay(value);
