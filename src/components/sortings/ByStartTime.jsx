@@ -41,14 +41,14 @@ function ByStartTime() {
             </WidthSelect>
 
             <Typography.Title>Select Time of Start</Typography.Title>
-            <TimePicker onChange={(value) => {
+            <TimePicker  onChange={(value) => {
                 console.log(value);
-                setTime(!(value === "default"))
+                setTime(true)
             }} inputReadOnly={true} disabledTime={disabledDateTime}
                         format={"HH:mm"} minuteStep={5} size={"large"} disabled={!date}/>
 
             <Typography.Title>Select Time of Booking</Typography.Title>
-            <WidthSelect onChange={(value) => {
+            <WidthSelect defaultValue={"default"} onChange={(value) => {
                 console.log(value);
                 setRange(!(value === "default"))
             }} options={[
@@ -61,14 +61,13 @@ function ByStartTime() {
             ]} size={"large"} disabled={(!(date && time))}/>
 
             <Typography.Title>Select Room</Typography.Title>
-            <WidthSelect onChange={(value) => {
+            <WidthSelect defaultValue={"default"} onChange={(value) => {
                 console.log(value);
                 setRoom(!(value === "default"));
                 checkValues();
             }} options={[
                 {value: '304', label: '304'},
             ]} size={"large"} disabled={!(date && time && range)}/>
-
 
             <div>{buttonState?.show && <MainButton {...buttonState} />}</div>
 
