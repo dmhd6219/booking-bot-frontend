@@ -27,7 +27,7 @@ const BigHeader = styled.div`
   font-size: calc(10px + 2vmin);
   color: white;
 
-  height: 500px;
+  height: 200px;
   width: 100vw;
 
 `
