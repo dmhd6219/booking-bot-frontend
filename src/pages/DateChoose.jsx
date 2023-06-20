@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Select, TimePicker, Typography} from 'antd';
 import styled from "styled-components";
+import {Link} from 'react-router-dom';
 
 const range = (start, end) => {
     const result = [];
@@ -33,13 +34,21 @@ const DateChoose = () => {
     return (
         <div>
             <HorizontalList>
-                <Button type="primary" onClick={() => setChoice("time-start")}>By Start Time</Button>
-                <Button type="primary" onClick={() => setChoice("room")}>By Room</Button>
-                <Button type="primary" onClick={() => setChoice("time-end")}>By End Time</Button>
+                <Link to={{pathname: '/', hash: '#sort-by-start-time'}}>
+                    <Button type="primary" onClick={() => setChoice("time-start")}>By Start Time</Button>
+                </Link>
+
+                <Link to={{pathname: '/', hash: '#sort-by-room'}}>
+                    <Button type="primary" onClick={() => setChoice("room")}>By Room</Button>
+                </Link>
+
+                <Link to={{pathname: '/', hash: '#sort-by-end-time'}}>
+                    <Button type="primary" onClick={() => setChoice("time-end")}>By End Time</Button>
+                </Link>
             </HorizontalList>
 
             {choice === "time-start" &&
-                <div>
+                <div key={"sort-by-start-time"}>
                     <Typography.Title>Select Date</Typography.Title>
                     <Select onChange={value => {
                         setDay(value);
@@ -72,7 +81,7 @@ const DateChoose = () => {
                 </div>}
 
             {choice === "room" &&
-                <div>
+                <div key={"sort-by-room"}>
                     <Typography.Title>Select Room</Typography.Title>
                     <Select onChange={value => setDay(value)} options={[
                         {value: '304', label: '304'},
@@ -103,7 +112,7 @@ const DateChoose = () => {
                 </div>}
 
             {choice === "time-end" &&
-                <div>
+                <div key={"sort-by-end-time"}>
                     <Typography.Title>Select Date</Typography.Title>
                     <Select onChange={value => {
                         setDay(value);

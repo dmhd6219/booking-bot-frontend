@@ -7,6 +7,7 @@ import locale from 'antd/locale/ru_RU';
 import DateChoose from "./pages/DateChoose";
 
 import {Logo} from "./components/Logo";
+import {BrowserRouter} from "react-router-dom";
 
 const Wrapper = styled.div`
   
@@ -65,7 +66,9 @@ function App() {
 
         <Wrapper>
 
-            <DateChoose/>
+            <BrowserRouter>
+                <DateChoose/>
+            </BrowserRouter>
         </Wrapper>
 
         </ConfigProvider>
