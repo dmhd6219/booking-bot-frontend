@@ -19,7 +19,8 @@ const Wrapper = styled.div`
 
 
 const BigHeader = styled.div`
-
+  background: var(--tg-theme-bg-color);
+  
   display: flex;
   flex-direction: column;
   align-items: center;
