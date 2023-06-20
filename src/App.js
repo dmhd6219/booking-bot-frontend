@@ -4,7 +4,7 @@ import {ConfigProvider, theme} from 'antd';
 import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
 
 import locale from 'antd/locale/ru_RU';
-import DateChoose from "./components/DateChoose";
+import DateChoose from "./pages/DateChoose";
 
 import {Logo} from "./components/Logo";
 
@@ -26,7 +26,7 @@ const BigHeader = styled.div`
   justify-content: center;
 
   height: 50vh;
-  width: 100vw;
+  max-width: 100vw;
 
 `
 
