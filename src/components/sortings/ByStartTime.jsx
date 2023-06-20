@@ -31,7 +31,7 @@ function ByStartTime() {
                 <Select.Option value="22.06.2022">22.06.2022</Select.Option>
             </WidthSelect>
 
-            <Typography.Title>Select Period of Start</Typography.Title>
+            <Typography.Title>Select Time of Start</Typography.Title>
             <TimePicker onChange={(value) => console.log(value)} inputReadOnly={true}
                         disabledTime={disabledDateTime} format={"HH:mm"}
                         minuteStep={5} size={"large"} onSelect={() => {
@@ -39,7 +39,7 @@ function ByStartTime() {
                 console.log("On Select (Time)")
             }} disabled={!date}/>
 
-            <Typography.Title>Select Time of Booking</Typography.Title>
+            <Typography.Title>Select Period of Booking</Typography.Title>
             <WidthSelect onChange={value => console.log(value)} options={[
                 {value: '30', label: '30 Minutes'},
                 {value: '60', label: '1 Hour'},
