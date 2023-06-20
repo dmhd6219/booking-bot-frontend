@@ -5,8 +5,7 @@ import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
 
 import locale from 'antd/locale/ru_RU';
 import DateChoose from "./components/DateChoose";
-
-import logo from './logo.png';
+import BigHeader from "./components/Header";
 
 const Wrapper = styled.div`
   background: var(--tg-theme-bg-color);
@@ -42,10 +41,8 @@ function App() {
 
             locale={locale}
         >
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-            </header>
 
+        <BigHeader/>
         <Wrapper>
 
             <DateChoose/>
