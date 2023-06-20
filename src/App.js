@@ -3,7 +3,7 @@ import './index.css';
 import {ConfigProvider, theme} from 'antd';
 import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
 
-import locale from 'antd/locale/ru_RU';
+import locale from 'antd/locale/en_US';
 import DateChoose from "./pages/DateChoose";
 
 import {Logo} from "./components/Logo";
