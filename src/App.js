@@ -1,13 +1,12 @@
 import styled from "styled-components";
-import './index.css'
-import MainButtonDemo from "./components/MainButtonDemo";
+import './index.css';
 import {ConfigProvider, theme} from 'antd';
 import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
-import ShowPopupDemo from "./components/ShowPopupDemo";
-import TimePickerTest from "./components/TimePickerTest";
 
 import locale from 'antd/locale/ru_RU';
 import DateChoose from "./components/DateChoose";
+
+import logo from './logo.png';
 
 const Wrapper = styled.div`
   background: var(--tg-theme-bg-color);
@@ -43,12 +42,11 @@ function App() {
 
             locale={locale}
         >
+            <header className="App-header">
+                <img src={logo} className="App-logo" alt="logo" />
+            </header>
+
         <Wrapper>
-            <MainButtonDemo/>
-
-            <ShowPopupDemo />
-
-            <TimePickerTest/>
 
             <DateChoose/>
         </Wrapper>
