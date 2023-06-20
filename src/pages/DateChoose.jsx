@@ -63,7 +63,7 @@ const DateChoose = () => {
                     <Select onChange={value => {
                         setDay(value);
                         console.log(day)
-                    }} size={"large"} style={{ width: 200 }} listHeight={128}>
+                    }} size={"large"} style={{ width: 200 }} listHeight={256}>
                         <Select.Option value="20.06.2022">20.06.2022</Select.Option>
                         <Select.Option value="21.06.2022">21.06.2022</Select.Option>
                         <Select.Option value="22.06.2022">22.06.2022</Select.Option>
