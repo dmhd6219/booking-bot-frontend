@@ -18,6 +18,12 @@ function ByStartTime() {
     });
 
     const checkValues = () => {
+        console.log({
+            date: date,
+            time:time,
+            range:range,
+            room:room,
+        });
         if (date && time && range && room) {
             setButtonState({
                 text : "BOOK",
