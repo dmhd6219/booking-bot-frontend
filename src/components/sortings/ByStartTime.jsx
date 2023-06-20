@@ -8,7 +8,7 @@ function ByStartTime() {
     const [date, setDate] = useState(false);
     const [time, setTime] = useState(false);
     const [range, setRange] = useState(false);
-    const [room, setRoom] = useState(false);
+    const [, setRoom] = useState(false);
 
     const [buttonState, setButtonState] = useState({
         text: 'BUTTON TEXT',
