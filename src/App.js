@@ -25,8 +25,8 @@ const BigHeader = styled.div`
   align-items: center;
   justify-content: center;
   
-  max-width: 100vw;
-
+  width: 100vw;
+  transform: scale(0.5, 0.5);
 `
 
 function App() {
