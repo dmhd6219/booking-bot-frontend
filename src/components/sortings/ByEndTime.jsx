@@ -3,6 +3,7 @@ import {Select, TimePicker, Typography} from "antd";
 import {WidthSelect} from "../WidthSelect";
 import {disabledDateTime} from "../TimeDisabler";
 import {MainButton, useShowPopup} from "@vkruglikov/react-telegram-web-app";
+import {tg} from "../../tg";
 
 function ByEndTime() {
     const [dateSelected, setDateSelected] = useState(false);
@@ -87,21 +88,29 @@ function ByEndTime() {
 
 
             <div>{buttonState?.show && <MainButton {...buttonState} onClick={() => {
+                // TODO change to tg.showConfirm
                 showPopup({
                     title: "Confirm",
                     message: `Book ${room} at ${time} for ${range} minutes?`,
                     buttons: [
                         {
+                            id: "ok",
                             type: 'ok',
                         },
                         // {
                         //     type: 'close',
                         // },
                         {
+                            id: "cancel",
                             type: 'destructive',
                             text: 'Cancel',
                         },
                     ],
+                }).then(id => {
+                    if (id === "ok") {
+                        // TODO : make a book
+                        tg.close();
+                    }
                 })
             }}/>}</div>
 
