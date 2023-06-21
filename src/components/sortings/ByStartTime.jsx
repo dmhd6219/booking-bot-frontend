@@ -92,14 +92,14 @@ function ByStartTime() {
                     message: `Book ${room} at ${time} for ${range} minutes?`,
                     buttons: [
                         {
-                            id: 0,
+                            id: "ok",
                             type: 'ok',
                         },
                         // {
                         //     type: 'close',
                         // },
                         {
-                            if: 1,
+                            id: "cancel",
                             type: 'destructive',
                             text: 'Cancel',
                         },
