@@ -29,16 +29,15 @@ function ByStartTime() {
     return (
         <div id={"sort-by-start-time"}>
             <Typography.Title>Select Date</Typography.Title>
-            <WidthSelect onChange={value => {
+            <WidthSelect size={"large"} onSelect={(value) => {
+                setDateSelected(true);
+                console.log("On Select (Date)")
                 setDate(value);
                 setTime(null);
                 setRange(null);
                 setRoom(null);
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
                 // TODO reload changes from backend
-            }} size={"large"} onSelect={() => {
-                setDateSelected(true);
-                console.log("On Select (Date)")
             }} value={date}>
                 <Select.Option value="20.06.2022">20.06.2022</Select.Option>
                 <Select.Option value="21.06.2022">21.06.2022</Select.Option>
@@ -46,26 +45,20 @@ function ByStartTime() {
             </WidthSelect>
 
             <Typography.Title>Select Time of Start</Typography.Title>
-            <TimePicker onChange={(value) => {
+            <TimePicker inputReadOnly={true}
+                        disabledTime={disabledDateTime} format={"HH:mm"}
+                        minuteStep={5} size={"large"} onSelect={(value) => {
+                setTimeSelected(true);
+                console.log("On Select (Time)");
                 setTime(value);
                 setRange(null);
                 setRoom(null);
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
                 // TODO reload changes from backend
-            }} inputReadOnly={true}
-                        disabledTime={disabledDateTime} format={"HH:mm"}
-                        minuteStep={5} size={"large"} onSelect={() => {
-                setTimeSelected(true);
-                console.log("On Select (Time)")
             }} disabled={!dateSelected} value={time}/>
 
             <Typography.Title>Select Period of Booking</Typography.Title>
-            <WidthSelect onChange={value => {
-                setRange(value);
-                setRoom(null);
-                setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
-                // TODO reload changes from backend
-            }} options={[
+            <WidthSelect options={[
                 {value: '30', label: '30 Minutes'},
                 {value: '60', label: '1 Hour'},
                 {value: '90', label: '1.5 Hours'},
@@ -74,17 +67,22 @@ function ByStartTime() {
                 {value: '180', label: '3 Hours'},
             ]} size={"large"} onSelect={() => {
                 setRangeSelected(true);
-                console.log("On Select (Range)")
+                console.log("On Select (Range)");
+                setRange(value);
+                setRoom(null);
+                setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
+                // TODO reload changes from backend
             }} disabled={(!(dateSelected && timeSelected))} value={range}/>
 
             <Typography.Title>Select Room</Typography.Title>
-            <WidthSelect onChange={value => setRoom(value)} options={[
+            <WidthSelect options={[
                 {value: '304', label: '304'},
             ]} size={"large"} onSelect={() => {
                 setRoomSelected(() => {
                     setButtonState({text: "BOOK", show: true, progress: false, disable: false,});
                     return true;
                 });
+                setRoom(value);
             }} disabled={!(dateSelected && timeSelected && rangeSelected)} value={room}/>
 
 

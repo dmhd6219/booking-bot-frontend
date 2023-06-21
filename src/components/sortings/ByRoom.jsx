@@ -27,31 +27,29 @@ function ByRoom() {
     return (
         <div id={"sort-by-room"}>
             <Typography.Title>Select Room</Typography.Title>
-            <WidthSelect onChange={value => {
+            <WidthSelect onSelect={() => {
+                setRoomSelected(true);
+                console.log("On Select (Room)");
                 setRoom(value);
                 setDate(null);
                 setTime(null);
                 setRange(null);
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
                 // TODO reload changes from backend
-            }} onSelect={() => {
-                setRoomSelected(true);
-                console.log("On Select (Room)")
             }} options={[
                 {value: '304', label: '304'},
                 {value: '305', label: '305'}
             ]} size={"large"} value={room}/>
 
             <Typography.Title>Select Date</Typography.Title>
-            <WidthSelect onChange={value => {
+            <WidthSelect onSelect={() => {
+                setDateSelected(true);
+                console.log("On Select (Date)");
                 setDate(value);
                 setTime(null);
                 setRange(null);
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
                 // TODO reload changes from backend
-            }} onSelect={() => {
-                setDateSelected(true);
-                console.log("On Select (Date)")
             }} size={"large"} disabled={!roomSelected} value={date}>
                 <Select.Option value="20.06.2022">20.06.2022</Select.Option>
                 <Select.Option value="21.06.2022">21.06.2022</Select.Option>
@@ -59,26 +57,24 @@ function ByRoom() {
             </WidthSelect>
 
             <Typography.Title>Select Time of Start</Typography.Title>
-            <TimePicker onChange={(value) => {
+            <TimePicker onSelect={() => {
+                setTimeSelected(true);
+                console.log("On Select (Time)");
                 setTime(value);
                 setRange(null);
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
                 // TODO reload changes from backend
-            }} onSelect={() => {
-                setTimeSelected(true);
-                console.log("On Select (Time)")
             }} inputReadOnly={true}
                         disabledTime={disabledDateTime} format={"HH:mm"} minuteStep={5} size={"large"}
                         disabled={!(roomSelected && dateSelected)} value={time}/>
 
             <Typography.Title>Select Period of Booking</Typography.Title>
-            <WidthSelect onChange={value => {
-                setRange(value);
-            }} onSelect={() => {
+            <WidthSelect onSelect={() => {
                 setRangeSelected(() => {
                     setButtonState({text: "BOOK", show: true, progress: false, disable: false,});
                     return true;
                 });
+                setRange(value);
             }} options={[
                 {value: '30', label: '30 Minutes'},
                 {value: '60', label: '1 Hour'},
