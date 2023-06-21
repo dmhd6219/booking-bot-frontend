@@ -102,7 +102,7 @@ function ByStartTime() {
                             text: 'Cancel',
                         },
                     ],
-                })
+                }).then(r => console.log(r))
             }}/>}</div>
 
         </div>
