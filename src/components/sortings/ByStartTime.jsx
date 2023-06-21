@@ -94,7 +94,7 @@ function ByStartTime() {
                     message: "Book 304 at 15:15 for 3 Hours?",
                     buttons: [
                         {
-                            text: 'BOOK',
+                            text: 'BO',
                             type: 'ok',
                         },
                         // {
