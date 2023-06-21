@@ -30,6 +30,7 @@ function ByRoom() {
                 setDate(null);
                 setTime(null);
                 setRange(null);
+                setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
                 // TODO reload changes from backend
             }} onSelect={() => {
                 setRoomSelected(true);
@@ -44,6 +45,8 @@ function ByRoom() {
                 setDate(value);
                 setTime(null);
                 setRange(null);
+                setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
+                // TODO reload changes from backend
             }} onSelect={() => {
                 setDateSelected(true);
                 console.log("On Select (Date)")
@@ -57,6 +60,8 @@ function ByRoom() {
             <TimePicker onChange={(value) => {
                 setTime(value);
                 setRange(null);
+                setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
+                // TODO reload changes from backend
             }} onSelect={() => {
                 setTimeSelected(true);
                 console.log("On Select (Time)")

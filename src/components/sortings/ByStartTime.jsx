@@ -31,6 +31,7 @@ function ByStartTime() {
                 setTime(null);
                 setRange(null);
                 setRoom(null);
+                setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
                 // TODO reload changes from backend
             }} size={"large"} onSelect={() => {
                 setDateSelected(true);
@@ -46,6 +47,7 @@ function ByStartTime() {
                 setTime(value);
                 setRange(null);
                 setRoom(null);
+                setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
                 // TODO reload changes from backend
             }} inputReadOnly={true}
                         disabledTime={disabledDateTime} format={"HH:mm"}
@@ -58,6 +60,7 @@ function ByStartTime() {
             <WidthSelect onChange={value => {
                 setRange(value);
                 setRoom(null);
+                setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
                 // TODO reload changes from backend
             }} options={[
                 {value: '30', label: '30 Minutes'},
