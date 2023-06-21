@@ -109,7 +109,7 @@ function ByEndTime() {
                 }).then(id => {
                     if (id === "ok") {
                         // TODO : make a book
-                        tg.close();
+                        setTimeout(() => tg.close(), 500);
                     }
                 })
             }}/>}</div>

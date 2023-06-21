@@ -109,7 +109,7 @@ function ByStartTime() {
                 }).then(id => {
                     if (id === "ok") {
                         // TODO : make a book
-                        setTimeout(() => tg.close(), 1000);
+                        setTimeout(() => tg.close(), 500);
                     }
                 })
             }}/>}</div>
