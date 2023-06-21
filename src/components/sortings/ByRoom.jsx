@@ -86,7 +86,24 @@ function ByRoom() {
                 {value: '180', label: '3 Hours'},
             ]} size={"large"} disabled={!(roomSelected && dateSelected && timeSelected)} value={range}/>
 
-            <div>{buttonState?.show && <MainButton {...buttonState} />}</div>
+            <div>{buttonState?.show && <MainButton {...buttonState} onClick={() => {
+                showPopup({
+                    title: "Confirm",
+                    message: `Book ${room} at ${time} for ${range} minutes?`,
+                    buttons: [
+                        {
+                            type: 'ok',
+                        },
+                        // {
+                        //     type: 'close',
+                        // },
+                        {
+                            type: 'destructive',
+                            text: 'Cancel',
+                        },
+                    ],
+                })
+            }}/>}</div>
 
         </div>
     )

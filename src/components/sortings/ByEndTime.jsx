@@ -85,7 +85,24 @@ function ByEndTime() {
             }} disabled={!(dateSelected && timeSelected && rangeSelected)} value={room}/>
 
 
-            <div>{buttonState?.show && <MainButton {...buttonState} />}</div>
+            <div>{buttonState?.show && <MainButton {...buttonState} onClick={() => {
+                showPopup({
+                    title: "Confirm",
+                    message: `Book ${room} at ${time} for ${range} minutes?`,
+                    buttons: [
+                        {
+                            type: 'ok',
+                        },
+                        // {
+                        //     type: 'close',
+                        // },
+                        {
+                            type: 'destructive',
+                            text: 'Cancel',
+                        },
+                    ],
+                })
+            }}/>}</div>
 
         </div>
     )

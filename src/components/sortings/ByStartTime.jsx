@@ -91,10 +91,9 @@ function ByStartTime() {
             <div>{buttonState?.show && <MainButton {...buttonState} onClick={() => {
                 showPopup({
                     title: "Confirm",
-                    message: "Book 304 at 15:15 for 3 Hours?",
+                    message: `Book ${room} at ${time} for ${range} minutes?`,
                     buttons: [
                         {
-                            text: 'BO',
                             type: 'ok',
                         },
                         // {
@@ -102,7 +101,7 @@ function ByStartTime() {
                         // },
                         {
                             type: 'destructive',
-                            text: 'cancel',
+                            text: 'Cancel',
                         },
                     ],
                 })
