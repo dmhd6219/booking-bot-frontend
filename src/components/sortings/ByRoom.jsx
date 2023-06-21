@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {Select, TimePicker, Typography} from "antd";
 import {WidthSelect} from "../WidthSelect";
 import {disabledDateTime} from "../TimeDisabler";
-import {MainButton} from "@vkruglikov/react-telegram-web-app";
+import {MainButton, useShowPopup} from "@vkruglikov/react-telegram-web-app";
 
 function ByRoom() {
     const [roomSelected, setRoomSelected] = useState(false);
@@ -21,6 +21,8 @@ function ByRoom() {
         progress: false,
         disable: false,
     });
+
+    const showPopup = useShowPopup();
 
     return (
         <div id={"sort-by-room"}>

@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {Select, TimePicker, Typography} from "antd";
 import {WidthSelect} from "../WidthSelect";
 import {disabledDateTime} from "../TimeDisabler";
-import {MainButton} from "@vkruglikov/react-telegram-web-app";
+import {MainButton, useShowPopup} from "@vkruglikov/react-telegram-web-app";
 
 function ByEndTime() {
     const [dateSelected, setDateSelected] = useState(false);
@@ -21,6 +21,8 @@ function ByEndTime() {
         progress: false,
         disable: false,
     });
+
+    const showPopup = useShowPopup();
 
 
     return (
