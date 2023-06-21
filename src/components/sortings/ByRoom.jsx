@@ -5,10 +5,15 @@ import {disabledDateTime} from "../TimeDisabler";
 import {MainButton} from "@vkruglikov/react-telegram-web-app";
 
 function ByRoom() {
-    const [room, setRoom] = useState(false);
-    const [date, setDate] = useState(false);
-    const [time, setTime] = useState(false);
-    const [, setRange] = useState(false);
+    const [roomSelected, setRoomSelected] = useState(false);
+    const [dateSelected, setDateSelected] = useState(false);
+    const [timeSelected, setTimeSelected] = useState(false);
+    const [, setRangeSelected] = useState(false);
+
+    const [room, setRoom] = useState(null);
+    const [date, setDate] = useState(null);
+    const [time, setTime] = useState(null);
+    const [range, setRange] = useState(null);
 
     const [buttonState, setButtonState] = useState({
         text: 'BUTTON TEXT',
@@ -20,34 +25,50 @@ function ByRoom() {
     return (
         <div id={"sort-by-room"}>
             <Typography.Title>Select Room</Typography.Title>
-            <WidthSelect onChange={value => console.log(value)} onSelect={() => {
-                setRoom(true);
+            <WidthSelect onChange={value => {
+                setRoom(value);
+                setDate(null);
+                setTime(null);
+                setRange(null);
+                // TODO reload changes from backend
+            }} onSelect={() => {
+                setRoomSelected(true);
                 console.log("On Select (Room)")
             }} options={[
                 {value: '304', label: '304'},
                 {value: '305', label: '305'}
-            ]} size={"large"}/>
+            ]} size={"large"} value={room}/>
 
             <Typography.Title>Select Date</Typography.Title>
-            <WidthSelect onChange={value => console.log(value)} onSelect={() => {
-                setDate(true);
+            <WidthSelect onChange={value => {
+                setDate(value);
+                setTime(null);
+                setRange(null);
+            }} onSelect={() => {
+                setDateSelected(true);
                 console.log("On Select (Date)")
-            }} size={"large"} disabled={!room}>
+            }} size={"large"} disabled={!roomSelected} value={date}>
                 <Select.Option value="20.06.2022">20.06.2022</Select.Option>
                 <Select.Option value="21.06.2022">21.06.2022</Select.Option>
                 <Select.Option value="22.06.2022">22.06.2022</Select.Option>
             </WidthSelect>
 
             <Typography.Title>Select Time of Start</Typography.Title>
-            <TimePicker onChange={(value) => console.log(value)} onSelect={() => {
-                setTime(true);
+            <TimePicker onChange={(value) => {
+                setTime(value);
+                setRange(null);
+            }} onSelect={() => {
+                setTimeSelected(true);
                 console.log("On Select (Time)")
             }} inputReadOnly={true}
-                        disabledTime={disabledDateTime} format={"HH:mm"} minuteStep={5} size={"large"} disabled={!(room && date)}/>
+                        disabledTime={disabledDateTime} format={"HH:mm"} minuteStep={5} size={"large"}
+                        disabled={!(roomSelected && dateSelected)} value={time}/>
 
             <Typography.Title>Select Period of Booking</Typography.Title>
-            <WidthSelect onChange={value => console.log(value)} onSelect={() => {
-                setRange(() => {
+            <WidthSelect onChange={value => {
+                setRange(value);
+            }} onSelect={() => {
+                setRangeSelected(() => {
                     setButtonState({text: "BOOK", show: true, progress: false, disable: false,});
                     return true;
                 });
@@ -58,7 +79,7 @@ function ByRoom() {
                 {value: '120', label: '2 Hours'},
                 {value: '150', label: '2.5 Hours'},
                 {value: '180', label: '3 Hours'},
-            ]} size={"large"} disabled={!(room && date && time)}/>
+            ]} size={"large"} disabled={!(roomSelected && dateSelected && timeSelected)} value={range}/>
 
             <div>{buttonState?.show && <MainButton {...buttonState} />}</div>
 
