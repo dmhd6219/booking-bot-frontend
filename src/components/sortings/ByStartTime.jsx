@@ -90,9 +90,11 @@ function ByStartTime() {
 
             <div>{buttonState?.show && <MainButton {...buttonState} onClick={() => {
                 showPopup({
+                    title: "Confirm",
+                    message: "Book 304 at 15:15 for 3 Hours?",
                     buttons: [
                         {
-                            text: 'Book 304 at 15:15 for 3 Hours?',
+                            text: 'BOOK',
                             type: 'ok',
                         },
                         // {
