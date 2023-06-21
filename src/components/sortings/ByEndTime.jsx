@@ -65,7 +65,7 @@ function ByEndTime() {
                 {value: '120', label: '2 Hours'},
                 {value: '150', label: '2.5 Hours'},
                 {value: '180', label: '3 Hours'},
-            ]} size={"large"} onSelect={() => {
+            ]} size={"large"} onSelect={(value) => {
                 setRangeSelected(true);
                 console.log("On Select (Range)");
                 setRange(value);
@@ -77,7 +77,7 @@ function ByEndTime() {
             <Typography.Title>Select Room</Typography.Title>
             <WidthSelect options={[
                 {value: '304', label: '304'},
-            ]} size={"large"} onSelect={() => {
+            ]} size={"large"} onSelect={(value) => {
                 setRoomSelected(() => {
                     setButtonState({text: "BOOK", show: true, progress: false, disable: false,});
                     return true;
