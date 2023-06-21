@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {Select, TimePicker, Typography} from "antd";
 import {WidthSelect} from "../WidthSelect";
 import {disabledDateTime} from "../TimeDisabler";
-import {MainButton} from "@vkruglikov/react-telegram-web-app";
+import {MainButton, useShowPopup} from "@vkruglikov/react-telegram-web-app";
 
 function ByStartTime() {
     const [dateSelected, setDateSelected] = useState(false);
@@ -21,6 +21,9 @@ function ByStartTime() {
         progress: false,
         disable: false,
     });
+
+    const showPopup = useShowPopup();
+    // const [popupState, setPopupState] = useState({title: 'title', message: 'message',});
 
 
     return (
@@ -85,7 +88,23 @@ function ByStartTime() {
             }} disabled={!(dateSelected && timeSelected && rangeSelected)} value={room}/>
 
 
-            <div>{buttonState?.show && <MainButton {...buttonState} />}</div>
+            <div>{buttonState?.show && <MainButton {...buttonState} onClick={() => {
+                showPopup({
+                    buttons: [
+                        {
+                            text: 'Book 304 at 15:15 for 3 Hours?',
+                            type: 'ok',
+                        },
+                        // {
+                        //     type: 'close',
+                        // },
+                        {
+                            type: 'destructive',
+                            text: 'cancel',
+                        },
+                    ],
+                })
+            }}/>}</div>
 
         </div>
     )
