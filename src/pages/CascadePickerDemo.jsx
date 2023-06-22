@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
-import {Button, CascadePicker} from 'antd-mobile'
-
+import {Button, CascadePicker} from "antd-mobile";
 
 function CascadePickerDemo() {
     const [visible, setVisible] = useState(false)
@@ -59,10 +58,4 @@ function CascadePickerDemo() {
     )
 }
 
-export default () => {
-    return (
-        <>
-            <CascadePickerDemo/>
-        </>
-    )
-}
+export default CascadePickerDemo
