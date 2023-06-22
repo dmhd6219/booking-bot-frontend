@@ -14,7 +14,7 @@
 }
 
 :root:root {
-  --adm-color-primary: #1677ff;
+  --adm-color-primary: var(--tg-theme-button-color);
   --adm-color-success: #00b578;
   --adm-color-warning: #ff8f1f;
   --adm-color-danger: #ff3141;
