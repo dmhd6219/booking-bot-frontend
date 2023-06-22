@@ -7,30 +7,30 @@ function CascadePickerDemo() {
 
     const [options,] = useState([
         {
-            label: 'A',
-            value: 'A',
+            label: '01',
+            value: '01',
             children: [
                 {
-                    label: 'A1',
-                    value: 'A1',
+                    label: '00',
+                    value: '00',
                 },
                 {
-                    label: 'A2',
-                    value: 'A2',
+                    label: '30',
+                    value: '30',
                 }
             ],
         },
         {
-            label: 'B',
-            value: 'B',
+            label: '20',
+            value: '20',
             children: [
                 {
-                    label: 'B1',
-                    value: 'B1',
+                    label: '00',
+                    value: '00',
                 },
                 {
-                    label: 'B2',
-                    value: 'B2',
+                    label: '30',
+                    value: '30',
                 }
             ],
         },
