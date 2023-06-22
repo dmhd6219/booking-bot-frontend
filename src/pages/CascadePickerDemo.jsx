@@ -41,6 +41,7 @@ function CascadePickerDemo() {
                 onClick={() => {
                     setVisible(true)
                 }}
+                type="primary"
             >
                 WHAT
             </Button>
