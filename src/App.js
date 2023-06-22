@@ -1,33 +1,34 @@
-import styled from "styled-components";
+// import styled from "styled-components";
 import './index.css';
 import {ConfigProvider, theme} from 'antd';
 import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
 
 import locale from 'antd/locale/en_US';
-import DateChoose from "./pages/DateChoose";
-
-import {Logo} from "./components/Logo";
-import {BrowserRouter} from "react-router-dom";
-
-
-const Wrapper = styled.div`
-
-  padding: 20px;
-
-`
+// import DateChoose from "./pages/DateChoose";
+//
+// import {Logo} from "./components/Logo";
+// import {BrowserRouter} from "react-router-dom";
+import CascadePickerDemo from "./pages/CascadePickerDemo";
 
 
-const BigHeader = styled.div`
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  width: 100vw;
-  height: 50vh;
-  transform: scale(0.5, 0.5);
-`
+// const Wrapper = styled.div`
+//
+//   padding: 20px;
+//
+// `
+//
+//
+// const BigHeader = styled.div`
+//
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//
+//   width: 100vw;
+//   height: 50vh;
+//   transform: scale(0.5, 0.5);
+// `
 
 
 function App() {
@@ -56,17 +57,19 @@ function App() {
             locale={locale}
         >
 
-            <BigHeader>
-                <Logo lang={"en"} fill={colorScheme === "dark" ? "white" : "black"}/>
-            </BigHeader>
+            {/*<BigHeader>*/}
+            {/*    <Logo lang={"en"} fill={colorScheme === "dark" ? "white" : "black"}/>*/}
+            {/*</BigHeader>*/}
 
-            <Wrapper>
+            {/*<Wrapper>*/}
 
-                <BrowserRouter>
-                    <DateChoose/>
-                </BrowserRouter>
+            {/*    <BrowserRouter>*/}
+            {/*        <DateChoose/>*/}
+            {/*    </BrowserRouter>*/}
 
-            </Wrapper>
+            {/*</Wrapper>*/}
+
+            <CascadePickerDemo/>
 
         </ConfigProvider>
     )
