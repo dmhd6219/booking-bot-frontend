@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {message, Select, TimePicker, Typography} from "antd";
+import {Select, TimePicker, Typography} from "antd";
 import {WidthSelect} from "../WidthSelect";
 import {disabledDateTime} from "../TimeDisabler";
 import {MainButton, useShowPopup} from "@vkruglikov/react-telegram-web-app";
@@ -15,8 +15,6 @@ function ByEndTime() {
     const [time, setTime] = useState(null);
     const [range, setRange] = useState(null);
     const [room, setRoom] = useState(null);
-
-    const [messageApi, ] = message.useMessage();
 
     const [buttonState, setButtonState] = useState({
         text: 'BUTTON TEXT',
@@ -110,10 +108,6 @@ function ByEndTime() {
                     ],
                 }).then(id => {
                     if (id === "ok") {
-                        messageApi.open({
-                            type: 'success',
-                            content: 'You successfully booked a room',
-                        });
                         // TODO : make a book
                         setTimeout(() => tg.close(), 500);
                     }
