@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {Button, CascadePicker} from "antd-mobile";
+import {tg} from "../tg";
 
 function CascadePickerDemo() {
     const [visible, setVisible] = useState(false)
@@ -39,7 +40,8 @@ function CascadePickerDemo() {
         <>
             <Button
                 onClick={() => {
-                    setVisible(true)
+                    setVisible(true);
+                    console.log(tg);
                 }}
                 color="primary"
             >
