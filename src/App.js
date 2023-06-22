@@ -1,29 +1,22 @@
-// import styled from "styled-components";
-import './index.css';
-// import {ConfigProvider, theme} from 'antd';
-
-import { ConfigProvider } from "antd-mobile";
-// import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
-
-// import locale from 'antd/locale/en_US';
-import enUS from 'antd-mobile/es/locales/en-US'
-// import DateChooseOld from "./pages/DateChooseOld";
-//
-// import {Logo} from "./components/Logo";
-// import {BrowserRouter} from "react-router-dom";
-import CascadePickerDemo from "./pages/CascadePickerDemo";
-import {Logo} from "./components/Logo";
 import styled from "styled-components";
-import {tg} from "./tg";
+import './index.css';
+import {ConfigProvider, theme} from 'antd';
+import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
+
+import locale from 'antd/locale/en_US';
+import DateChooseOld from "./pages/DateChooseOld";
+
+import {Logo} from "./components/Logo";
+import {BrowserRouter} from "react-router-dom";
 
 
-// const Wrapper = styled.div`
-//
-//   padding: 20px;
-//
-// `
-//
-//
+const Wrapper = styled.div`
+
+  padding: 20px;
+
+`
+
+
 const BigHeader = styled.div`
 
   display: flex;
@@ -39,43 +32,41 @@ const BigHeader = styled.div`
 
 function App() {
 
-    // const [colorScheme, themeParams] = useThemeParams();
+    const [colorScheme, themeParams] = useThemeParams();
 
     return (
 
         <ConfigProvider
-            // theme={
-            //     themeParams.text_color
-            //         ? {
-            //             algorithm:
-            //                 colorScheme === 'dark'
-            //                     ? theme.darkAlgorithm
-            //                     : theme.defaultAlgorithm,
-            //             token: {
-            //                 colorText: themeParams.text_color,
-            //                 colorPrimary: themeParams.button_color,
-            //                 colorBgBase: themeParams.bg_color,
-            //             },
-            //         }
-            //         : undefined
-            // }
+            theme={
+                themeParams.text_color
+                    ? {
+                        algorithm:
+                            colorScheme === 'dark'
+                                ? theme.darkAlgorithm
+                                : theme.defaultAlgorithm,
+                        token: {
+                            colorText: themeParams.text_color,
+                            colorPrimary: themeParams.button_color,
+                            colorBgBase: themeParams.bg_color,
+                        },
+                    }
+                    : undefined
+            }
 
-            locale={enUS}
+            locale={locale}
         >
 
             <BigHeader>
-                <Logo lang={"en"} fill={tg.colorScheme === "dark" ? "white" : "black"}/>
+                <Logo lang={"en"} fill={colorScheme === "dark" ? "white" : "black"}/>
             </BigHeader>
 
-            {/*<Wrapper>*/}
+            <Wrapper>
 
-            {/*    <BrowserRouter>*/}
-            {/*        <DateChooseOld/>*/}
-            {/*    </BrowserRouter>*/}
+                <BrowserRouter>
+                    <DateChooseOld/>
+                </BrowserRouter>
 
-            {/*</Wrapper>*/}
-
-            <CascadePickerDemo/>
+            </Wrapper>
 
         </ConfigProvider>
     )
