@@ -69,7 +69,7 @@ function ByRoom() {
                         disabledTime={disabledDateTime} format={"HH:mm"} minuteStep={5} size={"large"}
                         disabled={!(roomSelected && dateSelected)} value={time}/>
 
-            <Typography.Title>Select Period of Booking</Typography.Title>
+            <Typography.Title>Select Duration of Booking</Typography.Title>
             <WidthSelect onSelect={(value) => {
                 setRangeSelected(() => {
                     setButtonState({text: "BOOK", show: true, progress: false, disable: false,});

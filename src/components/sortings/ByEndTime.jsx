@@ -28,7 +28,7 @@ function ByEndTime() {
 
 
     return (
-        <div id={"sort-by-start-time"}>
+        <div id={"sort-by-end-time"}>
             <Typography.Title>Select Date</Typography.Title>
             <WidthSelect size={"large"} onSelect={(value) => {
                 setDateSelected(true);
@@ -58,7 +58,7 @@ function ByEndTime() {
                 // TODO reload changes from backend
             }} disabled={!dateSelected} value={time}/>
 
-            <Typography.Title>Select Period of Booking</Typography.Title>
+            <Typography.Title>Select Duration of Booking</Typography.Title>
             <WidthSelect options={[
                 {value: '30', label: '30 Minutes'},
                 {value: '60', label: '1 Hour'},
