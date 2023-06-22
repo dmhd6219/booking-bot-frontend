@@ -22,7 +22,7 @@ const HorizontalList = styled.div`
 
 
 
-const DateChoose = () => {
+const DateChooseOld = () => {
     const [choice, setChoice] = useState("time-start");
 
     return (
@@ -59,4 +59,4 @@ const DateChoose = () => {
     )
 }
 
-export default DateChoose;
+export default DateChooseOld;

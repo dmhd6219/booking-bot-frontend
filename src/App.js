@@ -7,13 +7,14 @@ import { ConfigProvider } from "antd-mobile";
 
 // import locale from 'antd/locale/en_US';
 import enUS from 'antd-mobile/es/locales/en-US'
-// import DateChoose from "./pages/DateChoose";
+// import DateChooseOld from "./pages/DateChooseOld";
 //
 // import {Logo} from "./components/Logo";
 // import {BrowserRouter} from "react-router-dom";
 import CascadePickerDemo from "./pages/CascadePickerDemo";
 import {Logo} from "./components/Logo";
 import styled from "styled-components";
+import {tg} from "./tg";
 
 
 // const Wrapper = styled.div`
@@ -63,14 +64,13 @@ function App() {
         >
 
             <BigHeader>
-                {/*<Logo lang={"en"} fill={colorScheme === "dark" ? "white" : "black"}/>*/}
-                <Logo lang={"en"} fill="black"/>
+                <Logo lang={"en"} fill={tg.colorScheme === "dark" ? "white" : "black"}/>
             </BigHeader>
 
             {/*<Wrapper>*/}
 
             {/*    <BrowserRouter>*/}
-            {/*        <DateChoose/>*/}
+            {/*        <DateChooseOld/>*/}
             {/*    </BrowserRouter>*/}
 
             {/*</Wrapper>*/}
