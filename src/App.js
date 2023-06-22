@@ -63,7 +63,8 @@ function App() {
         >
 
             <BigHeader>
-                <Logo lang={"en"} fill={colorScheme === "dark" ? "white" : "black"}/>
+                {/*<Logo lang={"en"} fill={colorScheme === "dark" ? "white" : "black"}/>*/}
+                <Logo lang={"en"} fill="black"/>
             </BigHeader>
 
             {/*<Wrapper>*/}
