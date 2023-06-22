@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Select, TimePicker, Typography} from "antd";
+import {Input, Select, TimePicker, Typography} from "antd";
 import {WidthSelect} from "../WidthSelect";
 import {disabledDateTime} from "../TimeDisabler";
 import {MainButton, useShowPopup} from "@vkruglikov/react-telegram-web-app";
@@ -11,6 +11,7 @@ function ByRoom() {
     const [timeSelected, setTimeSelected] = useState(false);
     const [, setRangeSelected] = useState(false);
 
+    const [title, setTitle] = useState("");
     const [room, setRoom] = useState(null);
     const [date, setDate] = useState(null);
     const [time, setTime] = useState(null);
@@ -27,6 +28,9 @@ function ByRoom() {
 
     return (
         <div id={"sort-by-room"}>
+            <Typography.Title>Enter a Title</Typography.Title>
+            <Input value={title} onChange={(value) => setTitle(value)}/>
+
             <Typography.Title>Select Room</Typography.Title>
             <WidthSelect onSelect={(value) => {
                 setRoomSelected(true);

@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Select, TimePicker, Typography} from "antd";
+import {Input, Select, TimePicker, Typography} from "antd";
 import {WidthSelect} from "../WidthSelect";
 import {disabledDateTime} from "../TimeDisabler";
 import {MainButton, useShowPopup} from "@vkruglikov/react-telegram-web-app";
@@ -11,6 +11,7 @@ function ByStartTime() {
     const [rangeSelected, setRangeSelected] = useState(false);
     const [, setRoomSelected] = useState(false);
 
+    const [title, setTitle] = useState("");
     const [date, setDate] = useState(null);
     const [time, setTime] = useState(null);
     const [range, setRange] = useState(null);
@@ -30,6 +31,9 @@ function ByStartTime() {
 
     return (
         <div id={"sort-by-start-time"}>
+            <Typography.Title>Enter a Title</Typography.Title>
+            <Input value={title} onChange={(value) => setTitle(value)}/>
+
             <Typography.Title>Select Date</Typography.Title>
             <WidthSelect size={"large"} onSelect={(value) => {
                 setDateSelected(true);
