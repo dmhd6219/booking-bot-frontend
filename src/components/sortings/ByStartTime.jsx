@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Form, Input, Select, TimePicker, Typography} from "antd";
+import {Button, Form, Input, Select, TimePicker, Typography} from "antd";
 import {WidthSelect} from "../WidthSelect";
 import {disabledDateTime} from "../TimeDisabler";
 import {MainButton, useShowPopup} from "@vkruglikov/react-telegram-web-app";
@@ -130,7 +130,7 @@ function ByStartTime() {
                 </Form.Item>
 
                 <Form.Item name="submit">
-                    <div>{buttonState?.show && <MainButton {...buttonState} />}</div>
+                    <div>{buttonState?.show && <Button htmlType="submit"><MainButton {...buttonState} /></Button>}</div>
                 </Form.Item>
 
             </Form>
