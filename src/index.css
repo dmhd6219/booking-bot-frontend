@@ -25,7 +25,7 @@
   --adm-color-weak: green;
   --adm-color-light: pink;
   --adm-color-border: #eeeeee;
-  --adm-color-box: var(--tg-theme-bg-color);
+  --adm-color-box: var(--tg-theme-secondary-bg-color);
   --adm-color-background: var(--tg-theme-bg-color);
 
   --adm-font-size-main: var(--adm-font-size-5);
