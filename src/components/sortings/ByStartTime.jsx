@@ -11,7 +11,7 @@ function ByStartTime() {
     const [rangeSelected, setRangeSelected] = useState(false);
     const [, setRoomSelected] = useState(false);
 
-    const [title, setTitle] = useState("");
+    const [title,] = useState("");
     const [date, setDate] = useState(null);
     const [time, setTime] = useState(null);
     const [range, setRange] = useState(null);
@@ -32,7 +32,7 @@ function ByStartTime() {
     return (
         <div id={"sort-by-start-time"}>
             <Typography.Title>Enter a Title</Typography.Title>
-            <Input size={"large"} value={title} onChange={(value) => {console.log(value);  setTitle(value.nativeEvent.data);}}/>
+            <Input size={"large"} value={title}/>
 
             <Typography.Title>Select Date</Typography.Title>
             <WidthSelect size={"large"} onSelect={(value) => {
@@ -95,7 +95,7 @@ function ByStartTime() {
             <div>{buttonState?.show && <MainButton {...buttonState} onClick={() => {
                 // TODO change to tg.showConfirm
                 showPopup({
-                    title: "Confirm",
+                    title: `Confirm ${title}`,
                     message: `Book ${room} at ${time} for ${range} minutes?`,
                     buttons: [
                         {
