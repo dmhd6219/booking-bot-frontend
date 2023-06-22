@@ -31,7 +31,7 @@ function ByEndTime() {
     return (
         <div id={"sort-by-end-time"}>
             <Typography.Title>Enter a Title</Typography.Title>
-            <Input value={title} onChange={(value) => setTitle(value)}/>
+            <Input value={title} onPressEnter={(value) => setTitle(value)}/>
 
             <Typography.Title>Select Date</Typography.Title>
             <WidthSelect size={"large"} onSelect={(value) => {

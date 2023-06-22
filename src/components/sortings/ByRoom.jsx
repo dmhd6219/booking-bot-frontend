@@ -29,7 +29,7 @@ function ByRoom() {
     return (
         <div id={"sort-by-room"}>
             <Typography.Title>Enter a Title</Typography.Title>
-            <Input value={title} onChange={(value) => setTitle(value)}/>
+            <Input value={title} onPressEnter={(value) => setTitle(value)}/>
 
             <Typography.Title>Select Room</Typography.Title>
             <WidthSelect onSelect={(value) => {

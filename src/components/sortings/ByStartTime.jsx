@@ -32,7 +32,7 @@ function ByStartTime() {
     return (
         <div id={"sort-by-start-time"}>
             <Typography.Title>Enter a Title</Typography.Title>
-            <Input size={"large"} value={title} onChange={(value) => setTitle(value)}/>
+            <Input size={"large"} value={title} onPressEnter={(value) => setTitle(value)}/>
 
             <Typography.Title>Select Date</Typography.Title>
             <WidthSelect size={"large"} onSelect={(value) => {
