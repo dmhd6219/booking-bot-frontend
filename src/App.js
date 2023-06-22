@@ -12,6 +12,8 @@ import enUS from 'antd-mobile/es/locales/en-US'
 // import {Logo} from "./components/Logo";
 // import {BrowserRouter} from "react-router-dom";
 import CascadePickerDemo from "./pages/CascadePickerDemo";
+import {Logo} from "./components/Logo";
+import styled from "styled-components";
 
 
 // const Wrapper = styled.div`
@@ -21,17 +23,17 @@ import CascadePickerDemo from "./pages/CascadePickerDemo";
 // `
 //
 //
-// const BigHeader = styled.div`
-//
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//
-//   width: 100vw;
-//   height: 50vh;
-//   transform: scale(0.5, 0.5);
-// `
+const BigHeader = styled.div`
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100vw;
+  height: 50vh;
+  transform: scale(0.5, 0.5);
+`
 
 
 function App() {
@@ -60,9 +62,9 @@ function App() {
             locale={enUS}
         >
 
-            {/*<BigHeader>*/}
-            {/*    <Logo lang={"en"} fill={colorScheme === "dark" ? "white" : "black"}/>*/}
-            {/*</BigHeader>*/}
+            <BigHeader>
+                <Logo lang={"en"} fill={colorScheme === "dark" ? "white" : "black"}/>
+            </BigHeader>
 
             {/*<Wrapper>*/}
 
