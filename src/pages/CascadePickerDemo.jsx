@@ -1,65 +1,40 @@
-import React, { useState } from 'react'
-import { Button, CascadePicker } from 'antd-mobile'
+import React, {useState} from 'react'
+import {Button, CascadePicker} from 'antd-mobile'
 
 
-const options = [
-    {
-        label: '浙江',
-        value: '浙江',
-        children: [
-            {
-                label: '杭州',
-                value: '杭州',
-            },
-            {
-                label: '宁波',
-                value: '宁波',
-                children: [
-                    {
-                        label: '街道',
-                        value: '街道',
-                        children: [
-                            {
-                                label: '小区1',
-                                value: '小区1',
-                            },
-                        ],
-                    },
-                ],
-            },
-        ],
-    },
-    {
-        label: '江苏',
-        value: '江苏',
-        children: [
-            {
-                label: '南京',
-                value: '南京',
-            },
-            {
-                label: '苏州',
-                value: '苏州',
-                children: [
-                    {
-                        label: '街道',
-                        value: '街道',
-                        children: [
-                            {
-                                label: '小区2',
-                                value: '小区2',
-                            },
-                        ],
-                    },
-                ],
-            },
-        ],
-    },
-]
-
-// 级联选择
 function CascadePickerDemo() {
     const [visible, setVisible] = useState(false)
+
+    const [options,] = useState([
+        {
+            label: 'A',
+            value: 'A',
+            children: [
+                {
+                    label: 'A1',
+                    value: 'A1',
+                },
+                {
+                    label: 'A2',
+                    value: 'A2',
+                }
+            ],
+        },
+        {
+            label: 'B',
+            value: 'B',
+            children: [
+                {
+                    label: 'B1',
+                    value: 'B1',
+                },
+                {
+                    label: 'B2',
+                    value: 'B2',
+                }
+            ],
+        },
+    ])
 
     return (
         <>
@@ -71,18 +46,14 @@ function CascadePickerDemo() {
                 WHAT
             </Button>
             <CascadePicker
-                title='级联选择'
+                title='Picker'
                 options={options}
                 visible={visible}
                 onClose={() => {
                     setVisible(false)
                 }}
-                onConfirm={(val, extend) => {
-                    console.log('onConfirm', val, extend.items)
-                }}
-                onSelect={val => {
-                    console.log('onSelect', val)
-                }}
+                onSelect={() => {console.log("Select")}}
+                onConfirm={() => {console.log("Confirm")}}
             />
         </>
     )
@@ -91,7 +62,7 @@ function CascadePickerDemo() {
 export default () => {
     return (
         <>
-            <CascadePickerDemo />
+            <CascadePickerDemo/>
         </>
     )
 }
