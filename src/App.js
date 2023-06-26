@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import './index.css';
+import './components/sortings/elements.css';
+
 import {ConfigProvider, theme} from 'antd';
 import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
 
@@ -15,7 +17,6 @@ const Wrapper = styled.div`
   padding: 20px;
 
 `
-
 
 const BigHeader = styled.div`
 

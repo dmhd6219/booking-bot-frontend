@@ -1,0 +1,19 @@
+
+.ant-picker-panel {
+    width : 300px;
+
+
+}
+
+.ant-picker-time-panel-column{
+    overflow: scroll;
+    overflow-y: hidden;
+}
+
+.ant-picker-time-panel-cell, .ant-picker-time-panel-cell-inner {
+    text-align: center;
+    width: 100% !important;
+    padding-inline-start : 14px;
+
+
+}
