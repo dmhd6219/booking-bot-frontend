@@ -5,10 +5,15 @@
 
 }
 
-.ant-picker-time-panel-column{
-    overflow: scroll;
-    overflow-y: hidden;
+.ant-picker-time-panel-column {
+    overflow: scroll !important;
+    overflow-x: hidden !important;
 }
+.ant-picker-time-panel-column > ::-webkit-scrollbar {
+    width: 0 !important;  /* Remove scrollbar space */
+    background: transparent !important;  /* Optional: just make scrollbar invisible */
+}
+
 
 .ant-picker-time-panel-cell, .ant-picker-time-panel-cell-inner {
     text-align: center;
