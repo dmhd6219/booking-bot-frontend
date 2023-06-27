@@ -30,10 +30,10 @@ function ByEndTime() {
 
     return (
         <div id={"sort-by-end-time"}>
-            <Typography.Title>Enter a Title</Typography.Title>
+            <Typography.Title>Title</Typography.Title>
             <Input value={title} onPressEnter={(value) => setTitle(value)}/>
 
-            <Typography.Title>Select Date</Typography.Title>
+            <Typography.Title>Date</Typography.Title>
             <WidthSelect size={"large"} onSelect={(value) => {
                 setDateSelected(true);
                 console.log("On Select (Date)")
@@ -49,7 +49,7 @@ function ByEndTime() {
                 <Select.Option value="22.06.2022">22.06.2022</Select.Option>
             </WidthSelect>
 
-            <Typography.Title>Select Time of End</Typography.Title>
+            <Typography.Title>Time of End</Typography.Title>
             <TimePicker inputReadOnly={true}
                         disabledTime={disabledDateTime} format={"HH:mm"}
                         minuteStep={5} size={"large"} onSelect={(value) => {
@@ -62,7 +62,7 @@ function ByEndTime() {
                 // TODO reload changes from backend
             }} disabled={!dateSelected} value={time}/>
 
-            <Typography.Title>Select Duration of Booking</Typography.Title>
+            <Typography.Title>Duration of Booking</Typography.Title>
             <WidthSelect options={[
                 {value: '30', label: '30 Minutes'},
                 {value: '60', label: '1 Hour'},
@@ -79,7 +79,7 @@ function ByEndTime() {
                 // TODO reload changes from backend
             }} disabled={(!(dateSelected && timeSelected))} value={range}/>
 
-            <Typography.Title>Select Room</Typography.Title>
+            <Typography.Title>Room</Typography.Title>
             <WidthSelect options={[
                 {value: '304', label: '304'},
             ]} size={"large"} onSelect={(value) => {

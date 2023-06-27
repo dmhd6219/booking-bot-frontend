@@ -58,9 +58,10 @@ export const EnglishLogo = (props) => (
 
 )
 
-export const Logo = (props) => (
-    <>
-            {props.lang === "en" && <EnglishLogo fill={props.fill}/> }
-            {props.lang === "ru" && <RussianLogo fill={props.fill}/> }
-    </>
-)
+export const Logo = (props) => {
+    if (props.lang === "en")
+        return <EnglishLogo fill={props.fill}/>;
+    else if (props.lang === "ru")
+        return <RussianLogo fill={props.fill}/>;
+    return null;
+};

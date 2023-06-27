@@ -13,13 +13,10 @@ import {BrowserRouter} from "react-router-dom";
 
 
 const Wrapper = styled.div`
-
   padding: 20px;
-
 `
 
 const BigHeader = styled.div`
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,6 +25,8 @@ const BigHeader = styled.div`
   width: 100vw;
   height: 50vh;
   transform: scale(0.5, 0.5);
+  
+  
 `
 
 
@@ -58,7 +57,7 @@ function App() {
         >
 
             <BigHeader>
-                <Logo lang={"en"} fill={colorScheme === "dark" ? "white" : "black"}/>
+                <Logo lang="en" fill={colorScheme === "dark" ? "white" : "black"}/>
             </BigHeader>
 
             <Wrapper>

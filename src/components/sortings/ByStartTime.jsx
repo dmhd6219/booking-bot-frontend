@@ -31,10 +31,10 @@ function ByStartTime() {
 
     return (
         <div id={"sort-by-start-time"}>
-            <Typography.Title>Enter a Title</Typography.Title>
+            <Typography.Title>Title</Typography.Title>
             <Input size={"large"} value={title}/>
 
-            <Typography.Title>Select Date</Typography.Title>
+            <Typography.Title>Date</Typography.Title>
             <WidthSelect size={"large"} onSelect={(value) => {
                 setDateSelected(true);
                 console.log("On Select (Date)")
@@ -50,7 +50,7 @@ function ByStartTime() {
                 <Select.Option value="22.06.2022">22.06.2022</Select.Option>
             </WidthSelect>
 
-            <Typography.Title>Select Time of Start</Typography.Title>
+            <Typography.Title>Time of Start</Typography.Title>
             <TimePicker inputReadOnly={true}
                         disabledTime={disabledDateTime} format={"HH:mm"}
                         minuteStep={5} size={"large"} onSelect={(value) => {
@@ -63,7 +63,7 @@ function ByStartTime() {
                 // TODO reload changes from backend
             }} disabled={!dateSelected} value={time}/>
 
-            <Typography.Title>Select Duration of Booking</Typography.Title>
+            <Typography.Title>Duration of Booking</Typography.Title>
             <WidthSelect options={[
                 {value: '30', label: '30 Minutes'},
                 {value: '60', label: '1 Hour'},

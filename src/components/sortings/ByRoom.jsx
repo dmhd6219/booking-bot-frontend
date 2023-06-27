@@ -28,10 +28,10 @@ function ByRoom() {
 
     return (
         <div id={"sort-by-room"}>
-            <Typography.Title>Enter a Title</Typography.Title>
+            <Typography.Title>Title</Typography.Title>
             <Input value={title} onPressEnter={(value) => setTitle(value)}/>
 
-            <Typography.Title>Select Room</Typography.Title>
+            <Typography.Title>Room</Typography.Title>
             <WidthSelect onSelect={(value) => {
                 setRoomSelected(true);
                 console.log("On Select (Room)");
@@ -46,7 +46,7 @@ function ByRoom() {
                 {value: '305', label: '305'}
             ]} size={"large"} value={room}/>
 
-            <Typography.Title>Select Date</Typography.Title>
+            <Typography.Title>Date</Typography.Title>
             <WidthSelect onSelect={(value) => {
                 setDateSelected(true);
                 console.log("On Select (Date)");
@@ -61,7 +61,7 @@ function ByRoom() {
                 <Select.Option value="22.06.2022">22.06.2022</Select.Option>
             </WidthSelect>
 
-            <Typography.Title>Select Time of Start</Typography.Title>
+            <Typography.Title>Time of Start</Typography.Title>
             <TimePicker onSelect={(value) => {
                 setTimeSelected(true);
                 console.log("On Select (Time)");
@@ -73,7 +73,7 @@ function ByRoom() {
                         disabledTime={disabledDateTime} format={"HH:mm"} minuteStep={5} size={"large"}
                         disabled={!(roomSelected && dateSelected)} value={time}/>
 
-            <Typography.Title>Select Duration of Booking</Typography.Title>
+            <Typography.Title>Duration of Booking</Typography.Title>
             <WidthSelect onSelect={(value) => {
                 setRangeSelected(() => {
                     setButtonState({text: "BOOK", show: true, progress: false, disable: false,});
