@@ -11,7 +11,7 @@ You can try open demo telegram bot with React WebApp [@web_app_react_test_bot](h
 
 1️⃣ **Foremost**, you have to do [initializing web apps](https://core.telegram.org/bots/webapps#initializing-web-apps) step, because package has dependency of Telegram Web App context.
 
-2️⃣ **Install dependencies** by running: 
+1️⃣ **Install dependencies** by running: 
 ```
 yarn add react
 yarn add react-router-hash-link
@@ -24,7 +24,7 @@ yarn add styled-components
 API_URL=yoururladress
 ```
 
-4️ ⃣**Try it out** by running:
+4️⃣ **Try it out** by running:
 ```
 yarn start
 ```
