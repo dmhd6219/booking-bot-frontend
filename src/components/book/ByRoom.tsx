@@ -15,7 +15,7 @@ const ByRoom: FunctionComponent = () => {
     const [, setRangeSelected] = useState(false);
 
 
-    const [title,] = useState<string>("");
+    // const [title,] = useState<string>("");
     const [room, setRoom] = useState<string | null>(null);
     const [date, setDate] = useState<string | null>(null);
     const [time, setTime] = useState<undefined | null | Dayjs>(null);
@@ -41,7 +41,7 @@ const ByRoom: FunctionComponent = () => {
     return (
         <div id={"sort-by-start-time"}>
             <Typography.Title>Title</Typography.Title>
-            <Input size={"large"} value={title}/>
+            <Input size={"large"} id={"booking-title"}/>
 
             <Typography.Title>Select Room</Typography.Title>
             <Select options={[
@@ -105,6 +105,7 @@ const ByRoom: FunctionComponent = () => {
 
 
             <div>{buttonState?.show && <MainButton {...buttonState} onClick={() => {
+                let title = document.getElementById("booking-title");
                 // TODO change to tg.showConfirm
                 showPopup({
                     title: `Confirm ${title}`,
