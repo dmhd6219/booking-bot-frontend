@@ -105,7 +105,7 @@ const ByRoom: FunctionComponent = () => {
 
 
             <div>{buttonState?.show && <MainButton {...buttonState} onClick={() => {
-                let title = document.getElementById("booking-title");
+                let title = (document.getElementById("booking-title") as HTMLInputElement).value;
                 // TODO change to tg.showConfirm
                 showPopup({
                     title: `Confirm ${title}`,
