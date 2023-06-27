@@ -1,21 +1,17 @@
-import styled from "styled-components";
 import './index.css';
-import './components/sortings/elements.css';
-
-import {ConfigProvider, theme} from 'antd';
-import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
-
-import locale from 'antd/locale/en_US';
-import DateChooseOld from "./pages/DateChooseOld";
+import './components/antd-elements.css';
 
 import {Logo} from "./components/Logo";
-import {BrowserRouter} from "react-router-dom";
 
-
+import styled from "styled-components";
+import {ConfigProvider, theme} from 'antd';
+import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
+import locale from 'antd/locale/en_US';
+import Pages from "./pages/Pages";
 
 const Wrapper = styled.div`
   padding: 20px;
-`
+`;
 
 const BigHeader = styled.div`
   display: flex;
@@ -26,17 +22,11 @@ const BigHeader = styled.div`
   width: 100vw;
   height: 50vh;
   transform: scale(0.5, 0.5);
-  
-  
-`
+`;
 
-
-function App() {
-
+function App(): JSX.Element {
     const [colorScheme, themeParams] = useThemeParams();
-
     return (
-
         <ConfigProvider
             theme={
                 themeParams.text_color
@@ -53,24 +43,17 @@ function App() {
                     }
                     : undefined
             }
-
             locale={locale}
         >
-
             <BigHeader>
                 <Logo lang="en" fill={colorScheme === "dark" ? "white" : "black"}/>
             </BigHeader>
-
             <Wrapper>
-
-                <BrowserRouter>
-                    <DateChooseOld/>
-                </BrowserRouter>
-
+                <Pages/>
             </Wrapper>
-
         </ConfigProvider>
-    )
+    );
 }
+
 
 export default App;

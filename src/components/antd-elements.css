@@ -1,5 +1,9 @@
 
 /* Time Picker */
+.ant-picker{
+    width: 200px;
+}
+
 .ant-picker-panel {
     width: 300px;
 
@@ -33,6 +37,10 @@
 }
 
 /* Selector */
+.ant-select{
+    width: 200px;
+}
+
 .ant-select-dropdown{
     width:300px !important;
     text-align: center;
