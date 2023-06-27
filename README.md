@@ -24,7 +24,7 @@ yarn add styled-components
 API_URL=yoururladress
 ```
 
-4️⃣**Try it out** by running:
+4️ ⃣**Try it out** by running:
 ```
 yarn start
 ```
