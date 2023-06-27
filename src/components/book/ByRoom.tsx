@@ -73,7 +73,7 @@ const ByRoom: FunctionComponent = () => {
             </Select>
 
             <Typography.Title>Time of Start</Typography.Title>
-                {/*TODO make different versions that depend on time*/}
+            {/*TODO make different versions that depend on time*/}
             <TimePicker inputReadOnly={true}
                         disabledTime={disabledDateTime} format={"HH:mm"}
                         minuteStep={5} size={"large"} onSelect={(value) => {
@@ -134,5 +134,6 @@ const ByRoom: FunctionComponent = () => {
         </div>
     )
 }
+
 
 export default ByRoom;

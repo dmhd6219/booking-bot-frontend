@@ -4,7 +4,7 @@ import styled from "styled-components";
 // @ts-ignore
 import {HashLink} from 'react-router-hash-link';
 import {tg} from "../TelegramWebApp";
-import ByTime from "../components/book/ByTime"
+import ByTime from "../components/book/ByTime";
 import ByRoom from "../components/book/ByRoom";
 
 const HorizontalList = styled.div`
@@ -15,7 +15,7 @@ const HorizontalList = styled.div`
   align-items: center;
 `
 
-function BookingPage() {
+export default function BookingPage() {
     const [choice, setChoice] = useState<string>("time-start");
 
     return (
@@ -45,11 +45,9 @@ function BookingPage() {
 
             {choice === "time-start" && <ByTime typeOfTime={"Start"}/>}
 
-            {choice === "room" && <ByRoom/>}
+            {choice === "room" && <ByRoom />}
 
             {choice === "time-end" && <ByTime typeOfTime={"End"}/>}
         </div>
     )
 }
-
-export default BookingPage
