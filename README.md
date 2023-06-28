@@ -29,7 +29,7 @@ API_URL=yoururladress
 4️⃣ **Try it out** by running:
 ```
 yarn start
-```A
+```
 
 
 ## 🛣 Roadmap
@@ -37,5 +37,7 @@ yarn start
 Here's what's coming up:
 
 - [ ] Localization.
-- [ ] Additional features, such as extending bookings and see rooms info, support.
+- [ ] Page with all bookings.
+- [ ] Page with user's bookings and availability to change them.
+- [ ] Page with rules.
 - [x] Main booking features support.
