@@ -93,7 +93,7 @@ const ByTime: FunctionComponent<{
                 // TODO reload changes from backend
             }} disabled={(!(dateSelected && timeSelected))} value={range}/>
 
-            <Typography.Title>Select Room</Typography.Title>
+            <Typography.Title>Room</Typography.Title>
             <Select options={[
                 {value: '304', label: '304'},
             ]} size={"large"} onSelect={(value) => {

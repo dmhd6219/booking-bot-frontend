@@ -43,7 +43,7 @@ const ByRoom: FunctionComponent = () => {
             <Typography.Title>Title</Typography.Title>
             <Input size={"large"} id={"booking-title"}/>
 
-            <Typography.Title>Select Room</Typography.Title>
+            <Typography.Title>Room</Typography.Title>
             <Select options={[
                 {value: '304', label: '304'},
             ]} size={"large"} onSelect={(value) => {
@@ -73,7 +73,6 @@ const ByRoom: FunctionComponent = () => {
             </Select>
 
             <Typography.Title>Time of Start</Typography.Title>
-            {/*TODO make different versions that depend on time*/}
             <TimePicker inputReadOnly={true}
                         disabledTime={disabledDateTime} format={"HH:mm"}
                         minuteStep={5} size={"large"} onSelect={(value) => {
