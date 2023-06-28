@@ -101,9 +101,6 @@ const ByRoom: FunctionComponent = () => {
             }} disabled={(!(dateSelected && timeSelected))} value={range}/>
 
 
-            <Typography.Title>Title</Typography.Title>
-            <Input size={"large"} id={"booking-title"}/>
-
 
             <div>{buttonState?.show && <MainButton {...buttonState} onClick={() => {
                 let title = (document.getElementById("booking-title") as HTMLInputElement).value;
