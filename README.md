@@ -24,7 +24,7 @@ yarn add @vkruglikov/react-telegram-web-app
 
 3️⃣ **Add API url** to .env file.
 ```
-API_URL=yoururladress
+API_URL=https://url.adress/
 ```
 
 4️⃣ **Try it out** by running:
