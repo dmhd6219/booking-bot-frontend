@@ -43,9 +43,6 @@ const ByTime: FunctionComponent<{
 
     return (
         <div id={"sort-by-start-time"}>
-            <Typography.Title>Title</Typography.Title>
-            <Input size={"large"} id={"booking-title"}/>
-
             <Typography.Title>Date</Typography.Title>
             <Select size={"large"} onSelect={(value: string) => {
                 setDateSelected(true);
@@ -103,6 +100,9 @@ const ByTime: FunctionComponent<{
                 });
                 setRoom(value);
             }} disabled={!(dateSelected && timeSelected && rangeSelected)} value={room}/>
+
+            <Typography.Title>Title</Typography.Title>
+            <Input size={"large"} id={"booking-title"}/>
 
 
             <div>{buttonState?.show && <MainButton {...buttonState} onClick={() => {
