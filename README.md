@@ -5,7 +5,8 @@ Telegram Web App for InnoBookingBot
 
 ## 🔴 Live Demo
 
-You can try open demo telegram bot with React WebApp [@web_app_react_test_bot](https://t.me/web_app_react_test_bot).
+You can try open demo telegram bot with React WebApp (for Booking page) [@web_app_react_test_bot](https://t.me/web_app_react_test_bot).
+Also you can try open demo telegram bot with Rules page [@web_app_react_test2_bot](https://t.me/web_app_react_test2_bot).
 
 ## 🔧 Installation & Get started
 
@@ -39,5 +40,5 @@ Here's what's coming up:
 - [ ] Localization.
 - [ ] Page with all bookings.
 - [ ] Page with user's bookings and availability to change them.
-- [ ] Page with rules.
+- [x] Page with rules.
 - [x] Main booking features support.
