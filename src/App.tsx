@@ -2,14 +2,14 @@ import './index.css';
 import './components/antd-elements.css';
 
 import {Logo} from "./components/Logo";
+import Pages from "./pages/Pages";
 
+import React from "react";
+import {BrowserRouter} from "react-router-dom";
 import styled from "styled-components";
 import {ConfigProvider, theme} from 'antd';
 import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
 import locale from 'antd/locale/en_US';
-import Pages from "./pages/Pages";
-import React from "react";
-import {BrowserRouter} from "react-router-dom";
 
 const Wrapper = styled.div`
   padding: 20px;

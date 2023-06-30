@@ -1,5 +1,6 @@
 import React from 'react'
 import {Route, Routes, useLocation} from "react-router-dom";
+
 import BookingPage from "./BookingPage";
 import RulesPage from "./RulesPage";
 import TestPage from "./TestPage";
