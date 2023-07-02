@@ -25,7 +25,7 @@ yarn add firebase
 
 :three: **Add API url** to .env file.
 ```
-REACT_APP_API_URL='https://url.adress/'
+REACT_APP_API_URL='https://url.adress'
 ```
 
 :four: **Configure Google Firebase**.

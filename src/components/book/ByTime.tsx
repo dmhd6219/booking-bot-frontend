@@ -5,7 +5,7 @@ import type {Dayjs} from 'dayjs';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
-import {tg} from "../../TelegramWebApp";
+import {tg} from "../../utils/TelegramWebApp";
 import {disabledDateTime} from "../TimeDisabler";
 
 dayjs.extend(customParseFormat);
