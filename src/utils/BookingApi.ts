@@ -157,3 +157,17 @@ export async function getDurationByTime(date: Date, time: string) {
     return ans;
 }
 
+export async function getRoomByTimeAndDuration(startTime: Date, duration: string): Promise<Room[]> {
+
+    const durationInMinutes = parseInt(duration.substring(0, duration.length - 7));
+
+    let endTime = new Date(startTime.toISOString());
+
+    endTime.setMinutes(startTime.getUTCMinutes() + (durationInMinutes * 60 * 1000));
+
+    let json: Room[] = await getFreeRooms(startTime, endTime);
+
+    return json;
+
+
+}
