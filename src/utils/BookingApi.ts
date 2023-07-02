@@ -20,19 +20,17 @@ interface Room {
 export async function getRooms(): Promise<Room[]> {
     let response = await fetch(roomsUrl);
 
-    let json: Room[] = await response.json();
-    return json;
+    return await response.json();
 
 }
 
-async function getFreeRooms(start: Date, end: Date): Promise<Room[]> {
+export async function getFreeRooms(start: Date, end: Date): Promise<Room[]> {
     let response = await fetch(freeRoomsUrl, {
         method: 'POST',
         body: JSON.stringify({start: start, end: end})
     });
 
-    let json: Room[] = await response.json();
-    return json;
+    return await response.json();
 }
 
 interface bookRoom {
@@ -42,14 +40,13 @@ interface bookRoom {
     owner: string
 }
 
-async function bookRoom(id: string, room: bookRoom): Promise<QueryResponse> {
+export async function bookRoom(id: string, room: bookRoom): Promise<QueryResponse> {
     let response = await fetch(bookRoomUrl(id), {
         method: 'POST',
         body: JSON.stringify(room)
     });
 
-    let json: QueryResponse = await response.json();
-    return json;
+    return await response.json();
 }
 
 interface QueryFilter {
@@ -70,17 +67,16 @@ interface QueryResponse {
     owner_email: string
 }
 
-async function getQuery(filter: QueryFilter): Promise<QueryResponse[]> {
+export async function getQuery(filter: QueryFilter): Promise<QueryResponse[]> {
     let response = await fetch(bookingsQueryUrl, {
         method: 'POST',
         body: JSON.stringify(filter)
     });
 
-    let json: QueryResponse[] = await response.json();
-    return json;
+    return await response.json();
 }
 
-async function deleteBooking(id: string): Promise<boolean> {
+export async function deleteBooking(id: string): Promise<boolean> {
     let response = await fetch(deleteBookingUrl(id), {
         method: 'DELETE'
     });
@@ -164,9 +160,7 @@ export async function getRoomByTimeAndDuration(startTime: Date, duration: string
 
     endTime.setMinutes(startTime.getUTCMinutes() + (durationInMinutes * 60 * 1000));
 
-    let json: Room[] = await getFreeRooms(startTime, endTime);
-
-    return json;
+    return await getFreeRooms(startTime, endTime);
 
 
 }
