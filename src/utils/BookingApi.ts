@@ -89,7 +89,7 @@ async function deleteBooking(id: string): Promise<boolean> {
 }
 
 
-export async function getAvailableTime(date: Date): Promise<string[]> {
+export async function getAvailableTimeByDate(date: Date): Promise<string[]> {
 
     date.setHours(0, 0, 0, 0);
     let today: Date = new Date(date.getTime());
@@ -132,14 +132,19 @@ export async function getAvailableTime(date: Date): Promise<string[]> {
     )
 }
 
-export async function getDuration(date: Date, time: string) {
-    let availableTime = await getAvailableTime(date);
+export async function getDurationByTime(date: Date, time: string) {
+    let availableTime = await getAvailableTimeByDate(date);
     let ans: string[] = []
 
-    for (const freeTime of availableTime) {
-        const currentTimeInMilliseconds = new Date(time).getTime();
+    const currentTime = new Date(time);
+    currentTime.setFullYear(date.getFullYear());
+    const currentTimeInMilliseconds = currentTime.getTime();
 
-        const freeTimeInMilliseconds = new Date(freeTime).getTime();
+    for (const freeTime of availableTime) {
+
+        const freeTime_ = new Date(freeTime);
+        freeTime_.setFullYear(date.getFullYear());
+        const freeTimeInMilliseconds = freeTime_.getTime();
 
         // Calculate the difference between the free time and the current time in minutes.
         const durationInMinutes = Math.floor((freeTimeInMilliseconds - currentTimeInMilliseconds) / 60000);
@@ -151,3 +156,4 @@ export async function getDuration(date: Date, time: string) {
 
     return ans;
 }
+
