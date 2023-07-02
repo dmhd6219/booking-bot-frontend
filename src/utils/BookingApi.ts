@@ -1,3 +1,5 @@
+import {fullTime} from "./TimeDisabler";
+
 export const apiUrl: string = `${process.env.REACT_APP_API_URL}`;
 export const roomsUrl: string = `${apiUrl}/rooms`;
 export const freeRoomsUrl: string = `${roomsUrl}/free`
@@ -87,3 +89,49 @@ async function deleteBooking(id: string): Promise<boolean> {
 }
 
 
+export async function getAvailableTime(date: Date): Promise<string[]> {
+
+    date.setHours(0, 0, 0, 0);
+    let today: Date = new Date(date.getTime());
+
+    date.setDate(date.getDate() + 1);
+    let tomorrow: Date = new Date(date.getTime());
+
+
+    let json: QueryResponse[] = await getQuery({
+        filter: {
+            started_at_or_after: today.toISOString(),
+            ended_at_or_before: tomorrow.toISOString(),
+            owner_email_in: [],
+            room_id_in: []
+        }
+    });
+
+
+    let bookedTime: Date[] = []
+
+    for (const room of json) {
+        const startTime = new Date(room.start);
+        const endTime = new Date(room.end);
+        // Round the start and end times to the nearest 15 minute interval.
+        const roundedStartTime = new Date(
+            startTime.getTime() +
+            (Math.ceil((endTime.getTime() - startTime.getTime()) / 15) * 15),
+        );
+        const roundedEndTime = new Date(
+            endTime.getTime() - (endTime.getTime() % 15),
+        );
+        // Add all available times between the rounded start and end times.
+        for (let time = roundedStartTime; time < roundedEndTime; time.setMinutes(time.getMinutes() + 15)) {
+            bookedTime.push(time);
+        }
+    }
+
+    return bookedTime.filter(item => !fullTime.includes(`${item.getUTCHours()}:${item.getUTCMinutes()}`)).map(
+        item => `${item.getUTCHours()}:${item.getUTCMinutes()}`
+    )
+}
+
+export async function getDuration(date: Date, time: string) {
+
+}
