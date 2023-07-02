@@ -2,7 +2,6 @@ import React from 'react'
 import {Card, Typography} from "antd";
 import styled from "styled-components";
 import {getUsers, setNewUser} from "../utils/Firebase";
-import {getRooms, roomsUrl} from "../utils/BookingApi";
 
 const CenteredSpace = styled.div`
   display: flex;
@@ -38,7 +37,7 @@ export default function TestPage() {
 
                 <CardWithPadding title="Get Books" style={{width: 300}}>
                     <button
-                        onClick={() => getRooms().then(r => console.log(r))}>Press to get all Books
+                        onClick={() => console.log("a")}>Press to get all Books
                     </button>
                 </CardWithPadding>
             </CenteredSpace>

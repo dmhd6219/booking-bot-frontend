@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 import {tg} from "../../utils/TelegramWebApp";
-import {disabledDateTime} from "../TimeDisabler";
+import {disabledDateTime} from "../../utils/TimeDisabler";
 
 dayjs.extend(customParseFormat);
 const ByTime: FunctionComponent<{
