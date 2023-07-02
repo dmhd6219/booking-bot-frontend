@@ -36,12 +36,12 @@ export default function BookingPage() {
                     }}>By Room</Button>
                 </HashLink>
 
-                <HashLink to='#sort-by-end-time'>
-                    <Button type="primary" onClick={() => {
-                        setChoice("time-end");
-                        tg.expand();
-                    }}>By End Time</Button>
-                </HashLink>
+                {/*<HashLink to='#sort-by-end-time'>*/}
+                {/*    <Button type="primary" onClick={() => {*/}
+                {/*        setChoice("time-end");*/}
+                {/*        tg.expand();*/}
+                {/*    }}>By End Time</Button>*/}
+                {/*</HashLink>*/}
             </HorizontalList>
 
             {choice === "time-start" && <ByTime typeOfTime={"Start"}/>}
