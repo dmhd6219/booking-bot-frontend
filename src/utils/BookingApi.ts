@@ -133,5 +133,21 @@ export async function getAvailableTime(date: Date): Promise<string[]> {
 }
 
 export async function getDuration(date: Date, time: string) {
+    let availableTime = await getAvailableTime(date);
+    let ans: string[] = []
 
+    for (const freeTime of availableTime) {
+        const currentTimeInMilliseconds = new Date(time).getTime();
+
+        const freeTimeInMilliseconds = new Date(freeTime).getTime();
+
+        // Calculate the difference between the free time and the current time in minutes.
+        const durationInMinutes = Math.floor((freeTimeInMilliseconds - currentTimeInMilliseconds) / 60000);
+
+        if (durationInMinutes <= 180) {
+            ans.push(`${durationInMinutes} minutes`);
+        }
+    }
+
+    return ans;
 }
