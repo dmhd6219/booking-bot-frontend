@@ -88,8 +88,7 @@ async function deleteBooking(id: string): Promise<boolean> {
     return response.ok;
 }
 
-
-export async function getAvailableTimeByDate(date: Date): Promise<string[]> {
+export async function getAvailableTimeByDate(date: Date, byRoom : string | null = null): Promise<string[]> {
 
     date.setHours(0, 0, 0, 0);
     let today: Date = new Date(date.getTime());
@@ -97,13 +96,13 @@ export async function getAvailableTimeByDate(date: Date): Promise<string[]> {
     date.setDate(date.getDate() + 1);
     let tomorrow: Date = new Date(date.getTime());
 
-
+    let rooms = byRoom === null ? [] : [byRoom];
     let json: QueryResponse[] = await getQuery({
         filter: {
             started_at_or_after: today.toISOString(),
             ended_at_or_before: tomorrow.toISOString(),
             owner_email_in: [],
-            room_id_in: []
+            room_id_in: rooms
         }
     });
 
