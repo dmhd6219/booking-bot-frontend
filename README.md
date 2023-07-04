@@ -30,7 +30,7 @@ REACT_APP_API_URL='https://url.adress'
 
 :four: **Configure Google Firebase**.
 Firestore should look like :
-![Structure of database](https://i.ibb.co/8svJm3R/bookingbot-db.png)
+![Structure of database](https://i.ibb.co/sbBdyhG/Screenshot-1.png)
 
 :five: **Add Firebase Variables** to .env file.
 ```
