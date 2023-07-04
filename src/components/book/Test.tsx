@@ -95,7 +95,7 @@ const Test: FunctionComponent = () => {
                 className="by-room-input"
             />
 
-            {buttonState?.show && isDebug && <Button onClick={() => {
+            {buttonState?.show && isDebug && <Button onClick={async () => {
                 let completeStartDate = new Date(date as string);
                 let timeISO = new Date(time?.toISOString() as string);
                 completeStartDate.setUTCHours(timeISO.getUTCHours(), timeISO.getUTCMinutes(), 0, 0);
@@ -114,6 +114,8 @@ const Test: FunctionComponent = () => {
 
                 console.log(`Start - ${completeStartDate.toISOString()}`)
                 console.log(`End - ${completeEndDate.toISOString()}`)
+
+                console.log(await getUsersEmailByTgId())
 
                 // bookRoom(room as string, title, completeStartDate.toISOString(), completeEndDate.toISOString(),
                 //     "s.sviatkin@innopolis.university").then(r => console.log(r));
@@ -153,7 +155,6 @@ const Test: FunctionComponent = () => {
                         let completeEndDate = new Date(completeStartDate.toISOString());
                         completeEndDate.setMinutes(completeEndDate.getMinutes() + (range as number));
 
-                        console.log(getUsersEmailByTgId())
                         bookRoom(room as string, title, completeStartDate.toISOString(), completeEndDate.toISOString(),
                             "s.sviatkin@innopolis.university").then(r => console.log(r));
                         // TODO : make a book
