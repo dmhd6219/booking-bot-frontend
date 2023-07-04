@@ -49,7 +49,7 @@ interface Booking {
     owner_email: UniversityEmail;
 }
 
-export async function bookRoom(id: string, title: string, start: DateIso, end: DateIso, owner_email: UniversityEmail): Promise<Booking> {
+export async function bookRoom(id: string, title: string, start: DateIso, end: DateIso, owner_email: UniversityEmail) {
     let response = await fetch(bookRoomUrl(id), {
         method: 'POST',
         body: JSON.stringify({
@@ -59,6 +59,8 @@ export async function bookRoom(id: string, title: string, start: DateIso, end: D
             owner_email: owner_email
         })
     });
+
+    console.log(`Book response - ${response.status}`)
 
     return response.json();
 }
