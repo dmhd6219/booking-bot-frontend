@@ -7,6 +7,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 import {isDebug, tg} from "../../utils/TelegramWebApp";
 import {getTestDates, getTestDurations, getTestRooms} from "../../utils/TestData";
+import {bookRoom} from "../../utils/BookingApi";
 
 dayjs.extend(customParseFormat);
 const Test: FunctionComponent = () => {
@@ -18,7 +19,7 @@ const Test: FunctionComponent = () => {
     const [title, setTitle] = useState<string>("");
     const [date, setDate] = useState<string | null>(null);
     const [time, setTime] = useState<undefined | null | Dayjs>(null);
-    const [range, setRange] = useState<string | null>(null);
+    const [range, setRange] = useState<number | null>(null);
     const [room, setRoom] = useState<string | null>(null);
 
 
@@ -93,12 +94,34 @@ const Test: FunctionComponent = () => {
                 className="by-room-input"
             />
 
-            {isDebug && <Button onClick={() => {
+            {buttonState?.show && isDebug && <Button onClick={() => {
+                let completeStartDate = new Date(date as string);
+                let timeISO = new Date(time?.toISOString() as string);
+                completeStartDate.setUTCHours(timeISO.getUTCHours(), timeISO.getUTCMinutes(), 0, 0);
+                let completeEndDate = new Date(completeStartDate.toISOString());
+                completeEndDate.setMinutes(completeEndDate.getMinutes() + (range as number));
+
                 console.log(`Title - ${title}`)
-                console.log(`Date - ${(new Date((date as string))).toLocaleDateString(["en-US"], {year: 'numeric', month: 'long', day: 'numeric'})}`)
+                console.log(`Date - ${completeStartDate.toLocaleDateString(["en-US"], {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                })}`)
                 console.log(`Time - ${time}`)
                 console.log(`Duration - ${range} minutes`)
                 console.log(`Room - ${room}`)
+
+                console.log(`Start - ${completeStartDate.toISOString()}`)
+                console.log(`End - ${completeEndDate.toISOString()}`)
+
+                bookRoom(room as string, title, completeStartDate.toISOString(), completeEndDate.toISOString(),
+                    "s.sviatkin@innopolis.university").then(r => console.log(r));
+
+
+                //completeStartDate.setHours((time?.toISOString() as number), time?.minute(), 0, 0);
+                //let completeEndDate = new Date(completeStartDate.toISOString())
+
+
             }} type="primary">Test Book</Button>}
 
 
@@ -123,6 +146,14 @@ const Test: FunctionComponent = () => {
                     ],
                 }).then(id => {
                     if (id === "ok") {
+                        let completeStartDate = new Date(date as string);
+                        let timeISO = new Date(time?.toISOString() as string);
+                        completeStartDate.setUTCHours(timeISO.getUTCHours(), timeISO.getUTCMinutes(), 0, 0);
+                        let completeEndDate = new Date(completeStartDate.toISOString());
+                        completeEndDate.setMinutes(completeEndDate.getMinutes() + (range as number));
+
+                        bookRoom(room as string, title, completeStartDate.toISOString(), completeEndDate.toISOString(),
+                            tg.initDataUnsafe.user.id).then(r => console.log(r));
                         // TODO : make a book
                         setTimeout(() => tg.close(), 500);
                     }

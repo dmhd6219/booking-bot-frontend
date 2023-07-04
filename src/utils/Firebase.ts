@@ -36,3 +36,9 @@ export async function setNewUser() {
 }
 
 
+export async function getUsersEmailByTgid(tg_id : string){
+    console.log(tg_id);
+    const usersCol = collection(db, 'users');
+    const userSnapshot = await getDocs(usersCol);
+    console.log(userSnapshot);
+}
