@@ -1,5 +1,3 @@
-import {fullTime} from "./TimeDisabler";
-
 export const apiUrl: string = `${process.env.REACT_APP_API_URL}`;
 export const roomsUrl: string = `${apiUrl}/rooms`;
 export const freeRoomsUrl: string = `${roomsUrl}/free`
@@ -20,147 +18,65 @@ interface Room {
 export async function getRooms(): Promise<Room[]> {
     let response = await fetch(roomsUrl);
 
-    return await response.json();
-
+    return response.json();
 }
 
-export async function getFreeRooms(start: Date, end: Date): Promise<Room[]> {
+type DateIso = `${number}${number}${number}${number}-${number}${number}-
+        ${number}${number}T${number}${number}:${number}${number}:${number}${number}.${number}${number}${number}Z`
+
+
+export async function getFreeRooms(start: DateIso, end: DateIso): Promise<Room[]> {
     let response = await fetch(freeRoomsUrl, {
         method: 'POST',
-        body: JSON.stringify({start: start, end: end})
+        body: JSON.stringify({
+            start: start,
+            end: end
+        })
     });
 
-    return await response.json();
+    return response.json();
+
 }
 
-interface bookRoom {
+type UniversityEmail = `${string}.${string}@innopolis.university`;
+
+interface Booking {
+    id : string,
     title: string,
-    start: string,
-    end: string,
-    owner: string
+    start : string,
+    end : string,
+    room : Room,
+    owner_email : UniversityEmail;
 }
 
-export async function bookRoom(id: string, room: bookRoom): Promise<QueryResponse> {
+export async function bookRoom(id : string, title : string, start : DateIso, end: DateIso, owner_email : UniversityEmail): Promise<Booking>{
     let response = await fetch(bookRoomUrl(id), {
         method: 'POST',
-        body: JSON.stringify(room)
+        body: JSON.stringify({
+            title : title,
+            start: start,
+            end: end,
+            owner_email : owner_email
+        })
     });
 
-    return await response.json();
+    return response.json();
 }
 
-interface QueryFilter {
-    filter: {
-        started_at_or_after?: string,
-        ended_at_or_before?: string,
-        room_id_in?: string[],
-        owner_email_in?: string[]
-    }
+interface Filter {
+    started_at_or_after ?: DateIso,
+    ended_at_or_before ?: DateIso,
+    room_id_in ?: string[],
+    owner_email_in ?: string[]
 }
 
-interface QueryResponse {
-    id: string,
-    title: string,
-    start: string,
-    end: string,
-    room: Room,
-    owner_email: string
-}
-
-export async function getQuery(filter: QueryFilter): Promise<QueryResponse[]> {
+export async function bookingsQuery(filter : Filter) : Promise<Booking[]>{
     let response = await fetch(bookingsQueryUrl, {
         method: 'POST',
-        body: JSON.stringify(filter)
+        body: JSON.stringify({
+            filter : filter
+        })
     });
 
-    return await response.json();
-}
-
-export async function deleteBooking(id: string): Promise<boolean> {
-    let response = await fetch(deleteBookingUrl(id), {
-        method: 'DELETE'
-    });
-
-    return response.ok;
-}
-
-export async function getAvailableTimeByDate(date: Date, byRoom : string | null = null): Promise<string[]> {
-
-    date.setHours(0, 0, 0, 0);
-    let today: Date = new Date(date.getTime());
-
-    date.setDate(date.getDate() + 1);
-    let tomorrow: Date = new Date(date.getTime());
-
-    let rooms = byRoom === null ? [] : [byRoom];
-    let json: QueryResponse[] = await getQuery({
-        filter: {
-            started_at_or_after: today.toISOString(),
-            ended_at_or_before: tomorrow.toISOString(),
-            owner_email_in: [],
-            room_id_in: rooms
-        }
-    });
-
-
-    let bookedTime: Date[] = []
-
-    for (const room of json) {
-        const startTime = new Date(room.start);
-        const endTime = new Date(room.end);
-        // Round the start and end times to the nearest 15 minute interval.
-        const roundedStartTime = new Date(
-            startTime.getTime() +
-            (Math.ceil((endTime.getTime() - startTime.getTime()) / 15) * 15),
-        );
-        const roundedEndTime = new Date(
-            endTime.getTime() - (endTime.getTime() % 15),
-        );
-        // Add all available times between the rounded start and end times.
-        for (let time = roundedStartTime; time < roundedEndTime; time.setMinutes(time.getMinutes() + 15)) {
-            bookedTime.push(time);
-        }
-    }
-
-    return bookedTime.filter(item => !fullTime.includes(`${item.getUTCHours()}:${item.getUTCMinutes()}`)).map(
-        item => `${item.getUTCHours()}:${item.getUTCMinutes()}`
-    )
-}
-
-export async function getDurationByTime(date: Date, time: string) {
-    let availableTime = await getAvailableTimeByDate(date);
-    let ans: string[] = []
-
-    const currentTime = new Date(time);
-    currentTime.setFullYear(date.getFullYear());
-    const currentTimeInMilliseconds = currentTime.getTime();
-
-    for (const freeTime of availableTime) {
-
-        const freeTime_ = new Date(freeTime);
-        freeTime_.setFullYear(date.getFullYear());
-        const freeTimeInMilliseconds = freeTime_.getTime();
-
-        // Calculate the difference between the free time and the current time in minutes.
-        const durationInMinutes = Math.floor((freeTimeInMilliseconds - currentTimeInMilliseconds) / 60000);
-
-        if (durationInMinutes <= 180) {
-            ans.push(`${durationInMinutes} minutes`);
-        }
-    }
-
-    return ans;
-}
-
-export async function getRoomByTimeAndDuration(startTime: Date, duration: string): Promise<Room[]> {
-
-    const durationInMinutes = parseInt(duration.substring(0, duration.length - 7));
-
-    let endTime = new Date(startTime.toISOString());
-
-    endTime.setMinutes(startTime.getUTCMinutes() + (durationInMinutes * 60 * 1000));
-
-    return await getFreeRooms(startTime, endTime);
-
-
+    return response.json();
 }
