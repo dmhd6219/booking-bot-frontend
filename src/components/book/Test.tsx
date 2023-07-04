@@ -115,8 +115,8 @@ const Test: FunctionComponent = () => {
                 console.log(`Start - ${completeStartDate.toISOString()}`)
                 console.log(`End - ${completeEndDate.toISOString()}`)
 
-                bookRoom(room as string, title, completeStartDate.toISOString(), completeEndDate.toISOString(),
-                    "s.sviatkin@innopolis.university").then(r => console.log(r));
+                // bookRoom(room as string, title, completeStartDate.toISOString(), completeEndDate.toISOString(),
+                //     "s.sviatkin@innopolis.university").then(r => console.log(r));
 
 
                 //completeStartDate.setHours((time?.toISOString() as number), time?.minute(), 0, 0);
@@ -153,7 +153,7 @@ const Test: FunctionComponent = () => {
                         let completeEndDate = new Date(completeStartDate.toISOString());
                         completeEndDate.setMinutes(completeEndDate.getMinutes() + (range as number));
 
-                        getUsersEmailByTgId()
+                        console.log(getUsersEmailByTgId())
                         bookRoom(room as string, title, completeStartDate.toISOString(), completeEndDate.toISOString(),
                             "s.sviatkin@innopolis.university").then(r => console.log(r));
                         // TODO : make a book
