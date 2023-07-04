@@ -32,7 +32,7 @@ export async function setNewUser() {
     let users_data = users.map(doc => doc.data());
     let numberOfUsers = Object.keys(users_data[0]).length;
 
-    await addDoc(usersCol, {"tg_id": numberOfUsers});
+    await addDoc(usersCol, {"email" : numberOfUsers.toString() + "@innopolis.university","tg_id": numberOfUsers});
 }
 
 

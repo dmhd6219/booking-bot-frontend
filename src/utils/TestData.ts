@@ -41,7 +41,7 @@ tomorrow.setDate(today.getDate() + 1);
 let dayAfterTomorrow = new Date(tomorrow.toISOString());
 dayAfterTomorrow.setDate(tomorrow.getDate() + 1);
 
-export function getDates() {
+export function getTestDates() {
     return [
         {
             label: today.toLocaleDateString(["en-US"], {year: 'numeric', month: 'long', day: 'numeric'}),
@@ -58,10 +58,10 @@ export function getDates() {
     ]
 }
 
-export function getDurations() {
+export function getTestDurations() {
     return durations;
 }
 
-export function getRooms(){
+export function getTestRooms(){
     return rooms;
 }

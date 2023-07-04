@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 import {isDebug, tg} from "../../utils/TelegramWebApp";
-import {getDates, getDurations, getRooms} from "../../utils/TestData";
+import {getTestDates, getTestDurations, getTestRooms} from "../../utils/TestData";
 
 dayjs.extend(customParseFormat);
 const Test: FunctionComponent = () => {
@@ -51,7 +51,7 @@ const Test: FunctionComponent = () => {
                 setRoom(null);
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
                 // TODO reload changes from backend
-            }} value={date} options={getDates()}>
+            }} value={date} options={getTestDates()}>
             </Select>
 
             <Typography.Title>Test Time of Start</Typography.Title>
@@ -68,7 +68,7 @@ const Test: FunctionComponent = () => {
             }} disabled={!dateSelected} value={time}/>
 
             <Typography.Title>Test Duration of Booking</Typography.Title>
-            <Select options={getDurations()} size={"large"} onSelect={(value) => {
+            <Select options={getTestDurations()} size={"large"} onSelect={(value) => {
                 setRangeSelected(true);
                 console.log("On Select (Range)");
                 setRange(value);
@@ -78,7 +78,7 @@ const Test: FunctionComponent = () => {
             }} disabled={(!(dateSelected && timeSelected))} value={range}/>
 
             <Typography.Title>Test Room</Typography.Title>
-            <Select options={getRooms()} size={"large"} onSelect={(value) => {
+            <Select options={getTestRooms()} size={"large"} onSelect={(value) => {
                 setRoomSelected(() => {
                     setButtonState({text: "BOOK", show: true, progress: false, disable: false,});
                     return true;
