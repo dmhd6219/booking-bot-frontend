@@ -1,25 +1,25 @@
 import React, {FunctionComponent, useState} from 'react'
-import {Input, Select, TimePicker, Typography} from "antd";
+import {Button, Input, Select, TimePicker, Typography} from "antd";
 import {MainButton, useShowPopup} from "@vkruglikov/react-telegram-web-app";
 import type {Dayjs} from 'dayjs';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
-import {tg} from "../../utils/TelegramWebApp";
+import {isDebug, tg} from "../../utils/TelegramWebApp";
+import {getDates, getDurations, getRooms} from "../../utils/TestData";
 
 dayjs.extend(customParseFormat);
-const ByRoom: FunctionComponent = () => {
-    const [roomSelected, setRoomSelected] = useState(false);
+const Test: FunctionComponent = () => {
     const [dateSelected, setDateSelected] = useState(false);
     const [timeSelected, setTimeSelected] = useState(false);
-    const [, setRangeSelected] = useState(false);
-
+    const [rangeSelected, setRangeSelected] = useState(false);
+    const [, setRoomSelected] = useState(false);
 
     const [title, setTitle] = useState<string>("");
-    const [room, setRoom] = useState<string | null>(null);
     const [date, setDate] = useState<string | null>(null);
     const [time, setTime] = useState<undefined | null | Dayjs>(null);
     const [range, setRange] = useState<string | null>(null);
+    const [room, setRoom] = useState<string | null>(null);
 
 
     const [buttonState, setButtonState] = useState({
@@ -39,45 +39,22 @@ const ByRoom: FunctionComponent = () => {
 
 
     return (
-        <div id={"sort-by-room"}>
-            <Typography.Title>Title</Typography.Title>
-            <Input
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="by-room-input"
-            />
+        <div id={"test-book"}>
 
-
-            <Typography.Title>Room</Typography.Title>
-            <Select options={[
-                {value: '304', label: '304'},
-            ]} size={"large"} onSelect={(value) => {
-                setRoomSelected(true);
-                console.log("On Select (Room)")
-                setRoom(value);
-                setDate(null);
-                setTime(null);
-                setRange(null);
-                setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
-                // TODO reload changes from backend
-            }} value={room}/>
-
-            <Typography.Title>Date</Typography.Title>
-            <Select size={"large"} onSelect={(value) => {
-                setDate(value);
+            <Typography.Title>Test Date</Typography.Title>
+            <Select size={"large"} onSelect={(value: string) => {
                 setDateSelected(true);
-                console.log("On Select (Date)");
+                console.log("On Select (Date)")
+                setDate(value);
                 setTime(null);
                 setRange(null);
+                setRoom(null);
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
                 // TODO reload changes from backend
-            }} disabled={!roomSelected} value={date}>
-                <Select.Option value="20.06.2022">20.06.2022</Select.Option>
-                <Select.Option value="21.06.2022">21.06.2022</Select.Option>
-                <Select.Option value="22.06.2022">22.06.2022</Select.Option>
+            }} value={date} options={getDates()}>
             </Select>
 
-            <Typography.Title>Time of Start</Typography.Title>
+            <Typography.Title>Test Time of Start</Typography.Title>
             <TimePicker inputReadOnly={true}
                         format={"HH:mm"}
                         minuteStep={5} size={"large"} onSelect={(value) => {
@@ -85,26 +62,44 @@ const ByRoom: FunctionComponent = () => {
                 console.log("On Select (Time)");
                 setTime(value);
                 setRange(null);
+                setRoom(null);
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
                 // TODO reload changes from backend
-            }} disabled={!(roomSelected && dateSelected)} value={time}/>
+            }} disabled={!dateSelected} value={time}/>
 
-            <Typography.Title>Duration of Booking</Typography.Title>
-            <Select options={[
-                {value: '30', label: '30 Minutes'},
-                {value: '60', label: '1 Hour'},
-                {value: '90', label: '1.5 Hours'},
-                {value: '120', label: '2 Hours'},
-                {value: '150', label: '2.5 Hours'},
-                {value: '180', label: '3 Hours'},
-            ]} size={"large"} onSelect={(value) => {
+            <Typography.Title>Test Duration of Booking</Typography.Title>
+            <Select options={getDurations()} size={"large"} onSelect={(value) => {
                 setRangeSelected(true);
                 console.log("On Select (Range)");
                 setRange(value);
-                setButtonState({text: "BOOK", show: true, progress: false, disable: false,});
+                setRoom(null);
+                setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
                 // TODO reload changes from backend
             }} disabled={(!(dateSelected && timeSelected))} value={range}/>
 
+            <Typography.Title>Test Room</Typography.Title>
+            <Select options={getRooms()} size={"large"} onSelect={(value) => {
+                setRoomSelected(() => {
+                    setButtonState({text: "BOOK", show: true, progress: false, disable: false,});
+                    return true;
+                });
+                setRoom(value);
+            }} disabled={!(dateSelected && timeSelected && rangeSelected)} value={room}/>
+
+            <Typography.Title>Test Title</Typography.Title>
+            <Input
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="by-room-input"
+            />
+
+            {isDebug && <Button onClick={() => {
+                console.log(`Title - ${title}`)
+                console.log(`Date - ${(new Date((date as string))).toLocaleDateString(["en-US"], {year: 'numeric', month: 'long', day: 'numeric'})}`)
+                console.log(`Time - ${time}`)
+                console.log(`Duration - ${range} minutes`)
+                console.log(`Room - ${room}`)
+            }} type="primary">Test Book</Button>}
 
 
             <div>{buttonState?.show && <MainButton {...buttonState} onClick={() => {
@@ -138,5 +133,4 @@ const ByRoom: FunctionComponent = () => {
     )
 }
 
-
-export default ByRoom;
+export default Test;

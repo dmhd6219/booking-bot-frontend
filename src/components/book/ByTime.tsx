@@ -6,7 +6,6 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 import {tg} from "../../utils/TelegramWebApp";
-import {disabledDateTime} from "../../utils/TimeDisabler";
 
 dayjs.extend(customParseFormat);
 const ByTime: FunctionComponent<{
@@ -70,7 +69,7 @@ const ByTime: FunctionComponent<{
             <Typography.Title>Time of {typeOfTime}</Typography.Title>
                 {/*TODO make different versions that depend on time*/}
             <TimePicker inputReadOnly={true}
-                        disabledTime={disabledDateTime} format={"HH:mm"}
+                        format={"HH:mm"}
                         minuteStep={5} size={"large"} onSelect={(value) => {
                 setTimeSelected(true);
                 console.log("On Select (Time)");

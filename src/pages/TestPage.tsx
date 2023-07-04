@@ -2,6 +2,7 @@ import React from 'react'
 import {Card, Typography} from "antd";
 import styled from "styled-components";
 import {getUsers, setNewUser} from "../utils/Firebase";
+import {isDebug, isTelegramWindow} from "../utils/TelegramWebApp";
 
 const CenteredSpace = styled.div`
   display: flex;
@@ -35,9 +36,12 @@ export default function TestPage() {
                     <button onClick={() => setNewUser()}>Press to set a new User</button>
                 </CardWithPadding>
 
-                <CardWithPadding title="Get Books" style={{width: 300}}>
+                <CardWithPadding title="Literally Debug" style={{width: 300}}>
                     <button
-                        onClick={() => console.log("a")}>Press to get all Books
+                        onClick={() => {
+                            console.log(`Telegram window - ${isTelegramWindow}, Debug - ${isDebug}`)
+
+                        }}>Press to debug
                     </button>
                 </CardWithPadding>
             </CenteredSpace>

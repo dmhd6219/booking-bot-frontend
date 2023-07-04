@@ -10,6 +10,7 @@ import styled from "styled-components";
 import {ConfigProvider, theme} from 'antd';
 import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
 import locale from 'antd/locale/en_US';
+import {isDebug, isTelegramWindow} from "./utils/TelegramWebApp";
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -28,6 +29,11 @@ const BigHeader = styled.div`
 
 function App(): JSX.Element {
     const [colorScheme, themeParams] = useThemeParams();
+
+    if (!isTelegramWindow && !isDebug) {
+        return <p>Open Telegram Web App!!!</p>
+    }
+
     return (
         <ConfigProvider
             theme={

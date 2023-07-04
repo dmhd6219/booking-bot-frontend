@@ -4,9 +4,10 @@ import styled from "styled-components";
 // @ts-ignore
 import {HashLink} from 'react-router-hash-link';
 
-import {tg} from "../utils/TelegramWebApp";
+import {isDebug, tg} from "../utils/TelegramWebApp";
 import ByTime from "../components/book/ByTime";
 import ByRoom from "../components/book/ByRoom";
+import Test from "../components/book/Test";
 
 const HorizontalList = styled.div`
   width: 100%;
@@ -22,6 +23,7 @@ export default function BookingPage() {
     return (
         <div>
             <HorizontalList>
+
                 <HashLink to="#sort-by-start-time">
                     <Button type="primary" onClick={() => {
                         setChoice("time-start");
@@ -36,19 +38,20 @@ export default function BookingPage() {
                     }}>By Room</Button>
                 </HashLink>
 
-                {/*<HashLink to='#sort-by-end-time'>*/}
-                {/*    <Button type="primary" onClick={() => {*/}
-                {/*        setChoice("time-end");*/}
-                {/*        tg.expand();*/}
-                {/*    }}>By End Time</Button>*/}
-                {/*</HashLink>*/}
+                <HashLink to='#test-book'>
+                    <Button type="primary" onClick={() => {
+                        setChoice("test");
+                        tg.expand();
+                    }}>Test</Button>
+                </HashLink>
+
             </HorizontalList>
 
             {choice === "time-start" && <ByTime typeOfTime={"Start"}/>}
 
             {choice === "room" && <ByRoom />}
 
-            {choice === "time-end" && <ByTime typeOfTime={"End"}/>}
+            {choice === "test" && isDebug && <Test />}
         </div>
     )
 }
