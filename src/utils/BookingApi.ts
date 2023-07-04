@@ -50,6 +50,7 @@ interface Booking {
 }
 
 export async function bookRoom(id: string, title: string, start: DateIso, end: DateIso, owner_email: UniversityEmail) {
+    console.log("in book function")
     let response = await fetch(bookRoomUrl(id), {
         method: 'POST',
         body: JSON.stringify({
