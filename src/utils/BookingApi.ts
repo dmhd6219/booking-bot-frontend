@@ -80,3 +80,12 @@ export async function bookingsQuery(filter : Filter) : Promise<Booking[]>{
 
     return response.json();
 }
+
+
+export async function deleteBooking(id : string) : Promise<boolean>{
+    let response = await fetch(deleteBookingUrl(id), {
+        method: 'DELETE'
+    });
+
+    return response.ok;
+}
