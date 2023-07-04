@@ -36,8 +36,10 @@ export async function setNewUser() {
 }
 
 
-export async function getUsersEmailByTgid(){
+export async function getUsersEmailByTgId(){
     const usersCol = collection(db, 'users');
     const userSnapshot = await getDocs(usersCol);
-    console.log(userSnapshot);
+    let data = userSnapshot.docs.map(doc => doc.data());;
+
+    console.log(data);
 }

@@ -8,7 +8,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {isDebug, tg} from "../../utils/TelegramWebApp";
 import {getTestDates, getTestDurations, getTestRooms} from "../../utils/TestData";
 import {bookRoom} from "../../utils/BookingApi";
-import {getUsersEmailByTgid} from "../../utils/Firebase";
+import {getUsersEmailByTgId} from "../../utils/Firebase";
 
 dayjs.extend(customParseFormat);
 const Test: FunctionComponent = () => {
@@ -153,7 +153,7 @@ const Test: FunctionComponent = () => {
                         let completeEndDate = new Date(completeStartDate.toISOString());
                         completeEndDate.setMinutes(completeEndDate.getMinutes() + (range as number));
 
-                        getUsersEmailByTgid()
+                        getUsersEmailByTgId()
                         bookRoom(room as string, title, completeStartDate.toISOString(), completeEndDate.toISOString(),
                             "s.sviatkin@innopolis.university").then(r => console.log(r));
                         // TODO : make a book
