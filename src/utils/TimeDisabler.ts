@@ -48,7 +48,10 @@ function getDisabledMinutes(dates: Date[], selectedHour: number) {
     return allHours.filter(x => !meetedMinutes.includes(x) || (selectedHour === today.getHours() && x < today.getMinutes()));
 }
 
-export const disabledDateTime = (dates : Date[]): { disabledHours: () => number[], disabledMinutes: (selectedHour : number) => number[] } => ({
+export const disabledDateTime = (dates: Date[]): {
+    disabledHours: () => number[],
+    disabledMinutes: (selectedHour: number) => number[]
+} => ({
     disabledHours: (): number[] => getDisabledHours(dates),
-    disabledMinutes: (selectedHour : number): number[] => getDisabledMinutes(dates, selectedHour),
+    disabledMinutes: (selectedHour: number): number[] => getDisabledMinutes(dates, selectedHour),
 });
