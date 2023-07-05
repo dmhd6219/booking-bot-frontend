@@ -1,3 +1,5 @@
+import {getDisabledHours, getDisabledMinutes} from "./TimeDisabler";
+
 export const apiUrl: string = `${process.env.REACT_APP_API_URL}`;
 export const roomsUrl: string = `${apiUrl}/rooms`;
 export const freeRoomsUrl: string = `${roomsUrl}/free`
@@ -158,8 +160,64 @@ export async function getRoomByTimeAndDuration(date: DateIso, duration: number) 
     let freeRooms: Room[] = await getFreeRooms(startDate.toISOString(), endDate.toISOString());
 
     for (let room of freeRooms) {
-        availableRooms.push(room.id);
+        availableRooms.push(room);
     }
 
     return availableRooms;
+}
+
+// Form valid options
+
+export function getOptionsOfDate() {
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let tomorrow = new Date(today.toISOString());
+    tomorrow.setDate(today.getDate() + 1);
+
+    let dayAfterTomorrow = new Date(tomorrow.toISOString());
+    dayAfterTomorrow.setDate(tomorrow.getDate() + 1);
+
+    return [
+        {
+            label: today.toLocaleDateString(["en-US"], {year: 'numeric', month: 'long', day: 'numeric'}),
+            value: today.toISOString()
+        },
+        {
+            label: tomorrow.toLocaleDateString(["en-US"], {year: 'numeric', month: 'long', day: 'numeric'}),
+            value: tomorrow.toISOString()
+        },
+        {
+            label: dayAfterTomorrow.toLocaleDateString(["en-US"], {year: 'numeric', month: 'long', day: 'numeric'}),
+            value: dayAfterTomorrow.toISOString()
+        }
+    ]
+}
+
+// To make async work, set options to hook variable
+
+export const disabledDateTime = (dates: Date[]): {
+    disabledHours: () => number[],
+    disabledMinutes: (selectedHour: number) => number[]
+} => ({
+    disabledHours: (): number[] => getDisabledHours(dates),
+    disabledMinutes: (selectedHour: number): number[] => getDisabledMinutes(dates, selectedHour),
+});
+
+
+export async function getDurationsOptions(date: DateIso, step: number) {
+    let data = await getDurationByTime(date, step);
+
+    return data.map(x => {
+        let hours = Math.floor(x / 60);
+        return {label: `${hours > 0 ? hours + "Hour" + (hours > 1 ? "s " : "") : ""} ${x % 60} Minutes`, value: x}
+    })
+}
+
+export async function getRoomsOptions(date: DateIso, duration: number) {
+    let data = await getRoomByTimeAndDuration(date, duration);
+
+    return data.map(x => {
+        return {label: x.name, value: x.id}
+    });
 }

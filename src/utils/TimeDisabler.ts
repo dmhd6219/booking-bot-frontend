@@ -10,7 +10,7 @@ export const allMinutes = range(0, 60, 15);
 //     disabledSeconds?: (selectedHour: number, selectedMinute: number) => number[];
 // };
 
-function getDisabledHours(dates: Date[]) {
+export function getDisabledHours(dates: Date[]) {
     let meetedHours: number[] = [];
     for (let hour of allHours) {
 
@@ -31,7 +31,7 @@ function getDisabledHours(dates: Date[]) {
     return disabledHours;
 }
 
-function getDisabledMinutes(dates: Date[], selectedHour: number) {
+export function getDisabledMinutes(dates: Date[], selectedHour: number) {
     let meetedMinutes: number[] = [];
     for (let hour of allHours) {
 
@@ -45,13 +45,5 @@ function getDisabledMinutes(dates: Date[], selectedHour: number) {
 
     let today = getClosestRoundedTime(new Date(), 15);
 
-    return allHours.filter(x => !meetedMinutes.includes(x) || (selectedHour === today.getHours() && x < today.getMinutes()));
+    return allMinutes.filter(x => !meetedMinutes.includes(x) || (selectedHour === today.getHours() && x < today.getMinutes()));
 }
-
-export const disabledDateTime = (dates: Date[]): {
-    disabledHours: () => number[],
-    disabledMinutes: (selectedHour: number) => number[]
-} => ({
-    disabledHours: (): number[] => getDisabledHours(dates),
-    disabledMinutes: (selectedHour: number): number[] => getDisabledMinutes(dates, selectedHour),
-});

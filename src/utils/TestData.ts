@@ -32,32 +32,6 @@ const rooms = [
 
 ]
 
-let today = new Date();
-today.setHours(0, 0, 0, 0);
-
-let tomorrow = new Date(today.toISOString());
-tomorrow.setDate(today.getDate() + 1);
-
-let dayAfterTomorrow = new Date(tomorrow.toISOString());
-dayAfterTomorrow.setDate(tomorrow.getDate() + 1);
-
-export function getTestDates() {
-    return [
-        {
-            label: today.toLocaleDateString(["en-US"], {year: 'numeric', month: 'long', day: 'numeric'}),
-            value: today.toISOString()
-        },
-        {
-            label: tomorrow.toLocaleDateString(["en-US"], {year: 'numeric', month: 'long', day: 'numeric'}),
-            value: tomorrow.toISOString()
-        },
-        {
-            label: dayAfterTomorrow.toLocaleDateString(["en-US"], {year: 'numeric', month: 'long', day: 'numeric'}),
-            value: dayAfterTomorrow.toISOString()
-        }
-    ]
-}
-
 export function getTestDurations() {
     return durations;
 }
