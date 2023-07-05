@@ -3,7 +3,7 @@ import {Card, Typography} from "antd";
 import styled from "styled-components";
 import {getUsers, setNewUser} from "../utils/Firebase";
 import {isDebug, isTelegramWindow} from "../utils/TelegramWebApp";
-import {getTimeByDate} from "../utils/BookingApi";
+import {allHours, allMinutes} from "../utils/TimeDisabler";
 
 const CenteredSpace = styled.div`
   display: flex;
@@ -42,7 +42,8 @@ export default function TestPage() {
                         onClick={async () => {
                             console.log(`Telegram window - ${isTelegramWindow}, Debug - ${isDebug}`)
 
-                            console.log(await getTimeByDate(new Date().toISOString(), 15));
+                            console.log(allHours);
+                            console.log(allMinutes);
 
                         }}>Press to debug
                     </button>

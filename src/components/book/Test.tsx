@@ -19,7 +19,7 @@ const Test: FunctionComponent = () => {
 
     const [title, setTitle] = useState<string>("");
     const [date, setDate] = useState<string | null>(null);
-    const [time, setTime] = useState<undefined | null | Dayjs>(null);
+    const [ time, setTime] = useState<undefined | null | Dayjs>(null);
     const [range, setRange] = useState<number | null>(null);
     const [room, setRoom] = useState<string | null>(null);
 
@@ -59,7 +59,7 @@ const Test: FunctionComponent = () => {
             <Typography.Title>Test Time of Start</Typography.Title>
             <TimePicker inputReadOnly={true}
                         format={"HH:mm"}
-                        minuteStep={5} size={"large"} onSelect={(value) => {
+                        minuteStep={15} size={"large"} onSelect={(value) => {
                 setTimeSelected(true);
                 console.log("On Select (Time)");
                 setTime(value);

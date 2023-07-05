@@ -95,12 +95,13 @@ export async function deleteBooking(id: string): Promise<boolean> {
 
 // actually logic
 
-export function getClosestRoundedTime(date: Date, step : number): Date {
+// By Start Time sorting
+export function getClosestRoundedTime(date: Date, step: number): Date {
     date.setMinutes(Math.floor((date.getMinutes() + step) / step) * step);
     return date;
 }
 
-export async function getTimeByDate(date: DateIso, step : number): Promise<Date[]> {
+export async function getTimeByDate(date: DateIso, step: number): Promise<Date[]> {
     let today: Date = getClosestRoundedTime(new Date(date), step);
     today.setSeconds(0, 0);
 
@@ -121,4 +122,44 @@ export async function getTimeByDate(date: DateIso, step : number): Promise<Date[
     }
 
     return freeSlots;
+}
+
+
+export async function getDurationByTime(date: DateIso, step: number) {
+    let startDate = new Date(date);
+    startDate.setSeconds(0, 0);
+
+    let endDate = new Date(date);
+    endDate.setHours(endDate.getHours() + 3, endDate.getMinutes(), 0, 0);
+
+    let freeMinutes = [];
+
+    for (let temp = new Date(startDate.toISOString()); temp <= endDate; temp.setMinutes(temp.getMinutes() + step)) {
+        let freeRooms: Room[] = await getFreeRooms(startDate.toISOString(), temp.toISOString());
+
+        if (!(freeRooms.length === 0)) {
+            freeMinutes.push(Math.abs(temp.getMinutes() - startDate.getMinutes()));
+        }
+
+    }
+
+    return freeMinutes;
+}
+
+export async function getRoomByTimeAndDuration(date: DateIso, duration: number) {
+    let startDate = new Date(date);
+    startDate.setSeconds(0, 0);
+
+    let endDate = new Date(startDate.toISOString());
+    endDate.setMinutes(endDate.getMinutes() + duration);
+
+    let availableRooms = [];
+
+    let freeRooms: Room[] = await getFreeRooms(startDate.toISOString(), endDate.toISOString());
+
+    for (let room of freeRooms) {
+        availableRooms.push(room.id);
+    }
+
+    return availableRooms;
 }
