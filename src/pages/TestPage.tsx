@@ -3,6 +3,7 @@ import {Card, Typography} from "antd";
 import styled from "styled-components";
 import {getUsers, setNewUser} from "../utils/Firebase";
 import {isDebug, isTelegramWindow} from "../utils/TelegramWebApp";
+import {getTimeByDate} from "../utils/BookingApi";
 
 const CenteredSpace = styled.div`
   display: flex;
@@ -38,8 +39,10 @@ export default function TestPage() {
 
                 <CardWithPadding title="Literally Debug" style={{width: 300}}>
                     <button
-                        onClick={() => {
+                        onClick={async () => {
                             console.log(`Telegram window - ${isTelegramWindow}, Debug - ${isDebug}`)
+
+                            console.log(await getTimeByDate(new Date().toISOString(), 15));
 
                         }}>Press to debug
                     </button>

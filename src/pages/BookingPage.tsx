@@ -38,20 +38,20 @@ export default function BookingPage() {
                     }}>By Room</Button>
                 </HashLink>
 
-                <HashLink to='#test-book'>
+                {isDebug && <HashLink to='#test-book'>
                     <Button type="primary" onClick={() => {
                         setChoice("test");
                         tg.expand();
                     }}>Test</Button>
-                </HashLink>
+                </HashLink>}
 
             </HorizontalList>
 
             {choice === "time-start" && <ByTime typeOfTime={"Start"}/>}
 
-            {choice === "room" && <ByRoom />}
+            {choice === "room" && <ByRoom/>}
 
-            {choice === "test" && isDebug && <Test />}
+            {choice === "test" && isDebug && <Test/>}
         </div>
     )
 }

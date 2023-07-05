@@ -92,3 +92,33 @@ export async function deleteBooking(id: string): Promise<boolean> {
 
     return response.ok;
 }
+
+// actually logic
+
+export function getClosestRoundedTime(date: Date, step : number): Date {
+    date.setMinutes(Math.floor((date.getMinutes() + step) / step) * step);
+    return date;
+}
+
+export async function getTimeByDate(date: DateIso, step : number): Promise<Date[]> {
+    let today: Date = getClosestRoundedTime(new Date(date), step);
+    today.setSeconds(0, 0);
+
+    let tomorrow: Date = new Date(date);
+    tomorrow.setHours(0, 0, 0, 0);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    let freeSlots: Date[] = [];
+
+    for (let temp: Date = new Date(today.toISOString()); temp < tomorrow; temp.setMinutes(temp.getMinutes() + step)) {
+        let next: Date = new Date(temp.toISOString());
+        next.setMinutes(next.getMinutes() + step)
+
+        let freeRooms: Room[] = await getFreeRooms(temp.toISOString(), next.toISOString());
+        if (!(freeRooms.length === 0)) {
+            freeSlots.push(temp);
+        }
+    }
+
+    return freeSlots;
+}
