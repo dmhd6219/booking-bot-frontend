@@ -156,7 +156,7 @@ const Test: FunctionComponent = () => {
                         completeEndDate.setMinutes(completeEndDate.getMinutes() + (range as number));
 
                         bookRoom(room as string, title, completeStartDate.toISOString(), completeEndDate.toISOString(),
-                            "s.sviatkin@innopolis.university").then(r => console.log(r));
+                            "a.savchenko@innopolis.university").then(r => console.log(r));
                         // TODO : make a book
                         setTimeout(() => tg.close(), 500);
                     }
