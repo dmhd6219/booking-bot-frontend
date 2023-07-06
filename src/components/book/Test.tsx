@@ -102,6 +102,9 @@ const Test: FunctionComponent = () => {
                 let completeEndDate = new Date(completeStartDate.toISOString());
                 completeEndDate.setMinutes(completeEndDate.getMinutes() + (range as number));
 
+                bookRoom(room as string, title, completeStartDate.toISOString(), completeEndDate.toISOString(),
+                    "a.savchenko@innopolis.university").then(r => console.log(r));
+
                 console.log(`Title - ${title}`)
                 console.log(`Date - ${completeStartDate.toLocaleDateString(["en-US"], {
                     year: 'numeric',
@@ -116,9 +119,6 @@ const Test: FunctionComponent = () => {
                 console.log(`End - ${completeEndDate.toISOString()}`)
 
                 console.log(await getUsersEmailByTgId())
-
-                // bookRoom(room as string, title, completeStartDate.toISOString(), completeEndDate.toISOString(),
-                //     "s.sviatkin@innopolis.university").then(r => console.log(r));
 
 
                 //completeStartDate.setHours((time?.toISOString() as number), time?.minute(), 0, 0);
