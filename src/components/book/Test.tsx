@@ -1,32 +1,30 @@
 import React, {FunctionComponent, useEffect, useState} from 'react'
 import {Button, Input, Select, TimePicker, Typography} from "antd";
 import {MainButton, useShowPopup} from "@vkruglikov/react-telegram-web-app";
-import type {Dayjs} from 'dayjs';
+import {Dayjs} from 'dayjs';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 import {isDebug, tg} from "../../utils/TelegramWebApp";
-import {getTestDurations, getTestRooms} from "../../utils/TestData";
 import {range} from "../../utils/Utils"
 
 import {
-    bookRoom,
+    bookRoom, DateOption, DurationOption,
     getDurationsOptions,
     getOptionsOfDate,
     getRooms,
     getRoomsOptions,
-    getTimeByDate
+    getTimeByDate, RoomOption
 } from "../../utils/BookingApi";
 import {getUsersEmailByTgId} from "../../utils/Firebase";
-import {getDisabledHours, getDisabledMinutes} from "../../utils/TimeDisabler";
 
 import {step} from "../../utils/Utils";
 
 dayjs.extend(customParseFormat);
 const Test: FunctionComponent = () => {
-    const [dateOptions, setDateOptions] = useState<{ label: string, value: string }[]>([]);
-    const [durationOptions, setDurationOptions] = useState<{ label: string, value: number }[]>([]);
-    const [roomOptions, setRoomOptions] = useState<{ label: string, value: string }[]>([]);
+    const [dateOptions, setDateOptions] = useState<DateOption[]>([]);
+    const [durationOptions, setDurationOptions] = useState<DurationOption[]>([]);
+    const [roomOptions, setRoomOptions] = useState<RoomOption[]>([]);
 
     const [dateSelected, setDateSelected] = useState(false);
     const [timeSelected, setTimeSelected] = useState(false);
@@ -34,13 +32,13 @@ const Test: FunctionComponent = () => {
     const [, setRoomSelected] = useState(false);
 
     const [title, setTitle] = useState<string>("");
-    const [date, setDate] = useState<string | null>(null);
-    const [time, setTime] = useState<undefined | null | Dayjs>(null);
+    const [date, setDate] = useState<Dayjs | null>(null);
+    const [time, setTime] = useState<Dayjs | null>(null);
     const [duration, setDuration] = useState<number | null>(null);
     const [room, setRoom] = useState<string | null>(null);
 
-    const [completeStartDate, setCompleteStartDate] = useState<Date | null>(null);
-    const [completeEndDate, setCompleteEndDate] = useState<Date | null>(null);
+    const [completeStartDate, setCompleteStartDate] = useState<Dayjs | null>(null);
+    const [completeEndDate, setCompleteEndDate] = useState<Dayjs | null>(null);
     const [loadingDurations, setLoadingDurations] = useState<boolean>(false);
     const [loadingRooms, setLoadingRooms] = useState<boolean>(false);
 
@@ -69,7 +67,7 @@ const Test: FunctionComponent = () => {
         <div id={"test-book"}>
 
             <Typography.Title>Test Date</Typography.Title>
-            <Select size={"large"} onSelect={async (value: string) => {
+            <Select size={"large"} onSelect={async (value: Dayjs) => {
                 setDateSelected(true);
                 console.log("On Select (Date)")
                 setDate(value);
@@ -78,19 +76,22 @@ const Test: FunctionComponent = () => {
                 setRoom(null);
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
 
-                let completeStartDate = new Date(value);
-                completeStartDate.setUTCHours(0, 0, 0, 0);
+                let completeStartDate: Dayjs = new Dayjs(value);
+                completeStartDate.set('hour', 0);
+                completeStartDate.set('minute', 0);
+                completeStartDate.set('second', 0);
+                completeStartDate.set('millisecond', 0);
+
                 setCompleteStartDate(completeStartDate);
                 setCompleteEndDate(null);
 
-                // TODO reload changes from backend
             }} value={date} options={dateOptions}>
             </Select>
 
             <Typography.Title>Test Time of Start</Typography.Title>
             <TimePicker inputReadOnly={true}
                         format={"HH:mm"}
-                        minuteStep={step} size={"large"} onSelect={async (value) => {
+                        minuteStep={step} size={"large"} onSelect={async (value: Dayjs) => {
                 setTimeSelected(true);
 
                 console.log("On Select (Time)");
@@ -99,9 +100,10 @@ const Test: FunctionComponent = () => {
                 setRoom(null);
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
 
-                (completeStartDate as Date).setUTCHours(value.hour(), value.minute(), 0, 0);
+                (completeStartDate as Dayjs).set('hour', value.get('hour'));
+
                 setCompleteStartDate(completeStartDate);
-                setCompleteEndDate(null);
+                setCompleteEndDate(completeStartDate);
 
                 setDurationOptions([]);
                 setRoomOptions([]);
@@ -113,7 +115,7 @@ const Test: FunctionComponent = () => {
                 }
             }} showNow={false} onOpenChange={async (open: boolean) => {
                 if (!open) {
-                    setDurationOptions(await getDurationsOptions((completeStartDate as Date).toISOString(), step).then((r) => {
+                    setDurationOptions(await getDurationsOptions((completeStartDate as Dayjs), step).then((r: DurationOption[]) => {
                         setLoadingDurations(false);
                         return r;
                     }))
@@ -121,15 +123,15 @@ const Test: FunctionComponent = () => {
             }}/>
 
             <Typography.Title>Test Duration of Booking</Typography.Title>
-            <Select size={"large"} onSelect={async (value) => {
+            <Select size={"large"} onSelect={async (value: number) => {
                 setRangeSelected(true);
                 console.log("On Select (Range)");
                 setDuration(value);
                 setRoom(null);
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
 
-                let completeEndDate = new Date((completeStartDate as Date).toISOString());
-                completeEndDate.setMinutes(completeEndDate.getMinutes() + (duration as number));
+                let completeEndDate: Dayjs = new Dayjs(completeStartDate);
+                completeEndDate.set('minute', completeEndDate.get('minute') + (duration as number));
                 setCompleteEndDate(completeEndDate);
 
                 setRoomOptions([]);
@@ -138,7 +140,7 @@ const Test: FunctionComponent = () => {
             }} disabled={(!(dateSelected && timeSelected))} value={duration} options={durationOptions}
                     loading={loadingDurations} onDropdownVisibleChange={async (open: boolean) => {
                 if (!open) {
-                    setRoomOptions(await getRoomsOptions((completeStartDate as Date).toISOString(), duration as number).then((r) => {
+                    setRoomOptions(await getRoomsOptions((completeStartDate as Dayjs), duration as number).then((r: RoomOption[]) => {
                         setLoadingRooms(false);
                         return r;
                     }));
@@ -163,17 +165,10 @@ const Test: FunctionComponent = () => {
             />
 
             {buttonState?.show && isDebug && <Button onClick={async () => {
-                let completeStartDate = new Date(date as string);
-                let timeISO = new Date(time?.toISOString() as string);
-                completeStartDate.setUTCHours(timeISO.getUTCHours(), timeISO.getUTCMinutes(), 0, 0);
-                let completeEndDate = new Date(completeStartDate.toISOString());
-                completeEndDate.setMinutes(completeEndDate.getMinutes() + (duration as number));
 
-                bookRoom(room as string, title, completeStartDate.toISOString(), completeEndDate.toISOString(),
-                    "a.savchenko@innopolis.university").then(r => console.log(r));
 
                 console.log(`Title - ${title}`)
-                console.log(`Date - ${completeStartDate.toLocaleDateString(["en-US"], {
+                console.log(`Date - ${(completeStartDate as Dayjs).toDate().toLocaleDateString(["en-US"], {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric'
@@ -182,10 +177,13 @@ const Test: FunctionComponent = () => {
                 console.log(`Duration - ${duration} minutes`)
                 console.log(`Room - ${room}`)
 
-                console.log(`Start - ${completeStartDate.toISOString()}`)
-                console.log(`End - ${completeEndDate.toISOString()}`)
+                console.log(`Start - ${(completeStartDate as Dayjs).toISOString()}`)
+                console.log(`End - ${(completeStartDate as Dayjs).toISOString()}`)
 
-                console.log(await getUsersEmailByTgId())
+                console.log("tg id - " + await getUsersEmailByTgId())
+
+                bookRoom(room as string, title, (completeStartDate as Dayjs).toISOString(), (completeStartDate as Dayjs).toISOString(),
+                    "a.savchenko@innopolis.university").then(r => console.log(r));
 
 
                 //completeStartDate.setHours((time?.toISOString() as number), time?.minute(), 0, 0);
@@ -217,7 +215,7 @@ const Test: FunctionComponent = () => {
                 }).then(id => {
                     if (id === "ok") {
 
-                        bookRoom(room as string, title, (completeStartDate as Date).toISOString(), (completeEndDate as Date).toISOString(),
+                        bookRoom(room as string, title, (completeStartDate as Dayjs).toISOString(), (completeStartDate as Dayjs).toISOString(),
                             "a.savchenko@innopolis.university").then(r => console.log(r));
                         // TODO : make a book
                         setTimeout(() => tg.close(), 500);

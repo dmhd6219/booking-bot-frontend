@@ -16,7 +16,7 @@ const ByTime: FunctionComponent<{ typeOfTime: string, }> = ({typeOfTime = "Start
 
     const [title, setTitle] = useState<string>("");
     const [date, setDate] = useState<string | null>(null);
-    const [time, setTime] = useState<undefined | null | Dayjs>(null);
+    const [time, setTime] = useState<Dayjs | null>(null);
     const [range, setRange] = useState<string | null>(null);
     const [room, setRoom] = useState<string | null>(null);
 
@@ -96,8 +96,6 @@ const ByTime: FunctionComponent<{ typeOfTime: string, }> = ({typeOfTime = "Start
                 });
                 setRoom(value);
             }} disabled={!(dateSelected && timeSelected && rangeSelected)} value={room}/>
-
-
 
 
             <div>{buttonState?.show && <MainButton {...buttonState} onClick={() => {

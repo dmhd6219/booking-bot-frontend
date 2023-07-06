@@ -1,5 +1,6 @@
 import {range, step} from "./Utils";
 import {getClosestRoundedTime} from "./BookingApi";
+import {Dayjs} from "dayjs";
 
 export const allHours = range(0, 24);
 export const allMinutes = range(0, 60, step);
@@ -10,19 +11,19 @@ export const allMinutes = range(0, 60, step);
 //     disabledSeconds?: (selectedHour: number, selectedMinute: number) => number[];
 // };
 
-export function getDisabledHours(dates: Date[]) {
+export function getDisabledHours(dates: Dayjs[]): number[] {
     let meetedHours: number[] = [];
     for (let hour of allHours) {
 
         for (let date of dates) {
-            if (date.getHours() === hour) {
+            if (date.get('hour') === hour) {
                 meetedHours.push(hour);
             }
         }
 
     }
 
-    let disabledHours = allHours.filter(x => !meetedHours.includes(x) || x < (new Date()).getHours());
+    let disabledHours: number[] = allHours.filter((x: number) => !meetedHours.includes(x) || x < (new Dayjs()).get('hour'));
     for (let hour of range(7, 19)) {
         if (!disabledHours.includes(hour)) {
             disabledHours.push(hour)
@@ -31,20 +32,20 @@ export function getDisabledHours(dates: Date[]) {
     return disabledHours;
 }
 
-export function getDisabledMinutes(dates: Date[], selectedHour: number) {
+export function getDisabledMinutes(dates: Dayjs[], selectedHour: number): number[] {
     let meetedMinutes: number[] = [];
     for (let hour of allHours) {
 
         for (let date of dates) {
-            if (date.getHours() === hour && date.getHours() === selectedHour) {
+            if (date.get('hour') === hour && date.get('hour') === selectedHour) {
                 meetedMinutes.push(hour);
             }
         }
 
     }
 
-    let today = getClosestRoundedTime(new Date(), step);
+    let today: Dayjs = getClosestRoundedTime(new Dayjs(), step);
 
-    return allMinutes.filter(x => !meetedMinutes.includes(x) || (selectedHour === today.getHours() && x < today.getMinutes()));
+    return allMinutes.filter(x => !meetedMinutes.includes(x) || (selectedHour === today.get('hour') && x < today.get('minute')));
 }
 
