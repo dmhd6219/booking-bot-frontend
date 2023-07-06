@@ -1,8 +1,8 @@
-import {range} from "./Utils";
+import {range, step} from "./Utils";
 import {getClosestRoundedTime} from "./BookingApi";
 
 export const allHours = range(0, 24);
-export const allMinutes = range(0, 60, 15);
+export const allMinutes = range(0, 60, step);
 
 // type DisabledTime = (now: Dayjs) => {
 //     disabledHours?: () => number[];
@@ -43,7 +43,8 @@ export function getDisabledMinutes(dates: Date[], selectedHour: number) {
 
     }
 
-    let today = getClosestRoundedTime(new Date(), 15);
+    let today = getClosestRoundedTime(new Date(), step);
 
     return allMinutes.filter(x => !meetedMinutes.includes(x) || (selectedHour === today.getHours() && x < today.getMinutes()));
 }
+

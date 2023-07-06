@@ -18,6 +18,7 @@ interface Room {
 }
 
 export async function getRooms(): Promise<Room[]> {
+    console.log("Fetching rooms...");
     let response = await fetch(roomsUrl);
 
     return response.json();
@@ -28,6 +29,8 @@ export async function getRooms(): Promise<Room[]> {
 type DateIso = string;
 
 export async function getFreeRooms(start: DateIso, end: DateIso): Promise<Room[]> {
+    console.log("Fetching free rooms...");
+
     let response = await fetch(freeRoomsUrl, {
         method: 'POST',
         body: JSON.stringify({
@@ -52,7 +55,8 @@ interface Booking {
 }
 
 export async function bookRoom(id: string, title: string, start: DateIso, end: DateIso, owner_email: UniversityEmail) {
-    console.log("in book function")
+    console.log("Fetching book rooms...");
+
     let response = await fetch(bookRoomUrl(id), {
         method: 'POST',
         body: JSON.stringify({
@@ -76,6 +80,8 @@ interface Filter {
 }
 
 export async function bookingsQuery(filter: Filter): Promise<Booking[]> {
+    console.log("Fetching books query...");
+
     let response = await fetch(bookingsQueryUrl, {
         method: 'POST',
         body: JSON.stringify({
@@ -88,6 +94,8 @@ export async function bookingsQuery(filter: Filter): Promise<Booking[]> {
 
 
 export async function deleteBooking(id: string): Promise<boolean> {
+    console.log("Deleting rooms...");
+
     let response = await fetch(deleteBookingUrl(id), {
         method: 'DELETE'
     });
@@ -140,7 +148,11 @@ export async function getDurationByTime(date: DateIso, step: number) {
         let freeRooms: Room[] = await getFreeRooms(startDate.toISOString(), temp.toISOString());
 
         if (!(freeRooms.length === 0)) {
-            freeMinutes.push(Math.abs(temp.getMinutes() - startDate.getMinutes()));
+            // @ts-ignore
+            let diff = Math.abs((temp - startDate) / (1000 * 60));
+            if (diff > 0) {
+                freeMinutes.push(diff);
+            }
         }
 
     }
@@ -210,7 +222,10 @@ export async function getDurationsOptions(date: DateIso, step: number) {
 
     return data.map(x => {
         let hours = Math.floor(x / 60);
-        return {label: `${hours > 0 ? hours + "Hour" + (hours > 1 ? "s " : "") : ""} ${x % 60} Minutes`, value: x}
+        return {
+            label: `${hours > 0 ? hours + " Hour" + (hours > 1 ? "s " : "") : ""} ${x % 60 > 0 ? x % 60 + " Minutes" : ""}`,
+            value: x
+        }
     })
 }
 

@@ -8,11 +8,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {tg} from "../../utils/TelegramWebApp";
 
 dayjs.extend(customParseFormat);
-const ByTime: FunctionComponent<{
-    typeOfTime: string,
-}> = ({
-          typeOfTime = "Start",
-      },) => {
+const ByTime: FunctionComponent<{ typeOfTime: string, }> = ({typeOfTime = "Start",},) => {
     const [dateSelected, setDateSelected] = useState(false);
     const [timeSelected, setTimeSelected] = useState(false);
     const [rangeSelected, setRangeSelected] = useState(false);
@@ -43,13 +39,6 @@ const ByTime: FunctionComponent<{
 
     return (
         <div id={"sort-by-start-time"}>
-            <Typography.Title>Title</Typography.Title>
-            <Input
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="by-room-input"
-            />
-
             <Typography.Title>Date</Typography.Title>
             <Select size={"large"} onSelect={(value: string) => {
                 setDateSelected(true);
@@ -67,7 +56,7 @@ const ByTime: FunctionComponent<{
             </Select>
 
             <Typography.Title>Time of {typeOfTime}</Typography.Title>
-                {/*TODO make different versions that depend on time*/}
+            {/*TODO make different versions that depend on time*/}
             <TimePicker inputReadOnly={true}
                         format={"HH:mm"}
                         minuteStep={5} size={"large"} onSelect={(value) => {
@@ -107,6 +96,8 @@ const ByTime: FunctionComponent<{
                 });
                 setRoom(value);
             }} disabled={!(dateSelected && timeSelected && rangeSelected)} value={room}/>
+
+
 
 
             <div>{buttonState?.show && <MainButton {...buttonState} onClick={() => {
