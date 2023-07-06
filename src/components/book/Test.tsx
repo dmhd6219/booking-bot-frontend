@@ -7,7 +7,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 import {isDebug, tg} from "../../utils/TelegramWebApp";
 import {getTestDurations, getTestRooms} from "../../utils/TestData";
-import {bookRoom, getOptionsOfDate} from "../../utils/BookingApi";
+import {bookRoom, getOptionsOfDate, getRooms} from "../../utils/BookingApi";
 import {getUsersEmailByTgId} from "../../utils/Firebase";
 
 dayjs.extend(customParseFormat);
@@ -42,6 +42,8 @@ const Test: FunctionComponent = () => {
 
     return (
         <div id={"test-book"}>
+
+            <Button onClick={async () => {console.log(await getRooms())}}>Test response</Button>
 
             <Typography.Title>Test Date</Typography.Title>
             <Select size={"large"} onSelect={(value: string) => {
