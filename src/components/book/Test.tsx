@@ -12,9 +12,8 @@ import {
     bookRoom, DateOption, DurationOption,
     getDurationsOptions,
     getOptionsOfDate,
-    getRooms,
     getRoomsOptions,
-    getTimeByDate, RoomOption
+    RoomOption
 } from "../../utils/BookingApi";
 import {getUsersEmailByTgId} from "../../utils/Firebase";
 
@@ -76,7 +75,7 @@ const Test: FunctionComponent = () => {
                 setRoom(null);
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
 
-                let completeStartDate: Date = new Date(value);
+                let completeStartDate: Date = new Date(value.toISOString());
                 completeStartDate.setHours(0, 0, 0, 0)
 
                 setCompleteStartDate(completeStartDate);
@@ -100,13 +99,13 @@ const Test: FunctionComponent = () => {
                 (completeStartDate as Date).setHours(value.hour(), value.minute());
 
                 setCompleteStartDate(completeStartDate);
-                setCompleteEndDate(completeStartDate);
+                setCompleteEndDate(null);
 
                 setDurationOptions([]);
                 setRoomOptions([]);
                 setLoadingDurations(true);
                 // TODO reload changes from backend
-            }} disabled={!dateSelected} value={time} disabledTime={(now: Dayjs) => {
+            }} disabled={!dateSelected} value={time} disabledTime={() => {
                 return {
                     disabledHours: () => range(7, 19)
                 }
@@ -127,9 +126,9 @@ const Test: FunctionComponent = () => {
                 setRoom(null);
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
 
-                let completeEndDate: Date = new Date(completeStartDate as Date);
-                completeEndDate.setMinutes((completeStartDate as Date).getMinutes() + (duration as number));
-                setCompleteEndDate(completeEndDate);
+                let cEndDate: Date = new Date((completeStartDate as Date).toISOString());
+                cEndDate.setMinutes((completeStartDate as Date).getMinutes() + (duration as number));
+                setCompleteEndDate(cEndDate);
 
                 setRoomOptions([]);
                 setLoadingRooms(true);
@@ -180,11 +179,7 @@ const Test: FunctionComponent = () => {
                 console.log("tg id - " + await getUsersEmailByTgId())
 
                 bookRoom(room as string, title, (completeStartDate as Date).toISOString(), (completeEndDate as Date).toISOString(),
-                    "a.savchenko@innopolis.university").then(r => console.log(r));
-
-
-                //completeStartDate.setHours((time?.toISOString() as number), time?.minute(), 0, 0);
-                //let completeEndDate = new Date(completeStartDate.toISOString())
+                    "s.sviatkin@innopolis.university").then(r => console.log(r));
 
 
             }} type="primary">Test Book</Button>}

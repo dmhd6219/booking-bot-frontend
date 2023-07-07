@@ -1,7 +1,4 @@
 import {getDisabledHours, getDisabledMinutes} from "./TimeDisabler";
-import {Dayjs} from "dayjs";
-import {Moment} from "moment/moment";
-import moment from "moment";
 
 export const apiUrl: string = `${process.env.REACT_APP_API_URL}`;
 export const roomsUrl: string = `${apiUrl}/rooms`;
@@ -119,17 +116,17 @@ export function getClosestRoundedTime(date: Date, step: number): Date {
 }
 
 export async function getTimeByDate(date: Date, step: number): Promise<Date[]> {
-    let today: Date = getClosestRoundedTime(new Date(date), step);
+    let today: Date = getClosestRoundedTime(new Date(date.toISOString()), step);
     today.setSeconds(0, 0);
 
-    let tomorrow: Date = new Date(today);
+    let tomorrow: Date = new Date(today.toISOString());
     tomorrow.setHours(0, 0, 0, 0);
     tomorrow.setDate(tomorrow.getDate() + 1);
 
     let freeSlots: Date[] = [];
 
-    for (let temp: Date = new Date(today); temp < tomorrow; temp.setMinutes(temp.getMinutes() + step)) {
-        let next: Date = new Date(temp);
+    for (let temp: Date = new Date(today.toISOString()); temp < tomorrow; temp.setMinutes(temp.getMinutes() + step)) {
+        let next: Date = new Date(temp.toISOString());
         next.setMinutes(next.getMinutes() + step)
 
         let freeRooms: Room[] = await getFreeRooms(temp.toISOString(), next.toISOString());
@@ -143,15 +140,15 @@ export async function getTimeByDate(date: Date, step: number): Promise<Date[]> {
 
 
 export async function getDurationByTime(date: Date, step: number): Promise<number[]> {
-    let startDate: Date = new Date(date);
+    let startDate: Date = new Date(date.toISOString());
     startDate.setSeconds(0, 0);
 
-    let endDate: Date = new Date(startDate);
+    let endDate: Date = new Date(startDate.toISOString());
     endDate.setHours(endDate.getHours() + 3);
 
     let freeMinutes: number[] = [];
 
-    for (let temp: Date = new Date(startDate); temp <= endDate; temp.setMinutes(temp.getMinutes() + step)) {
+    for (let temp: Date = new Date(startDate.toISOString()); temp <= endDate; temp.setMinutes(temp.getMinutes() + step)) {
         let freeRooms: Room[] = await getFreeRooms(startDate.toISOString(), temp.toISOString());
 
         if (!(freeRooms.length === 0)) {
@@ -168,10 +165,10 @@ export async function getDurationByTime(date: Date, step: number): Promise<numbe
 }
 
 export async function getRoomByTimeAndDuration(date: Date, duration: number): Promise<Room[]> {
-    let startDate: Date = new Date(date);
+    let startDate: Date = new Date(date.toISOString());
     startDate.setSeconds(0,0)
 
-    let endDate: Date = new Date(startDate);
+    let endDate: Date = new Date(startDate.toISOString());
     endDate.setMinutes(endDate.getMinutes() + duration);
 
     let availableRooms: Room[] = [];
@@ -196,10 +193,10 @@ export function getOptionsOfDate(): DateOption[] {
     let today: Date = new Date();
     today.setHours(0,0,0,0)
 
-    let tomorrow: Date = new Date(today);
+    let tomorrow: Date = new Date(today.toISOString());
     tomorrow.setDate(today.getDate() + 1);
 
-    let dayAfterTomorrow: Date = new Date(tomorrow);
+    let dayAfterTomorrow: Date = new Date(tomorrow.toISOString());
     dayAfterTomorrow.setDate(tomorrow.getDate() + 1);
 
     return [
