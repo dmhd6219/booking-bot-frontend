@@ -176,7 +176,7 @@ const Test: FunctionComponent = () => {
                 console.log(`Start - ${(completeStartDate as Date).toISOString()}`)
                 console.log(`End - ${(completeEndDate as Date).toISOString()}`)
 
-                console.log("tg id - " + await getUsersEmailByTgId())
+                console.log("tg id - " + await getUsersEmailByTgId(tg.initDataUnsafe.user.id))
 
                 bookRoom(room as string, title, (completeStartDate as Date).toISOString(), (completeEndDate as Date).toISOString(),
                     "s.sviatkin@innopolis.university").then(r => console.log(r));
@@ -185,7 +185,7 @@ const Test: FunctionComponent = () => {
             }} type="primary">Test Book</Button>}
 
 
-            <div>{buttonState?.show && <MainButton {...buttonState} onClick={() => {
+            <div>{buttonState?.show && <MainButton {...buttonState} onClick={async () => {
                 // TODO change to tg.showConfirm
                 showPopup({
                     title: `Confirm ${title}`,
@@ -204,11 +204,11 @@ const Test: FunctionComponent = () => {
                             text: 'Cancel',
                         },
                     ],
-                }).then(id => {
+                }).then(async (id) => {
                     if (id === "ok") {
 
                         bookRoom(room as string, title, (completeStartDate as Date).toISOString(), (completeEndDate as Date).toISOString(),
-                            "d.tsoi@innopolis.university").then(r => console.log(r));
+                            await getUsersEmailByTgId(tg.initDataUnsafe.user.id)).then(r => console.log(r));
                         // TODO : make a book
                         setTimeout(() => tg.close(), 500);
                     }
