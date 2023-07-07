@@ -54,7 +54,7 @@ function App(): JSX.Element {
             locale={locale}
         >
             <BigHeader>
-                <Logo alt="huy"  lang="en" fill={colorScheme === "dark" ? "white" : "black"}/>
+                <Logo  lang="en" fill={colorScheme === "dark" ? "white" : "black"}/>
             </BigHeader>
             <Wrapper>
                 <BrowserRouter>

@@ -1,5 +1,7 @@
 import {getDisabledHours, getDisabledMinutes} from "./TimeDisabler";
 import {Dayjs} from "dayjs";
+import {Moment} from "moment/moment";
+import moment from "moment";
 
 export const apiUrl: string = `${process.env.REACT_APP_API_URL}`;
 export const roomsUrl: string = `${apiUrl}/rooms`;
@@ -58,14 +60,18 @@ interface Booking {
 export async function bookRoom(id: string, title: string, start: DateIso, end: DateIso, owner_email: UniversityEmail) {
     console.log("Fetching book rooms...");
 
+    let body = JSON.stringify({
+        title: title,
+        start: start,
+        end: end,
+        owner_email: owner_email
+    });
+
+    console.log(body)
+
     let response = await fetch(bookRoomUrl(id), {
         method: 'POST',
-        body: JSON.stringify({
-            title: title,
-            start: start,
-            end: end,
-            owner_email: owner_email
-        })
+        body: body
     });
 
     console.log(`Book response - ${response.status}`)
@@ -107,26 +113,24 @@ export async function deleteBooking(id: string): Promise<boolean> {
 // actually logic
 
 // By Start Time sorting
-export function getClosestRoundedTime(date: Dayjs, step: number): Dayjs {
-    date.set('minute', Math.floor((date.get('minute') + step) / step) * step);
+export function getClosestRoundedTime(date: Date, step: number): Date {
+    date.setMinutes(Math.floor((date.getMinutes() + step) / step) * step)
     return date;
 }
 
-export async function getTimeByDate(date: Dayjs, step: number): Promise<Dayjs[]> {
-    let today: Dayjs = getClosestRoundedTime(new Dayjs(date), step);
-    today.set('second', 0);
-    today.set('millisecond', 0);
+export async function getTimeByDate(date: Date, step: number): Promise<Date[]> {
+    let today: Date = getClosestRoundedTime(new Date(date), step);
+    today.setSeconds(0, 0);
 
-    let tomorrow: Dayjs = new Dayjs(today);
-    tomorrow.set('hour', 0);
-    tomorrow.set('minute', 0)
-    tomorrow.set('day', tomorrow.get('day') + 1);
+    let tomorrow: Date = new Date(today);
+    tomorrow.setHours(0, 0, 0, 0);
+    tomorrow.setDate(tomorrow.getDate() + 1);
 
-    let freeSlots: Dayjs[] = [];
+    let freeSlots: Date[] = [];
 
-    for (let temp: Dayjs = new Dayjs(today); temp < tomorrow; temp.set('minute', temp.get('minute') + step)) {
-        let next: Dayjs = new Dayjs(temp);
-        next.set('minute', next.get('minute') + step)
+    for (let temp: Date = new Date(today); temp < tomorrow; temp.setMinutes(temp.getMinutes() + step)) {
+        let next: Date = new Date(temp);
+        next.setMinutes(next.getMinutes() + step)
 
         let freeRooms: Room[] = await getFreeRooms(temp.toISOString(), next.toISOString());
         if (!(freeRooms.length === 0)) {
@@ -138,17 +142,16 @@ export async function getTimeByDate(date: Dayjs, step: number): Promise<Dayjs[]>
 }
 
 
-export async function getDurationByTime(date: Dayjs, step: number): Promise<number[]> {
-    let startDate: Dayjs = new Dayjs(date);
-    startDate.set('second', 0);
-    startDate.set('millisecond', 0);
+export async function getDurationByTime(date: Date, step: number): Promise<number[]> {
+    let startDate: Date = new Date(date);
+    startDate.setSeconds(0, 0);
 
-    let endDate: Dayjs = new Dayjs(startDate);
-    endDate.set('hour', endDate.get('hour') + 3);
+    let endDate: Date = new Date(startDate);
+    endDate.setHours(endDate.getHours() + 3);
 
     let freeMinutes: number[] = [];
 
-    for (let temp: Dayjs = new Dayjs(startDate); temp <= endDate; temp.set('minute', temp.get('minute') + step)) {
+    for (let temp: Date = new Date(startDate); temp <= endDate; temp.setMinutes(temp.getMinutes() + step)) {
         let freeRooms: Room[] = await getFreeRooms(startDate.toISOString(), temp.toISOString());
 
         if (!(freeRooms.length === 0)) {
@@ -164,13 +167,12 @@ export async function getDurationByTime(date: Dayjs, step: number): Promise<numb
     return freeMinutes;
 }
 
-export async function getRoomByTimeAndDuration(date: Dayjs, duration: number): Promise<Room[]> {
-    let startDate: Dayjs = new Dayjs(date);
-    startDate.set('second', 0);
-    startDate.set('millisecond', 0);
+export async function getRoomByTimeAndDuration(date: Date, duration: number): Promise<Room[]> {
+    let startDate: Date = new Date(date);
+    startDate.setSeconds(0,0)
 
-    let endDate: Dayjs = new Dayjs(startDate);
-    endDate.set('minute', endDate.get('minute') + duration);
+    let endDate: Date = new Date(startDate);
+    endDate.setMinutes(endDate.getMinutes() + duration);
 
     let availableRooms: Room[] = [];
 
@@ -187,42 +189,39 @@ export async function getRoomByTimeAndDuration(date: Dayjs, duration: number): P
 
 export interface DateOption {
     label: string,
-    value: Dayjs,
+    value: string,
 }
 
 export function getOptionsOfDate(): DateOption[] {
-    let today = new Dayjs(new Date());
-    today.set('hour', 0);
-    today.set('minute', 0);
-    today.set('second', 0);
-    today.set('millisecond', 0);
+    let today: Date = new Date();
+    today.setHours(0,0,0,0)
 
-    let tomorrow: Dayjs = new Dayjs(today);
-    tomorrow.set('day', today.get('day') + 1);
+    let tomorrow: Date = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
 
-    let dayAfterTomorrow: Dayjs = new Dayjs(tomorrow);
-    dayAfterTomorrow.set('day', tomorrow.get('day') + 1);
+    let dayAfterTomorrow: Date = new Date(tomorrow);
+    dayAfterTomorrow.setDate(tomorrow.getDate() + 1);
 
     return [
         {
-            label: today.toDate().toLocaleDateString(["en-US"],
+            label: today.toLocaleDateString(["en-US"],
                 {year: 'numeric', month: 'long', day: 'numeric'}),
-            value: today
+            value: today.toISOString()
         },
         {
-            label: tomorrow.toDate().toLocaleDateString(["en-US"],
+            label: tomorrow.toLocaleDateString(["en-US"],
                 {year: 'numeric', month: 'long', day: 'numeric'}),
-            value: tomorrow
+            value: tomorrow.toISOString()
         },
         {
-            label: dayAfterTomorrow.toDate().toLocaleDateString(["en-US"],
+            label: dayAfterTomorrow.toLocaleDateString(["en-US"],
                 {year: 'numeric', month: 'long', day: 'numeric'}),
-            value: dayAfterTomorrow
+            value: dayAfterTomorrow.toISOString()
         }
     ]
 }
 
-export const disabledDateTime = (dates: Dayjs[]): {
+export const disabledDateTime = (dates: Date[]): {
     disabledHours: () => number[],
     disabledMinutes: (selectedHour: number) => number[]
 } => ({
@@ -235,7 +234,7 @@ export interface DurationOption {
     value: number
 }
 
-export async function getDurationsOptions(date: Dayjs, step: number): Promise<DurationOption[]> {
+export async function getDurationsOptions(date: Date, step: number): Promise<DurationOption[]> {
     let data: number[] = await getDurationByTime(date, step);
 
     return data.map((x: number): DurationOption => {
@@ -247,11 +246,12 @@ export async function getDurationsOptions(date: Dayjs, step: number): Promise<Du
     })
 }
 
-export interface RoomOption{
-    label:string,
-    value:string,
+export interface RoomOption {
+    label: string,
+    value: string,
 }
-export async function getRoomsOptions(date: Dayjs, duration: number) {
+
+export async function getRoomsOptions(date: Date, duration: number) {
     let data: Room[] = await getRoomByTimeAndDuration(date, duration);
 
     return data.map((x: Room) => {
