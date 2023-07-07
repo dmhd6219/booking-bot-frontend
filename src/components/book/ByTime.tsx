@@ -97,6 +97,13 @@ const ByTime: FunctionComponent<{ typeOfTime: string, }> = ({typeOfTime = "Start
                 setRoom(value);
             }} disabled={!(dateSelected && timeSelected && rangeSelected)} value={room}/>
 
+            <Typography.Title>Test Title</Typography.Title>
+            <Input
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="by-room-input"
+            />
+
 
             <div>{buttonState?.show && <MainButton {...buttonState} onClick={() => {
                 // TODO change to tg.showConfirm

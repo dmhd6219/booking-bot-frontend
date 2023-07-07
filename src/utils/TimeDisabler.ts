@@ -1,8 +1,6 @@
 import {range, step} from "./Utils";
 import {getClosestRoundedTime} from "./BookingApi";
 import {Dayjs} from "dayjs";
-import {Moment} from "moment/moment";
-import moment from "moment";
 
 export const allHours = range(0, 24);
 export const allMinutes = range(0, 60, step);
