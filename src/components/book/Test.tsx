@@ -5,7 +5,7 @@ import {Dayjs} from 'dayjs';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
-import {isDebug, tg} from "../../utils/TelegramWebApp";
+import {isDebug, isTelegramWindow, tg} from "../../utils/TelegramWebApp";
 import {range} from "../../utils/Utils"
 
 import {
@@ -31,7 +31,7 @@ const Test: FunctionComponent = () => {
     const [, setRoomSelected] = useState(false);
 
     const [title, setTitle] = useState<string>("");
-    const [date, setDate] = useState<Date | null>(null);
+    const [date, setDate] = useState<string | null>(null);
     const [time, setTime] = useState<Dayjs | null>(null);
     const [duration, setDuration] = useState<number | null>(null);
     const [room, setRoom] = useState<string | null>(null);
@@ -66,19 +66,19 @@ const Test: FunctionComponent = () => {
         <div id={"test-book"}>
 
             <Typography.Title>Test Date</Typography.Title>
-            <Select size={"large"} onSelect={async (value: Date) => {
+            <Select size={"large"} onSelect={(value: string) => {
                 setDateSelected(true);
-                console.log("On Select (Date)")
+                console.log("On Select (Date) - " + value)
                 setDate(value);
                 setTime(null);
                 setDuration(null);
                 setRoom(null);
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
 
-                let completeStartDate: Date = new Date(value.toISOString());
-                completeStartDate.setHours(0, 0, 0, 0)
+                let cStartDate: Date = new Date(value);
+                cStartDate.setHours(0, 0, 0, 0)
 
-                setCompleteStartDate(completeStartDate);
+                setCompleteStartDate(cStartDate);
                 setCompleteEndDate(null);
 
             }} value={date} options={dateOptions}>
@@ -176,10 +176,12 @@ const Test: FunctionComponent = () => {
                 console.log(`Start - ${(completeStartDate as Date).toISOString()}`)
                 console.log(`End - ${(completeEndDate as Date).toISOString()}`)
 
-                console.log("tg id - " + await getUsersEmailByTgId(tg.initDataUnsafe.user.id))
 
-                bookRoom(room as string, title, (completeStartDate as Date).toISOString(), (completeEndDate as Date).toISOString(),
-                    "s.sviatkin@innopolis.university").then(r => console.log(r));
+                if (isTelegramWindow) {
+                    console.log("tg id - " + await getUsersEmailByTgId(tg.initDataUnsafe.user.id))
+                }
+                // bookRoom(room as string, title, (completeStartDate as Date).toISOString(), (completeEndDate as Date).toISOString(),
+                //     "s.sviatkin@innopolis.university").then(r => console.log(r));
 
 
             }} type="primary">Test Book</Button>}

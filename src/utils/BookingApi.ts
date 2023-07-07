@@ -26,7 +26,7 @@ export async function getRooms(): Promise<Room[]> {
 
 // type DateIso = `${number}${number}${number}${number}-${number}${number}-
 //         ${number}${number}T${number}${number}:${number}${number}:${number}${number}.${number}${number}${number}Z`
-type DateIso = string;
+export type DateIso = string;
 
 export async function getFreeRooms(start: DateIso, end: DateIso): Promise<Room[]> {
     console.log("Fetching free rooms...");
