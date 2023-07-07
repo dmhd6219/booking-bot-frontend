@@ -41,6 +41,5 @@ export async function getUsersEmailByTgId(id:string) {
     const userSnapshot = await getDocs(usersCol);
     let data = userSnapshot.docs.map(doc => doc.data());
 
-
-    return data.filter(elem => elem.tg_id === id)[0].email;
+    return data.filter(elem => elem.tg_id === id)[0].id;
 }

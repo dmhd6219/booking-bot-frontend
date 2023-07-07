@@ -178,7 +178,7 @@ const Test: FunctionComponent = () => {
 
 
                 if (isTelegramWindow) {
-                    console.log("tg id - " + await getUsersEmailByTgId(tg.initDataUnsafe.user.id))
+                    console.log("tg id - " + await getUsersEmailByTgId(tg.initDataUnsafe.user.id.toString()))
                 }
                 // bookRoom(room as string, title, (completeStartDate as Date).toISOString(), (completeEndDate as Date).toISOString(),
                 //     "s.sviatkin@innopolis.university").then(r => console.log(r));
@@ -210,7 +210,7 @@ const Test: FunctionComponent = () => {
                     if (id === "ok") {
 
                         bookRoom(room as string, title, (completeStartDate as Date).toISOString(), (completeEndDate as Date).toISOString(),
-                            await getUsersEmailByTgId(tg.initDataUnsafe.user.id)).then(r => console.log(r));
+                            await getUsersEmailByTgId(tg.initDataUnsafe.user.id.toString())).then(r => console.log(r));
                         // TODO : make a book
                         setTimeout(() => tg.close(), 500);
                     }
