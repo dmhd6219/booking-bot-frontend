@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {Input, Select, TimePicker, Typography} from "antd";
-import {MainButton, useShowPopup} from "@vkruglikov/react-telegram-web-app";
+import {BackButton, MainButton, useShowPopup} from "@vkruglikov/react-telegram-web-app";
 import {Dayjs} from 'dayjs';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -56,14 +56,16 @@ export default function ByTime() {
         if (isTelegramWindow) {
             tg.expand();
             tg.BackButton.show();
-            tg.BackButton.offClick(() => {
-                navigate("/")
-            });
         }
     }, [navigate])
 
     return (
         <div id={"time"}>
+            {buttonState.show &&
+                <BackButton onClick={() => {
+                    navigate("/")
+                }}/>
+            }
 
             <Typography.Title>Date</Typography.Title>
             <Select size={"large"} onSelect={(value: string) => {

@@ -6,6 +6,7 @@ import {Booking, bookingsQuery, deleteBooking, Filter} from "../utils/BookingApi
 import {timezone} from "../utils/Utils";
 import {isTelegramWindow, tg} from "../utils/TelegramWebApp";
 import {useNavigate} from "react-router-dom";
+import {BackButton} from "@vkruglikov/react-telegram-web-app";
 
 const CenteredSpace = styled.div`
   display: flex;
@@ -75,13 +76,18 @@ export default function MyBookingsPage() {
         if (isTelegramWindow){
             tg.expand();
             tg.BackButton.show();
-            tg.BackButton.offClick(() => {navigate("/")});
         }
         load()
     }, [navigate]);
 
     return (
         <div>
+            {buttonState.show &&
+                <BackButton onClick={() => {
+                    navigate("/")
+                }}/>
+            }
+
             <CenteredTitle>My Bookings</CenteredTitle>
             <CenteredSpace>
                 {loading && <CardWithPadding style={{width: 300}} loading={loading} actions={[<DeleteOutlined/>]}>
