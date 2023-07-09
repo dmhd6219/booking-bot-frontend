@@ -46,6 +46,8 @@ export default function MyBookingsPage() {
     // let bookings: Booking[];
 
     const load = async () => {
+        setLoading(true);
+
         let past = new Date();
         past.setFullYear(2020, 5, 5);
 
@@ -82,7 +84,7 @@ export default function MyBookingsPage() {
             tg.BackButton.show();
         }
         load()
-    }, [navigate]);
+    }, []);
 
     return (
         <div>
@@ -104,7 +106,8 @@ export default function MyBookingsPage() {
                                      actions={[<Button onClick={async () => {
                                          const result: boolean = await deleteBooking(booking.id);
                                          if (result) {
-                                             window.location.reload();
+                                             setCards([]);
+                                             load();
                                          }
                                      }}><DeleteOutlined/></Button>]}
                                      title={booking.title}
