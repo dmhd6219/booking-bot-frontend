@@ -48,7 +48,7 @@ export default function RulesPage() {
                     <p>Booking is not allowed anytime because of university classes</p>
                     <p>Usually you cannot book a room from 7:00 to 19:00</p>
                 </CardWithPadding>
-                <CardWithPadding title="Available rooms" extra={<Link to="/rooms">See rooms</Link>}
+                <CardWithPadding title="Available rooms" extra={<Link to="#">See rooms</Link>}
                                  style={{width: 300}}>
                     <p>You can book only rooms with Yellow access</p>
                     <p>You can see available for booking rooms by clicking "See rooms"</p>

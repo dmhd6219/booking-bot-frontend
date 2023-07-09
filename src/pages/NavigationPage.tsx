@@ -43,7 +43,7 @@ const NavigationPage = () => {
                     </BlockButton>
                 </BlockLink>
                 <BlockLink to="/rooms">
-                    <BlockButton type="default" block>
+                    <BlockButton type="default" block disabled>
                         All bookings
                     </BlockButton>
                 </BlockLink>
