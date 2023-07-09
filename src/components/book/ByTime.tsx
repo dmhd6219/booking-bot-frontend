@@ -154,6 +154,7 @@ const Test: FunctionComponent = () => {
 
 
             <div>{buttonState?.show && <MainButton {...buttonState} onClick={async () => {
+                console.log("Button pressed")
                 // TODO change to tg.showConfirm
                 showPopup({
                     title: `Confirm ${title}`,
@@ -166,16 +167,14 @@ const Test: FunctionComponent = () => {
                             id: "ok",
                             type: 'ok',
                         },
-                        // {
-                        //     type: 'close',
-                        // },
                         {
                             id: "cancel",
                             type: 'destructive',
                             text: 'Cancel',
                         },
                     ],
-                }).then(async (id) => {
+                }).then(async (id: string) => {
+                    console.log(id)
                     if (id === "ok") {
                         console.log(`Room - ${room}\nTitle - ${title}\nStart Date - ${(completeStartDate as Date).toISOString()}\nEnd Date - ${(completeEndDate as Date).toISOString()}`)
 
