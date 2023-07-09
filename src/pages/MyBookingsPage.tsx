@@ -5,6 +5,7 @@ import {DeleteOutlined} from '@ant-design/icons';
 import {Booking, bookingsQuery, deleteBooking, Filter} from "../utils/BookingApi";
 import {timezone} from "../utils/Utils";
 import {isTelegramWindow, tg} from "../utils/TelegramWebApp";
+import {useNavigate} from "react-router-dom";
 
 const CenteredSpace = styled.div`
   display: flex;
@@ -25,6 +26,7 @@ const CardWithPadding = styled(Card)`
 
 
 export default function MyBookingsPage() {
+    const navigate = useNavigate();
 
     const [loading, setLoading] = useState(true);
     const [cards, setCards] = useState<Booking[]>([]);
@@ -72,6 +74,7 @@ export default function MyBookingsPage() {
         if (isTelegramWindow){
             tg.expand();
             tg.BackButton.show();
+            tg.BackButton.offClick(() => {navigate("/")});
         }
         load()
     }, []);

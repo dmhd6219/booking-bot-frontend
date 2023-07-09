@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {Card, Typography} from "antd";
 import styled from "styled-components";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {isTelegramWindow, tg} from "../utils/TelegramWebApp";
 
 const CenteredSpace = styled.div`
@@ -22,10 +22,13 @@ const CardWithPadding = styled(Card)`
 `
 export default function RulesPage() {
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         if (isTelegramWindow) {
             tg.expand();
             tg.BackButton.show();
+            tg.BackButton.offClick(() => {navigate("/")});
         }
     }, []);
 

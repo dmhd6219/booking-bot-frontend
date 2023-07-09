@@ -17,6 +17,7 @@ import {
 import {getUsersEmailByTgId} from "../../utils/Firebase";
 
 import {range, step, timezone} from "../../utils/Utils";
+import {useNavigate} from "react-router-dom";
 
 dayjs.extend(customParseFormat);
 const Test: FunctionComponent = () => {
@@ -47,6 +48,7 @@ const Test: FunctionComponent = () => {
         progress: false,
         disable: false,
     });
+    const navigate = useNavigate();
 
     const showPopup = useShowPopup();
     useEffect(() => {
@@ -54,6 +56,7 @@ const Test: FunctionComponent = () => {
         if (isTelegramWindow) {
             tg.expand();
             tg.BackButton.show();
+            tg.BackButton.offClick(() => {navigate("/")});
         }
     }, [])
 
