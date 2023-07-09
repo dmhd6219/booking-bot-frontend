@@ -14,13 +14,7 @@ Also you can try open demo telegram bot with Rules page [@web_app_react_test2_bo
 
 :two: **Install dependencies** by running:
 ```
-yarn add react
-yarn add react-router-dom
-yarn add react-router-hash-link
-yarn add antd
-yarn add styled-components
-yarn add @vkruglikov/react-telegram-web-app
-yarn add firebase
+yarn add
 ```
 
 :three: **Add API url** to .env file.

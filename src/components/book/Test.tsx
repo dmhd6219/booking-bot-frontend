@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 import {isDebug, isTelegramWindow, tg} from "../../utils/TelegramWebApp";
-import {range} from "../../utils/Utils"
+import {range, timezone} from "../../utils/Utils"
 
 import {
     bookRoom, DateOption, DurationOption,
@@ -90,13 +90,13 @@ const Test: FunctionComponent = () => {
                         minuteStep={step} size={"large"} onSelect={async (value: Dayjs) => {
                 setTimeSelected(true);
 
-                console.log("On Select (Time)");
+                console.log(`On Select (Time) - ${value.toISOString()}`);
                 setTime(value);
                 setDuration(null);
                 setRoom(null);
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
 
-                (completeStartDate as Date).setHours(value.hour(), value.minute());
+                (completeStartDate as Date).setHours(value.hour() + timezone, value.minute());
 
                 setCompleteStartDate(completeStartDate);
                 setCompleteEndDate(null);
@@ -121,13 +121,13 @@ const Test: FunctionComponent = () => {
             <Typography.Title>Test Duration of Booking</Typography.Title>
             <Select size={"large"} onSelect={async (value: number) => {
                 setRangeSelected(true);
-                console.log("On Select (Range)");
+                console.log(`On Select (Range) - ${value}`);
                 setDuration(value);
                 setRoom(null);
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
 
                 let cEndDate: Date = new Date((completeStartDate as Date).toISOString());
-                cEndDate.setMinutes((completeStartDate as Date).getMinutes() + (duration as number));
+                cEndDate.setMinutes((cEndDate as Date).getMinutes() + value);
                 setCompleteEndDate(cEndDate);
 
                 setRoomOptions([]);
@@ -180,8 +180,11 @@ const Test: FunctionComponent = () => {
                 if (isTelegramWindow) {
                     console.log("tg id - " + await getUsersEmailByTgId(tg.initDataUnsafe.user.id.toString()))
                 }
-                // bookRoom(room as string, title, (completeStartDate as Date).toISOString(), (completeEndDate as Date).toISOString(),
-                //     "s.sviatkin@innopolis.university").then(r => console.log(r));
+
+                else{
+                    bookRoom(room as string, title, (completeStartDate as Date).toISOString(), (completeEndDate as Date).toISOString(),
+                        "s.sviatkin@innopolis.university").then(r => console.log(r));
+                }
 
 
             }} type="primary">Test Book</Button>}

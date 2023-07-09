@@ -1,8 +1,8 @@
 import React from 'react'
 import {Card, Typography} from "antd";
 import styled from "styled-components";
-import {getUsers, getUsersEmailByTgId, setNewUser} from "../utils/Firebase";
-import {isDebug, isTelegramWindow} from "../utils/TelegramWebApp";
+import {getUsers, setNewUser} from "../utils/Firebase";
+import {getRooms} from "../utils/BookingApi";
 
 const CenteredSpace = styled.div`
   display: flex;
@@ -39,11 +39,11 @@ export default function TestPage() {
                 <CardWithPadding title="Literally Debug" style={{width: 300}}>
                     <button
                         onClick={async () => {
-                            console.log(`Telegram window - ${isTelegramWindow}, Debug - ${isDebug}`)
+                            // console.log(`Telegram window - ${isTelegramWindow}, Debug - ${isDebug}`)
 
-                            console.log(getUsersEmailByTgId("1328906598"));
+                            // console.log(getUsersEmailByTgId("1328906598"));
 
-
+                            console.log(getRooms())
 
                         }}>Press to debug
                     </button>

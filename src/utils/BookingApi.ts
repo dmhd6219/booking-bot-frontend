@@ -1,4 +1,6 @@
 import {getDisabledHours, getDisabledMinutes} from "./TimeDisabler";
+import axios, {AxiosResponse} from "axios";
+import {timezone} from "./Utils";
 
 export const apiUrl: string = `${process.env.REACT_APP_API_URL}`;
 export const roomsUrl: string = `${apiUrl}/rooms`;
@@ -17,11 +19,13 @@ interface Room {
     capacity: number
 }
 
+
 export async function getRooms(): Promise<Room[]> {
     console.log("Fetching rooms...");
-    let response = await fetch(roomsUrl);
 
-    return response.json();
+    let response: AxiosResponse = await axios.get(roomsUrl);
+
+    return response.data;
 }
 
 // type DateIso = `${number}${number}${number}${number}-${number}${number}-
@@ -31,15 +35,9 @@ export type DateIso = string;
 export async function getFreeRooms(start: DateIso, end: DateIso): Promise<Room[]> {
     console.log("Fetching free rooms...");
 
-    let response = await fetch(freeRoomsUrl, {
-        method: 'POST',
-        body: JSON.stringify({
-            start: start,
-            end: end
-        })
-    });
+    let response: AxiosResponse = await axios.post(freeRoomsUrl, JSON.stringify({start: start, end: end}));
 
-    return response.json();
+    return response.data;
 
 }
 
@@ -54,7 +52,7 @@ interface Booking {
     owner_email: UniversityEmail;
 }
 
-export async function bookRoom(id: string, title: string, start: DateIso, end: DateIso, owner_email: UniversityEmail) {
+export async function bookRoom(id: string, title: string, start: DateIso, end: DateIso, owner_email: UniversityEmail): Promise<Booking> {
     console.log("Fetching book rooms...");
 
     let body = JSON.stringify({
@@ -66,14 +64,11 @@ export async function bookRoom(id: string, title: string, start: DateIso, end: D
 
     console.log(body)
 
-    let response = await fetch(bookRoomUrl(id), {
-        method: 'POST',
-        body: body
-    });
+    let response: AxiosResponse = await axios.post(bookRoomUrl(id), body);
 
     console.log(`Book response - ${response.status}`)
 
-    return response.json();
+    return response.data;
 }
 
 interface Filter {
@@ -86,25 +81,17 @@ interface Filter {
 export async function bookingsQuery(filter: Filter): Promise<Booking[]> {
     console.log("Fetching books query...");
 
-    let response = await fetch(bookingsQueryUrl, {
-        method: 'POST',
-        body: JSON.stringify({
-            filter: filter
-        })
-    });
-
-    return response.json();
+    let response: AxiosResponse = await axios.post(bookingsQueryUrl, JSON.stringify({filter: filter}));
+    return response.data;
 }
 
 
 export async function deleteBooking(id: string): Promise<boolean> {
     console.log("Deleting rooms...");
 
-    let response = await fetch(deleteBookingUrl(id), {
-        method: 'DELETE'
-    });
+    let response: AxiosResponse = await axios.delete(deleteBookingUrl(id));
 
-    return response.ok;
+    return response.status === 200;
 }
 
 // actually logic
@@ -166,7 +153,7 @@ export async function getDurationByTime(date: Date, step: number): Promise<numbe
 
 export async function getRoomByTimeAndDuration(date: Date, duration: number): Promise<Room[]> {
     let startDate: Date = new Date(date.toISOString());
-    startDate.setSeconds(0,0)
+    startDate.setSeconds(0, 0)
 
     let endDate: Date = new Date(startDate.toISOString());
     endDate.setMinutes(endDate.getMinutes() + duration);
@@ -191,7 +178,7 @@ export interface DateOption {
 
 export function getOptionsOfDate(): DateOption[] {
     let today: Date = new Date();
-    today.setHours(0,0,0,0)
+    today.setHours(timezone, 0, 0, 0)
 
     let tomorrow: Date = new Date(today.toISOString());
     tomorrow.setDate(today.getDate() + 1);
@@ -236,8 +223,9 @@ export async function getDurationsOptions(date: Date, step: number): Promise<Dur
 
     return data.map((x: number): DurationOption => {
         let hours: number = Math.floor(x / 60);
+        let minutes : number = x % 60;
         return {
-            label: `${hours > 0 ? hours + " Hour" + (hours > 1 ? "s " : "") : ""} ${x % 60 > 0 ? x % 60 + " Minutes" : ""}`,
+            label: `${hours > 0 ? hours + " Hour" + (hours > 1 ? "s " : "") : ""} ${minutes > 0 ? minutes + " Minutes" : ""}`,
             value: x
         }
     })
