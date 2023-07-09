@@ -2,15 +2,14 @@ import './index.css';
 import './components/antd-elements.css';
 
 import {Logo} from "./components/Logo";
-import Pages from "./pages/Pages";
 
-import React from "react";
-import {BrowserRouter} from "react-router-dom";
 import styled from "styled-components";
 import {ConfigProvider, theme} from 'antd';
 import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
 import locale from 'antd/locale/en_US';
-import {isDebug, isTelegramWindow} from "./utils/TelegramWebApp";
+import Pages from "./pages/Pages";
+import React from "react";
+import {BrowserRouter} from "react-router-dom";
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -29,11 +28,6 @@ const BigHeader = styled.div`
 
 function App(): JSX.Element {
     const [colorScheme, themeParams] = useThemeParams();
-
-    if (!isTelegramWindow && !isDebug) {
-        return <p>Open Telegram Web App!!!</p>
-    }
-
     return (
         <ConfigProvider
             theme={
@@ -54,7 +48,7 @@ function App(): JSX.Element {
             locale={locale}
         >
             <BigHeader>
-                <Logo  lang="en" fill={colorScheme === "dark" ? "white" : "black"}/>
+                <Logo lang="en" fill={colorScheme === "dark" ? "white" : "black"}/>
             </BigHeader>
             <Wrapper>
                 <BrowserRouter>

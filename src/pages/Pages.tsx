@@ -1,9 +1,8 @@
 import React from 'react'
 import {Route, Routes, useLocation} from "react-router-dom";
-
 import BookingPage from "./BookingPage";
 import RulesPage from "./RulesPage";
-import TestPage from "./TestPage";
+import NavigationPage from './NavigationPage';
 
 const Pages: React.FC = () => {
     const location = useLocation();
@@ -12,7 +11,7 @@ const Pages: React.FC = () => {
         <Routes location={location} key={location.pathname}>
             <Route path="/" element={<BookingPage/>}/>
             <Route path="/rules" element={<RulesPage/>}/>
-            <Route path="/test" element={<TestPage/>}/>
+            <Route path="/navigation" element={<NavigationPage/>}/>
         </Routes>
     )
 }
