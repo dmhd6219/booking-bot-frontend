@@ -38,6 +38,7 @@ export default function RulesPage() {
         <div>
             {buttonState.show &&
                 <BackButton onClick={() => {
+                    console.log("clicked")
                     navigate("/")
                 }}/>
             }
