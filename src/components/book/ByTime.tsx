@@ -1,14 +1,30 @@
-import React, {FunctionComponent, useState} from 'react'
+import React, {FunctionComponent, useEffect, useState} from 'react'
 import {Input, Select, TimePicker, Typography} from "antd";
 import {MainButton, useShowPopup} from "@vkruglikov/react-telegram-web-app";
-import type {Dayjs} from 'dayjs';
+import {Dayjs} from 'dayjs';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 import {tg} from "../../utils/TelegramWebApp";
+import {range, timezone} from "../../utils/Utils"
+
+import {
+    bookRoom, DateOption, DurationOption,
+    getDurationsOptions,
+    getOptionsOfDate,
+    getRoomsOptions,
+    RoomOption
+} from "../../utils/BookingApi";
+import {getUsersEmailByTgId} from "../../utils/Firebase";
+
+import {step} from "../../utils/Utils";
 
 dayjs.extend(customParseFormat);
-const ByTime: FunctionComponent<{ typeOfTime: string, }> = ({typeOfTime = "Start",},) => {
+const Test: FunctionComponent = () => {
+    const [dateOptions, setDateOptions] = useState<DateOption[]>([]);
+    const [durationOptions, setDurationOptions] = useState<DurationOption[]>([]);
+    const [roomOptions, setRoomOptions] = useState<RoomOption[]>([]);
+
     const [dateSelected, setDateSelected] = useState(false);
     const [timeSelected, setTimeSelected] = useState(false);
     const [rangeSelected, setRangeSelected] = useState(false);
@@ -17,8 +33,13 @@ const ByTime: FunctionComponent<{ typeOfTime: string, }> = ({typeOfTime = "Start
     const [title, setTitle] = useState<string>("");
     const [date, setDate] = useState<string | null>(null);
     const [time, setTime] = useState<Dayjs | null>(null);
-    const [range, setRange] = useState<string | null>(null);
+    const [duration, setDuration] = useState<number | null>(null);
     const [room, setRoom] = useState<string | null>(null);
+
+    const [completeStartDate, setCompleteStartDate] = useState<Date | null>(null);
+    const [completeEndDate, setCompleteEndDate] = useState<Date | null>(null);
+    const [loadingDurations, setLoadingDurations] = useState<boolean>(false);
+    const [loadingRooms, setLoadingRooms] = useState<boolean>(false);
 
 
     const [buttonState, setButtonState] = useState({
@@ -29,75 +50,103 @@ const ByTime: FunctionComponent<{ typeOfTime: string, }> = ({typeOfTime = "Start
     });
 
     const showPopup = useShowPopup();
-    // const [popupState, setPopupState] = useState<
-    //     Pick<ShowPopupParams, 'title' | 'message'>
-    //   >({
-    //     title: 'title',
-    //     message: 'message',
-    //   });
+    useEffect(() => {
+        setDateOptions(getOptionsOfDate());
+    }, [])
 
 
     return (
-        <div id={"sort-by-start-time"}>
+        <div id={"time"}>
+
             <Typography.Title>Date</Typography.Title>
             <Select size={"large"} onSelect={(value: string) => {
                 setDateSelected(true);
-                console.log("On Select (Date)")
+                console.log("On Select (Date) - " + value)
                 setDate(value);
                 setTime(null);
-                setRange(null);
+                setDuration(null);
                 setRoom(null);
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
-                // TODO reload changes from backend
-            }} value={date}>
-                <Select.Option value="20.06.2022">20.06.2022</Select.Option>
-                <Select.Option value="21.06.2022">21.06.2022</Select.Option>
-                <Select.Option value="22.06.2022">22.06.2022</Select.Option>
+
+                let cStartDate: Date = new Date(value);
+                cStartDate.setHours(timezone, 0, 0, 0)
+
+                setCompleteStartDate(cStartDate);
+                setCompleteEndDate(null);
+
+            }} value={date} options={dateOptions}>
             </Select>
 
-            <Typography.Title>Time of {typeOfTime}</Typography.Title>
-            {/*TODO make different versions that depend on time*/}
+            <Typography.Title>Time of Start</Typography.Title>
             <TimePicker inputReadOnly={true}
                         format={"HH:mm"}
-                        minuteStep={5} size={"large"} onSelect={(value) => {
+                        minuteStep={step} size={"large"} onSelect={async (value: Dayjs) => {
                 setTimeSelected(true);
-                console.log("On Select (Time)");
+
+                console.log(`On Select (Time) - ${value.toISOString()}`);
                 setTime(value);
-                setRange(null);
+                setDuration(null);
                 setRoom(null);
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
+
+                (completeStartDate as Date).setHours(value.hour() + timezone, value.minute());
+
+                setCompleteStartDate(completeStartDate);
+                setCompleteEndDate(null);
+
+                setDurationOptions([]);
+                setRoomOptions([]);
+                setLoadingDurations(true);
                 // TODO reload changes from backend
-            }} disabled={!dateSelected} value={time}/>
+            }} disabled={!dateSelected} value={time} disabledTime={() => {
+                return {
+                    disabledHours: () => range(7, 19)
+                }
+            }} showNow={false} onOpenChange={async (open: boolean) => {
+                if (!open) {
+                    setDurationOptions(await getDurationsOptions((completeStartDate as Date), step).then((r: DurationOption[]) => {
+                        setLoadingDurations(false);
+                        return r;
+                    }))
+                }
+            }}/>
 
             <Typography.Title>Duration of Booking</Typography.Title>
-            <Select options={[
-                {value: '30', label: '30 Minutes'},
-                {value: '60', label: '1 Hour'},
-                {value: '90', label: '1.5 Hours'},
-                {value: '120', label: '2 Hours'},
-                {value: '150', label: '2.5 Hours'},
-                {value: '180', label: '3 Hours'},
-            ]} size={"large"} onSelect={(value) => {
+            <Select size={"large"} onSelect={async (value: number) => {
                 setRangeSelected(true);
-                console.log("On Select (Range)");
-                setRange(value);
+                console.log(`On Select (Range) - ${value}`);
+                setDuration(value);
                 setRoom(null);
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
+
+                let cEndDate: Date = new Date((completeStartDate as Date).toISOString());
+                cEndDate.setMinutes((cEndDate as Date).getMinutes() + value);
+                setCompleteEndDate(cEndDate);
+
+                setRoomOptions([]);
+                setLoadingRooms(true);
                 // TODO reload changes from backend
-            }} disabled={(!(dateSelected && timeSelected))} value={range}/>
+            }} disabled={(!(dateSelected && timeSelected))} value={duration} options={durationOptions}
+                    loading={loadingDurations} onDropdownVisibleChange={async (open: boolean) => {
+                if (!open) {
+                    setRoomOptions(await getRoomsOptions((completeStartDate as Date), duration as number).then((r: RoomOption[]) => {
+                        setLoadingRooms(false);
+                        return r;
+                    }));
+                }
+            }}/>
 
             <Typography.Title>Room</Typography.Title>
-            <Select options={[
-                {value: '304', label: '304'},
-            ]} size={"large"} onSelect={(value) => {
+            <Select size={"large"} onSelect={(value) => {
                 setRoomSelected(() => {
                     setButtonState({text: "BOOK", show: true, progress: false, disable: false,});
                     return true;
                 });
                 setRoom(value);
-            }} disabled={!(dateSelected && timeSelected && rangeSelected)} value={room}/>
+            }} disabled={!(dateSelected && timeSelected && rangeSelected)} value={room} options={roomOptions}
+                    loading={loadingRooms}/>
 
-            <Typography.Title>Test Title</Typography.Title>
+            <Typography.Title>Title</Typography.Title>
             <Input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -105,11 +154,11 @@ const ByTime: FunctionComponent<{ typeOfTime: string, }> = ({typeOfTime = "Start
             />
 
 
-            <div>{buttonState?.show && <MainButton {...buttonState} onClick={() => {
+            <div>{buttonState?.show && <MainButton {...buttonState} onClick={async () => {
                 // TODO change to tg.showConfirm
                 showPopup({
                     title: `Confirm ${title}`,
-                    message: `Book ${room} at ${time} for ${range} minutes?`,
+                    message: `Book ${room} at ${time} for ${duration} minutes?`,
                     buttons: [
                         {
                             id: "ok",
@@ -124,8 +173,11 @@ const ByTime: FunctionComponent<{ typeOfTime: string, }> = ({typeOfTime = "Start
                             text: 'Cancel',
                         },
                     ],
-                }).then(id => {
+                }).then(async (id) => {
                     if (id === "ok") {
+
+                        bookRoom(room as string, title, (completeStartDate as Date).toISOString(), (completeEndDate as Date).toISOString(),
+                            await getUsersEmailByTgId(tg.initDataUnsafe.user.id.toString())).then(r => console.log(r));
                         // TODO : make a book
                         setTimeout(() => tg.close(), 500);
                     }
@@ -136,4 +188,4 @@ const ByTime: FunctionComponent<{ typeOfTime: string, }> = ({typeOfTime = "Start
     )
 }
 
-export default ByTime;
+export default Test;
