@@ -157,7 +157,7 @@ const Test: FunctionComponent = () => {
                 // TODO change to tg.showConfirm
                 showPopup({
                     title: `Confirm ${title}`,
-                    message: `Book ${room} at ${(completeEndDate as Date).toLocaleTimeString(["en-US"], {
+                    message: `Book ${room} at ${(completeStartDate as Date).toLocaleTimeString(["ru-RU"], {
                         hour: '2-digit',
                         minute: '2-digit'
                     })} for ${duration} minutes?`,
