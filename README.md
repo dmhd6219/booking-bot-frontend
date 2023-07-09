@@ -38,7 +38,7 @@ REACT_APP_FIREBASE_APP_ID='firebase app id'
 
 :six: **Try it out** by running:
 ```
-yarn start
+npm install
 ```
 
 
