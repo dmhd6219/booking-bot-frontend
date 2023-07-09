@@ -6,19 +6,23 @@
     "Rules": {
       "Title": "Rules",
       "FirstRule": {
+        "Title" : "Booking time",
         "FirstParagraph": "Booking is not allowed anytime because of university classes",
         "SecondParagraph": "Usually you cannot book a room from 7:00 to 19:00"
       },
       "SecondRule": {
+        "Title" : "Available rooms",
         "FirstParagraph": "You can book only rooms with Yellow access",
         "SecondParagraph": "You can see available for booking rooms by clicking \"See rooms\"",
         "Button": "See rooms"
       },
       "ThirdRule": {
+        "Title" : "Booking time",
         "FirstParagraph": "You can book one room not more than 3 horus per day",
         "SecondParagraph": "In case you need more, other people can book it again"
       },
       "FourthRule": {
+        "Title" : "Please respect",
         "FirstParagraph": "Your booking can be removed by administrators for some important events or classes",
         "SecondParagraph": "You will be informed in this case"
       }

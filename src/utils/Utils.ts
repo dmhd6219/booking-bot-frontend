@@ -21,19 +21,23 @@ export interface Localization {
     "Rules": {
         "Title": string,
         "FirstRule": {
+            "Title" : string,
             "FirstParagraph": string,
             "SecondParagraph": string
         },
         "SecondRule": {
+            "Title" : string,
             "FirstParagraph": string,
             "SecondParagraph": string,
             "Button": string
         },
         "ThirdRule": {
+            "Title" : string,
             "FirstParagraph": string,
             "SecondParagraph": string
         },
         "FourthRule": {
+            "Title" : string,
             "FirstParagraph": string,
             "SecondParagraph": string
         }
