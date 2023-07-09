@@ -25,10 +25,11 @@ export default function RulesPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log("opened 1st time");
         if (isTelegramWindow) {
             tg.expand();
             tg.BackButton.show();
-            tg.BackButton.offClick(() => {navigate("/")});
+            tg.BackButton.offClick(() => {console.log("clicked");navigate("/")});
         }
     }, [navigate]);
 
