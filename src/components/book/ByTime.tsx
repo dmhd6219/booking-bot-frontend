@@ -16,7 +16,7 @@ import {
 } from "../../utils/BookingApi";
 import {getUsersEmailByTgId} from "../../utils/Firebase";
 
-import {range, step} from "../../utils/Utils";
+import {range, step, timezone} from "../../utils/Utils";
 
 dayjs.extend(customParseFormat);
 const Test: FunctionComponent = () => {
@@ -88,7 +88,7 @@ const Test: FunctionComponent = () => {
                 setRoom(null);
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
 
-                (completeStartDate as Date).setHours(value.hour(), value.minute());
+                (completeStartDate as Date).setHours(timezone + value.hour(), value.minute());
 
                 setCompleteStartDate(completeStartDate);
                 setCompleteEndDate(null);

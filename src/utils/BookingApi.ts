@@ -1,6 +1,5 @@
 import {getDisabledHours, getDisabledMinutes} from "./TimeDisabler";
 import axios, {AxiosResponse} from "axios";
-import {timezone} from "./Utils";
 
 export const apiUrl: string = `${process.env.REACT_APP_API_URL}`;
 export const roomsUrl: string = `${apiUrl}/rooms`;
@@ -179,7 +178,7 @@ export interface DateOption {
 
 export function getOptionsOfDate(): DateOption[] {
     let today: Date = new Date();
-    today.setHours(timezone, 0, 0, 0)
+    today.setHours(0, 0, 0, 0)
 
     let tomorrow: Date = new Date(today.toISOString());
     tomorrow.setDate(today.getDate() + 1);
