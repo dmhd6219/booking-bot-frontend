@@ -6,7 +6,6 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 import {tg} from "../../utils/TelegramWebApp";
-import {range, timezone} from "../../utils/Utils"
 
 import {
     bookRoom, DateOption, DurationOption,
@@ -17,7 +16,7 @@ import {
 } from "../../utils/BookingApi";
 import {getUsersEmailByTgId} from "../../utils/Firebase";
 
-import {step} from "../../utils/Utils";
+import {range, step} from "../../utils/Utils";
 
 dayjs.extend(customParseFormat);
 const Test: FunctionComponent = () => {
@@ -89,7 +88,7 @@ const Test: FunctionComponent = () => {
                 setRoom(null);
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
 
-                (completeStartDate as Date).setHours(value.hour() + timezone, value.minute());
+                (completeStartDate as Date).setHours(value.hour(), value.minute());
 
                 setCompleteStartDate(completeStartDate);
                 setCompleteEndDate(null);
@@ -158,7 +157,10 @@ const Test: FunctionComponent = () => {
                 // TODO change to tg.showConfirm
                 showPopup({
                     title: `Confirm ${title}`,
-                    message: `Book ${room} at ${time} for ${duration} minutes?`,
+                    message: `Book ${room} at ${(completeEndDate as Date).toLocaleTimeString(["en-US"], {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    })} for ${duration} minutes?`,
                     buttons: [
                         {
                             id: "ok",
