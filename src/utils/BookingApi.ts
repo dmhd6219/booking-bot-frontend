@@ -43,7 +43,7 @@ export async function getFreeRooms(start: DateIso, end: DateIso): Promise<Room[]
 
 type UniversityEmail = `${string}.${string}@innopolis.university`;
 
-interface Booking {
+export interface Booking {
     id: string,
     title: string,
     start: string,
@@ -71,7 +71,7 @@ export async function bookRoom(id: string, title: string, start: DateIso, end: D
     return response.data;
 }
 
-interface Filter {
+export interface Filter {
     started_at_or_after?: DateIso,
     ended_at_or_before?: DateIso,
     room_id_in?: string[],
@@ -82,6 +82,7 @@ export async function bookingsQuery(filter: Filter): Promise<Booking[]> {
     console.log("Fetching books query...");
 
     let response: AxiosResponse = await axios.post(bookingsQueryUrl, JSON.stringify({filter: filter}));
+    console.log("Fetched query")
     return response.data;
 }
 

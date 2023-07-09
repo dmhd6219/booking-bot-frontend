@@ -48,6 +48,6 @@ Here's what's coming up:
 
 - [ ] Localization.
 - [ ] Page with all bookings.
-- [ ] Page with user's bookings and availability to change them.
+- [x] Page with user's bookings and availability to delete them.
 - [x] Page with rules.
 - [x] Main booking features support.

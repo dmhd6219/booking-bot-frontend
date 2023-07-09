@@ -69,7 +69,7 @@ const Test: FunctionComponent = () => {
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
 
                 let cStartDate: Date = new Date(value);
-                cStartDate.setHours(timezone, 0, 0, 0)
+                cStartDate.setHours(0, 0, 0, 0)
 
                 setCompleteStartDate(cStartDate);
                 setCompleteEndDate(null);
