@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Input, Select, TimePicker, Typography} from "antd";
 import {MainButton, useShowPopup} from "@vkruglikov/react-telegram-web-app";
 import {Dayjs} from 'dayjs';
@@ -20,7 +20,7 @@ import {range, step, timezone} from "../../utils/Utils";
 import {useNavigate} from "react-router-dom";
 
 dayjs.extend(customParseFormat);
-const Test: FunctionComponent = () => {
+export default function ByTime() {
     const [dateOptions, setDateOptions] = useState<DateOption[]>([]);
     const [durationOptions, setDurationOptions] = useState<DurationOption[]>([]);
     const [roomOptions, setRoomOptions] = useState<RoomOption[]>([]);
@@ -56,10 +56,11 @@ const Test: FunctionComponent = () => {
         if (isTelegramWindow) {
             tg.expand();
             tg.BackButton.show();
-            tg.BackButton.offClick(() => {navigate("/")});
+            tg.BackButton.offClick(() => {
+                navigate("/")
+            });
         }
     }, [])
-
 
     return (
         <div id={"time"}>
@@ -195,5 +196,3 @@ const Test: FunctionComponent = () => {
         </div>
     )
 }
-
-export default Test;
