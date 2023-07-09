@@ -76,7 +76,7 @@ const Test: FunctionComponent = () => {
                 setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
 
                 let cStartDate: Date = new Date(value);
-                cStartDate.setHours(0, 0, 0, 0)
+                cStartDate.setHours(timezone, 0, 0, 0)
 
                 setCompleteStartDate(cStartDate);
                 setCompleteEndDate(null);
@@ -179,9 +179,7 @@ const Test: FunctionComponent = () => {
 
                 if (isTelegramWindow) {
                     console.log("tg id - " + await getUsersEmailByTgId(tg.initDataUnsafe.user.id.toString()))
-                }
-
-                else{
+                } else {
                     bookRoom(room as string, title, (completeStartDate as Date).toISOString(), (completeEndDate as Date).toISOString(),
                         "s.sviatkin@innopolis.university").then(r => console.log(r));
                 }
