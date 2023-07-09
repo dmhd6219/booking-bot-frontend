@@ -193,9 +193,11 @@ export default function ByTime() {
                     if (id === "ok") {
                         console.log(`Room - ${room}\nTitle - ${title}\nStart Date - ${cStartDate.toISOString()}\nEnd Date - ${(completeEndDate as Date).toISOString()}`)
                         bookRoom(room as string, title, (completeStartDate as Date).toISOString(), (completeEndDate as Date).toISOString(),
-                            await getUsersEmailByTgId(tg.initDataUnsafe.user.id.toString())).then(r => console.log(r));
+                            await getUsersEmailByTgId(tg.initDataUnsafe.user.id.toString())).then(r => {
+                            console.log(r);
+                            navigate("/");
+                        });
                         // TODO : make a book
-                        setTimeout(() => navigate("/"), 500);
                     }
                 })
             }}/>}</div>
