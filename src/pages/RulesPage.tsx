@@ -1,6 +1,8 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {Card, Typography} from "antd";
 import styled from "styled-components";
+import {Link} from "react-router-dom";
+import {isTelegramWindow, tg} from "../utils/TelegramWebApp";
 
 const CenteredSpace = styled.div`
 display: flex;
@@ -19,6 +21,13 @@ const CardWithPadding = styled(Card)`
   margin-bottom: 5px;
 `
 export default function RulesPage() {
+
+    useEffect(() => {
+        if (isTelegramWindow) {
+            tg.expand();
+        }
+    }, []);
+
     return (
         <div>
             <CenteredTitle>Rules</CenteredTitle>
@@ -27,7 +36,7 @@ export default function RulesPage() {
                     <p>Booking is not allowed anytime because of university classes</p>
                     <p>Usually you cannot book a room from 7:00 to 19:00</p>
                 </CardWithPadding>
-                <CardWithPadding title="Available rooms" extra={<a href="/map">See rooms</a>} style={{ width: 300 }}>
+                <CardWithPadding title="Available rooms" extra={<Link to="/rooms">See rooms</Link>} style={{ width: 300 }}>
                     <p>You can book only rooms with Yellow access</p>
                     <p>You can see available for booking rooms by clicking "See rooms"</p>
                 </CardWithPadding>

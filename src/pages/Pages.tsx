@@ -10,9 +10,9 @@ const Pages: React.FC = () => {
 
     return (
         <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<BookingPage/>}/>
+            <Route path="/" element={<NavigationPage/>}/>
+            <Route path="/book" element={<BookingPage/>}/>
             <Route path="/rules" element={<RulesPage/>}/>
-            <Route path="/navigation" element={<NavigationPage/>}/>
             <Route path="/my" element={<MyBookingsPage/>}/>
         </Routes>
     )

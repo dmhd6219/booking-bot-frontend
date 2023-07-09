@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Button, Typography } from "antd";
+import {Link} from "react-router-dom";
+import {Button, Typography} from "antd";
 import styled from "styled-components";
 
 const CenteredSpace = styled.div`
@@ -27,39 +27,33 @@ const BlockLink = styled(Link)`
 `;
 
 const NavigationPage = () => {
-  return (
-    <div>
-      <CenteredSpace>
-        <CenteredTitle>Navigation</CenteredTitle>
-        <BlockLink to="/">
-          <BlockButton type="default" block>
-            Book a room
-          </BlockButton>
-        </BlockLink>
-        <BlockLink to="/rules">
-          <BlockButton type="default" block>
-            All bookings
-          </BlockButton>
-        </BlockLink>
-        <BlockLink to="/rules">
-          <BlockButton type="default" block>
-            My bookings
-          </BlockButton>
-        </BlockLink>
-        <BlockLink to="/rules">
-          <BlockButton type="default" block>
-            Map
-          </BlockButton>
-        </BlockLink>
-
-        <BlockLink to="/rules">
-          <BlockButton type="default" block>
-            Rules
-          </BlockButton>
-        </BlockLink>
-      </CenteredSpace>
-    </div>
-  );
+    return (
+        <div>
+            <CenteredSpace>
+                <CenteredTitle>Navigation</CenteredTitle>
+                <BlockLink to="/book">
+                    <BlockButton type="default" block>
+                        Book a room
+                    </BlockButton>
+                </BlockLink>
+                <BlockLink to="/rooms">
+                    <BlockButton type="default" block>
+                        All bookings
+                    </BlockButton>
+                </BlockLink>
+                <BlockLink to="/my">
+                    <BlockButton type="default" block>
+                        My bookings
+                    </BlockButton>
+                </BlockLink>
+                <BlockLink to="/rules">
+                    <BlockButton type="default" block>
+                        Rules
+                    </BlockButton>
+                </BlockLink>
+            </CenteredSpace>
+        </div>
+    );
 };
 
 export default NavigationPage;

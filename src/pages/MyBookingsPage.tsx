@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {DeleteOutlined} from '@ant-design/icons';
 import {Booking, bookingsQuery, deleteBooking, Filter} from "../utils/BookingApi";
 import {timezone} from "../utils/Utils";
+import {isTelegramWindow, tg} from "../utils/TelegramWebApp";
 
 const CenteredSpace = styled.div`
   display: flex;
@@ -68,6 +69,9 @@ export default function MyBookingsPage() {
     }
 
     useEffect(() => {
+        if (isTelegramWindow){
+            tg.expand();
+        }
         load()
     }, []);
 

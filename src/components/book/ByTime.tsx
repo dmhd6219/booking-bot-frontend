@@ -5,7 +5,7 @@ import {Dayjs} from 'dayjs';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
-import {tg} from "../../utils/TelegramWebApp";
+import {isTelegramWindow, tg} from "../../utils/TelegramWebApp";
 
 import {
     bookRoom, DateOption, DurationOption,
@@ -51,6 +51,9 @@ const Test: FunctionComponent = () => {
     const showPopup = useShowPopup();
     useEffect(() => {
         setDateOptions(getOptionsOfDate());
+        if (isTelegramWindow) {
+            tg.expand();
+        }
     }, [])
 
 
