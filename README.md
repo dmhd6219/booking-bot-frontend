@@ -14,7 +14,7 @@ Also you can try open demo telegram bot with Rules page [@web_app_react_test2_bo
 
 :two: **Install dependencies** by running:
 ```
-yarn add
+npm install
 ```
 
 :three: **Add API url** to .env file.
@@ -38,7 +38,7 @@ REACT_APP_FIREBASE_APP_ID='firebase app id'
 
 :six: **Try it out** by running:
 ```
-npm install
+npm start
 ```
 
 
