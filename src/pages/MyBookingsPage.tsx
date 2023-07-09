@@ -56,7 +56,10 @@ export default function MyBookingsPage() {
             let end: Date = new Date(book.end);
 
             start.setHours(start.getHours() - timezone);
-            end.setHours(start.getHours() - timezone);
+            end.setHours(end.getHours() - timezone);
+
+            book.start = start.toISOString();
+            book.end = end.toISOString();
         }
         console.log(bookings);
         setCards(bookings);
