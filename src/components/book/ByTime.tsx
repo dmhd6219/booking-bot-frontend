@@ -16,11 +16,14 @@ import {
 } from "../../utils/BookingApi";
 import {getUsersEmailByTgId} from "../../utils/Firebase";
 
-import {range, step, timezone} from "../../utils/Utils";
+import {LOCALE, range, step, timezone} from "../../utils/Utils";
 import {useNavigate} from "react-router-dom";
 
 dayjs.extend(customParseFormat);
 export default function ByTime() {
+    const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
+    const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
+
     const [dateOptions, setDateOptions] = useState<DateOption[]>([]);
     const [durationOptions, setDurationOptions] = useState<DurationOption[]>([]);
     const [roomOptions, setRoomOptions] = useState<RoomOption[]>([]);
@@ -69,7 +72,7 @@ export default function ByTime() {
                 }}/>
             }
 
-            <Typography.Title>Date</Typography.Title>
+            <Typography.Title>{LOCALE[lang].Book.ByTime.Date}</Typography.Title>
             <Select size={"large"} onSelect={(value: string) => {
                 setDateSelected(true);
                 console.log("On Select (Date) - " + value)
@@ -88,7 +91,7 @@ export default function ByTime() {
             }} value={date} options={dateOptions}>
             </Select>
 
-            <Typography.Title>Time of Start</Typography.Title>
+            <Typography.Title>{LOCALE[lang].Book.ByTime.Time}</Typography.Title>
             <TimePicker inputReadOnly={true}
                         format={"HH:mm"}
                         minuteStep={step} size={"large"} onSelect={async (value: Dayjs) => {
@@ -122,7 +125,7 @@ export default function ByTime() {
                 }
             }}/>
 
-            <Typography.Title>Duration of Booking</Typography.Title>
+            <Typography.Title>{LOCALE[lang].Book.ByTime.Duration}</Typography.Title>
             <Select size={"large"} onSelect={async (value: number) => {
                 setRangeSelected(true);
                 console.log(`On Select (Range) - ${value}`);
@@ -147,7 +150,7 @@ export default function ByTime() {
                 }
             }}/>
 
-            <Typography.Title>Room</Typography.Title>
+            <Typography.Title>{LOCALE[lang].Book.ByTime.Room}</Typography.Title>
             <Select size={"large"} onSelect={(value) => {
                 setRoomSelected(() => {
                     setMainButtonState({text: "BOOK", show: true, progress: false, disable: false,});
@@ -157,7 +160,7 @@ export default function ByTime() {
             }} disabled={!(dateSelected && timeSelected && rangeSelected)} value={room} options={roomOptions}
                     loading={loadingRooms}/>
 
-            <Typography.Title>Title</Typography.Title>
+            <Typography.Title>{LOCALE[lang].Book.ByTime.Title}</Typography.Title>
             <Input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -170,11 +173,11 @@ export default function ByTime() {
                 cStartDate.setHours(cStartDate.getHours() - timezone);
                 // TODO change to tg.showConfirm
                 showPopup({
-                    title: `Confirm ${title}`,
-                    message: `Book ${room} at ${cStartDate.toLocaleTimeString(["ru-RU"], {
+                    title: `${LOCALE[lang].Book.ByTime.Confirm} ${title}`,
+                    message: `${LOCALE[lang].Book.ByTime.Book} ${room} ${LOCALE[lang].Book.ByTime.At.toLowerCase()} ${cStartDate.toLocaleTimeString([locale], {
                         hour: '2-digit',
                         minute: '2-digit'
-                    })} for ${duration} minutes?`,
+                    })} ${LOCALE[lang].Book.ByTime.For.toLowerCase()} ${duration} ${LOCALE[lang].Book.ByTime.Minutes.toLowerCase()}?`,
                     buttons: [
                         {
                             id: "ok",

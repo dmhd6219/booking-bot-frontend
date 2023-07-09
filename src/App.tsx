@@ -10,7 +10,8 @@ import locale from 'antd/locale/en_US';
 import Pages from "./pages/Pages";
 import React from "react";
 import {BrowserRouter} from "react-router-dom";
-import {isTelegramWindow} from "./utils/TelegramWebApp";
+import {isTelegramWindow, tg} from "./utils/TelegramWebApp";
+import {LOCALE} from "./utils/Utils";
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -29,6 +30,9 @@ const BigHeader = styled.div`
 
 function App(): JSX.Element {
     const [colorScheme, themeParams] = useThemeParams();
+
+    const lang : "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
+
     return (
         <div>
             {isTelegramWindow && <ConfigProvider
@@ -50,7 +54,7 @@ function App(): JSX.Element {
                 locale={locale}
             >
                 <BigHeader>
-                    <Logo lang="en" fill={colorScheme === "dark" ? "white" : "black"}/>
+                    <Logo lang={tg.initDataUnsafe.user.language_code} fill={colorScheme === "dark" ? "white" : "black"}/>
                 </BigHeader>
                 <Wrapper>
                     <BrowserRouter>
@@ -60,7 +64,7 @@ function App(): JSX.Element {
             </ConfigProvider>}
 
             {!isTelegramWindow &&
-                <p>Please, open in <a href="t.me/https://t.me/web_app_react_test_bot" target="_blank">Telegram</a></p>}
+                <p>{LOCALE[lang].App.TelegramWebAppError} <a href="t.me/https://t.me/web_app_react_test_bot" target="_blank">Telegram</a></p>}
         </div>
     );
 }

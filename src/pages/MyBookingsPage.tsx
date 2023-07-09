@@ -3,10 +3,11 @@ import {Button, Card, Typography} from "antd";
 import styled from "styled-components";
 import {DeleteOutlined} from '@ant-design/icons';
 import {Booking, bookingsQuery, deleteBooking, Filter} from "../utils/BookingApi";
-import {timezone} from "../utils/Utils";
+import {LOCALE, timezone} from "../utils/Utils";
 import {isTelegramWindow, tg} from "../utils/TelegramWebApp";
 import {useNavigate} from "react-router-dom";
 import {BackButton} from "@vkruglikov/react-telegram-web-app";
+import {getUsersEmailByTgId} from "../utils/Firebase";
 
 const CenteredSpace = styled.div`
   display: flex;
@@ -27,6 +28,9 @@ const CardWithPadding = styled(Card)`
 
 
 export default function MyBookingsPage() {
+    const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
+    const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
+
     const navigate = useNavigate();
     const [buttonState,] = useState<{ show: boolean }>({show: true});
 
@@ -48,12 +52,12 @@ export default function MyBookingsPage() {
         let future = new Date();
         future.setFullYear(2024, 5, 5);
 
-        // const user = await getUsersEmailByTgId(tg.initDataUnsafe.user.id.toString());
+        const user = await getUsersEmailByTgId(tg.initDataUnsafe.user.id.toString());
         const filter: Filter = {
             started_at_or_after: (past).toISOString(),
             ended_at_or_before: (future).toISOString(),
             room_id_in: [],
-            owner_email_in: ["s.sviatkin@innopolis.university"]
+            owner_email_in: [user]
         }
         const bookings: Booking[] = await bookingsQuery(filter);
         for (let book of bookings) {
@@ -73,8 +77,7 @@ export default function MyBookingsPage() {
     }
 
     useEffect(() => {
-        console.log('everything is ok')
-        if (isTelegramWindow){
+        if (isTelegramWindow) {
             tg.expand();
             tg.BackButton.show();
         }
@@ -89,12 +92,12 @@ export default function MyBookingsPage() {
                 }}/>
             }
 
-            <CenteredTitle>My Bookings</CenteredTitle>
+            <CenteredTitle>{LOCALE[lang].My.Title}</CenteredTitle>
             <CenteredSpace>
                 {loading && <CardWithPadding style={{width: 300}} loading={loading} actions={[<DeleteOutlined/>]}>
                 </CardWithPadding>}
 
-                {!loading && cards.length === 0 && <p>You have no active bookings!</p>}
+                {!loading && cards.length === 0 && <p>{LOCALE[lang].My.Empty}</p>}
 
                 {!loading && cards.map((booking: Booking) =>
                     <CardWithPadding style={{width: 300}}
@@ -107,16 +110,16 @@ export default function MyBookingsPage() {
                                      title={booking.title}
                                      key={booking.id}>
                         <ul>
-                            <li>At {(new Date(booking.start).toLocaleDateString(["en-US"],
+                            <li>{LOCALE[lang].My.At} {(new Date(booking.start).toLocaleDateString([locale],
                                 {year: 'numeric', month: 'long', day: 'numeric'}))}</li>
-                            <li>From {(new Date(booking.start)).toLocaleTimeString(["ru-RU"], {
+                            <li>{LOCALE[lang].My.From} {(new Date(booking.start)).toLocaleTimeString(["ru-RU"], {
                                 hour: '2-digit',
                                 minute: '2-digit'
-                            })} to {(new Date(booking.end)).toLocaleTimeString(["ru-RU"], {
+                            })} {LOCALE[lang].My.To.toLowerCase()} {(new Date(booking.end)).toLocaleTimeString(["ru-RU"], {
                                 hour: '2-digit',
                                 minute: '2-digit'
                             })}</li>
-                            <li>At {booking.room.name}</li>
+                            <li>{LOCALE[lang].My.At} {booking.room.name}</li>
                         </ul>
                     </CardWithPadding>)}
             </CenteredSpace>

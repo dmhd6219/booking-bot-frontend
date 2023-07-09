@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {Button, Typography} from "antd";
 import styled from "styled-components";
 import {tg} from "../utils/TelegramWebApp";
+import {LOCALE} from "../utils/Utils";
 
 const CenteredSpace = styled.div`
   display: flex;
@@ -28,6 +29,7 @@ const BlockLink = styled(Link)`
 `;
 
 const NavigationPage = () => {
+    const lang : "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
 
     useEffect(() => {
         tg.BackButton.hide();
@@ -36,25 +38,25 @@ const NavigationPage = () => {
     return (
         <div>
             <CenteredSpace>
-                <CenteredTitle>Navigation</CenteredTitle>
+                <CenteredTitle>{LOCALE[lang].Navigation.Title}</CenteredTitle>
                 <BlockLink to="/book">
                     <BlockButton type="default" block>
-                        Book a room
+                        {LOCALE[lang].Navigation.Book}
                     </BlockButton>
                 </BlockLink>
                 <BlockLink to="/rooms">
                     <BlockButton type="default" block disabled>
-                        All bookings
+                        {LOCALE[lang].Navigation.All}
                     </BlockButton>
                 </BlockLink>
                 <BlockLink to="/my">
                     <BlockButton type="default" block>
-                        My bookings
+                        {LOCALE[lang].Navigation.My}
                     </BlockButton>
                 </BlockLink>
                 <BlockLink to="/rules">
                     <BlockButton type="default" block>
-                        Rules
+                        {LOCALE[lang].Navigation.Rules}
                     </BlockButton>
                 </BlockLink>
             </CenteredSpace>

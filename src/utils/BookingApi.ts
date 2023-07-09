@@ -1,5 +1,6 @@
 import {getDisabledHours, getDisabledMinutes} from "./TimeDisabler";
 import axios, {AxiosResponse} from "axios";
+import {tg} from "./TelegramWebApp";
 
 export const apiUrl: string = `${process.env.REACT_APP_API_URL}`;
 export const roomsUrl: string = `${apiUrl}/rooms`;
@@ -177,6 +178,9 @@ export interface DateOption {
 }
 
 export function getOptionsOfDate(): DateOption[] {
+    const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
+    const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
+
     let today: Date = new Date();
     today.setHours(0, 0, 0, 0)
 
@@ -188,17 +192,17 @@ export function getOptionsOfDate(): DateOption[] {
 
     return [
         {
-            label: today.toLocaleDateString(["en-US"],
+            label: today.toLocaleDateString([locale],
                 {year: 'numeric', month: 'long', day: 'numeric'}),
             value: today.toISOString()
         },
         {
-            label: tomorrow.toLocaleDateString(["en-US"],
+            label: tomorrow.toLocaleDateString([locale],
                 {year: 'numeric', month: 'long', day: 'numeric'}),
             value: tomorrow.toISOString()
         },
         {
-            label: dayAfterTomorrow.toLocaleDateString(["en-US"],
+            label: dayAfterTomorrow.toLocaleDateString([locale],
                 {year: 'numeric', month: 'long', day: 'numeric'}),
             value: dayAfterTomorrow.toISOString()
         }
@@ -218,16 +222,36 @@ export interface DurationOption {
     value: number
 }
 
+function declOfMinutes(number: number): string {
+    let words: string[] = ['минута', 'минуты', 'минут'];
+    return words[(number % 100 > 4 && number % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(number % 10 < 5) ? Math.abs(number) % 10 : 5]];
+}
+
+function declOfHours(number: number): string {
+    let words: string[] = ['час', 'часа', 'часов'];
+    return words[(number % 100 > 4 && number % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(number % 10 < 5) ? Math.abs(number) % 10 : 5]];
+}
+
 export async function getDurationsOptions(date: Date, step: number): Promise<DurationOption[]> {
+    const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
     let data: number[] = await getDurationByTime(date, step);
 
     return data.map((x: number): DurationOption => {
         let hours: number = Math.floor(x / 60);
-        let minutes : number = x % 60;
-        return {
-            label: `${hours > 0 ? hours + " Hour" + (hours > 1 ? "s " : "") : ""} ${minutes > 0 ? minutes + " Minutes" : ""}`,
-            value: x
+        let minutes: number = x % 60;
+
+        if (lang === "ru") {
+            return {
+                label: `${hours > 0 ? hours + ` ${declOfHours(hours)}` : ""} ${minutes > 0 ? minutes + ` ${declOfMinutes(minutes)}` : ""}`,
+                value: x
+            }
+        } else {
+            return {
+                label: `${hours > 0 ? hours + " Hour" + (hours > 1 ? "s " : "") : ""} ${minutes > 0 ? minutes + " Minutes" : ""}`,
+                value: x
+            }
         }
+
     })
 }
 

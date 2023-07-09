@@ -1,0 +1,55 @@
+{
+  "LocalizationEn" : {
+    "App": {
+      "TelegramWebAppError": "Please, open in"
+    },
+    "Rules": {
+      "Title": "Rules",
+      "FirstRule": {
+        "FirstParagraph": "Booking is not allowed anytime because of university classes",
+        "SecondParagraph": "Usually you cannot book a room from 7:00 to 19:00"
+      },
+      "SecondRule": {
+        "FirstParagraph": "You can book only rooms with Yellow access",
+        "SecondParagraph": "You can see available for booking rooms by clicking \"See rooms\"",
+        "Button": "See rooms"
+      },
+      "ThirdRule": {
+        "FirstParagraph": "You can book one room not more than 3 horus per day",
+        "SecondParagraph": "In case you need more, other people can book it again"
+      },
+      "FourthRule": {
+        "FirstParagraph": "Your booking can be removed by administrators for some important events or classes",
+        "SecondParagraph": "You will be informed in this case"
+      }
+    },
+    "Navigation": {
+      "Title" : "Navigation",
+      "Book": "Book a room",
+      "All": "All bookings",
+      "My": "My bookings",
+      "Rules": "Rules"
+    },
+    "My": {
+      "Title": "My Bookings",
+      "Empty": "You have no active bookings!",
+      "At": "At",
+      "From": "From",
+      "To": "To"
+    },
+    "Book": {
+      "ByTime": {
+        "Date": "Date",
+        "Time": "Time of Start",
+        "Duration": "Duration of Booking",
+        "Room": "Room",
+        "Title" : "Title",
+        "Confirm": "Confirm",
+        "Book" : "Book",
+        "At" : "At",
+        "For" : "For",
+        "Minutes" : "Minutes"
+      }
+    }
+  }
+}

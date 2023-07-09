@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {Link, useNavigate} from "react-router-dom";
 import {isTelegramWindow, tg} from "../utils/TelegramWebApp";
 import {BackButton} from "@vkruglikov/react-telegram-web-app";
+import {LOCALE} from "../utils/Utils";
 
 const CenteredSpace = styled.div`
   display: flex;
@@ -22,7 +23,7 @@ const CardWithPadding = styled(Card)`
   margin-bottom: 5px;
 `
 export default function RulesPage() {
-
+    const lang : "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
     const navigate = useNavigate();
     const [buttonState,] = useState<{ show: boolean }>({show: true});
 
@@ -42,24 +43,24 @@ export default function RulesPage() {
                 }}/>
             }
 
-            <CenteredTitle>Rules</CenteredTitle>
+            <CenteredTitle>{LOCALE[lang].Rules.Title}</CenteredTitle>
             <CenteredSpace>
                 <CardWithPadding title="Booking time" style={{width: 300}}>
-                    <p>Booking is not allowed anytime because of university classes</p>
-                    <p>Usually you cannot book a room from 7:00 to 19:00</p>
+                    <p>{LOCALE[lang].Rules.FirstRule.FirstParagraph}</p>
+                    <p>{LOCALE[lang].Rules.FirstRule.SecondParagraph}</p>
                 </CardWithPadding>
-                <CardWithPadding title="Available rooms" extra={<Link to="#">See rooms</Link>}
+                <CardWithPadding title="Available rooms" extra={<Link to="#">{LOCALE[lang].Rules.SecondRule.Button}</Link>}
                                  style={{width: 300}}>
-                    <p>You can book only rooms with Yellow access</p>
-                    <p>You can see available for booking rooms by clicking "See rooms"</p>
+                    <p>{LOCALE[lang].Rules.SecondRule.FirstParagraph}</p>
+                    <p>{LOCALE[lang].Rules.SecondRule.SecondParagraph}"</p>
                 </CardWithPadding>
                 <CardWithPadding title="Booking time" style={{width: 300}}>
-                    <p>You can book one room not more than 3 horus per day</p>
-                    <p>In case you need more, other people can book it again</p>
+                    <p>{LOCALE[lang].Rules.ThirdRule.FirstParagraph}</p>
+                    <p>{LOCALE[lang].Rules.ThirdRule.SecondParagraph}</p>
                 </CardWithPadding>
                 <CardWithPadding title="Please respect" style={{width: 300}}>
-                    <p>Your booking can be removed by administrators for some important events or classes</p>
-                    <p>You will be informed in this case</p>
+                    <p>{LOCALE[lang].Rules.FourthRule.FirstParagraph}</p>
+                    <p>{LOCALE[lang].Rules.FourthRule.SecondParagraph}</p>
                 </CardWithPadding>
             </CenteredSpace>
         </div>
