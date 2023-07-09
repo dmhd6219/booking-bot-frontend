@@ -53,6 +53,7 @@ const Test: FunctionComponent = () => {
         setDateOptions(getOptionsOfDate());
         if (isTelegramWindow) {
             tg.expand();
+            tg.BackButton.show();
         }
     }, [])
 

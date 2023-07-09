@@ -71,6 +71,7 @@ export default function MyBookingsPage() {
     useEffect(() => {
         if (isTelegramWindow){
             tg.expand();
+            tg.BackButton.show();
         }
         load()
     }, []);

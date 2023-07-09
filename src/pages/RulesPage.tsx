@@ -25,6 +25,7 @@ export default function RulesPage() {
     useEffect(() => {
         if (isTelegramWindow) {
             tg.expand();
+            tg.BackButton.show();
         }
     }, []);
 

@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Link} from "react-router-dom";
 import {Button, Typography} from "antd";
 import styled from "styled-components";
+import {tg} from "../utils/TelegramWebApp";
 
 const CenteredSpace = styled.div`
   display: flex;
@@ -27,6 +28,11 @@ const BlockLink = styled(Link)`
 `;
 
 const NavigationPage = () => {
+
+    useEffect(() => {
+        tg.BackButton.hide();
+    }, []);
+
     return (
         <div>
             <CenteredSpace>
