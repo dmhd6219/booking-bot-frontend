@@ -22,8 +22,11 @@ interface Room {
 
 export async function getRooms(): Promise<Room[]> {
     console.log("Fetching rooms...");
+    const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
+    const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
 
-    let response: AxiosResponse = await axios.get(roomsUrl);
+
+    let response: AxiosResponse = await axios.get(roomsUrl, {headers: {"Accept-Language": locale}});
 
     return response.data;
 }
@@ -34,8 +37,13 @@ export type DateIso = string;
 
 export async function getFreeRooms(start: DateIso, end: DateIso): Promise<Room[]> {
     console.log("Fetching free rooms...");
+    const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
+    const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
 
-    let response: AxiosResponse = await axios.post(freeRoomsUrl, JSON.stringify({start: start, end: end}));
+    let response: AxiosResponse = await axios.post(freeRoomsUrl, JSON.stringify({
+        start: start,
+        end: end
+    }), {headers: {"Accept-Language": locale}});
 
     return response.data;
 
@@ -54,6 +62,8 @@ export interface Booking {
 
 export async function bookRoom(id: string, title: string, start: DateIso, end: DateIso, owner_email: UniversityEmail): Promise<Booking> {
     console.log("Fetching book rooms...");
+    const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
+    const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
 
     let body = JSON.stringify({
         title: title,
@@ -64,7 +74,7 @@ export async function bookRoom(id: string, title: string, start: DateIso, end: D
 
     console.log(body)
 
-    let response: AxiosResponse = await axios.post(bookRoomUrl(id), body);
+    let response: AxiosResponse = await axios.post(bookRoomUrl(id), body, {headers: {"Accept-Language": locale}});
 
     console.log(`Book response - ${response.status}`)
 
@@ -80,8 +90,10 @@ export interface Filter {
 
 export async function bookingsQuery(filter: Filter): Promise<Booking[]> {
     console.log("Fetching books query...");
+    const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
+    const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
 
-    let response: AxiosResponse = await axios.post(bookingsQueryUrl, JSON.stringify({filter: filter}));
+    let response: AxiosResponse = await axios.post(bookingsQueryUrl, JSON.stringify({filter: filter}), {headers: {"Accept-Language": locale}});
     console.log("Fetched query")
     return response.data;
 }
@@ -89,8 +101,10 @@ export async function bookingsQuery(filter: Filter): Promise<Booking[]> {
 
 export async function deleteBooking(id: string): Promise<boolean> {
     console.log("Deleting rooms...");
+    const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
+    const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
 
-    let response: AxiosResponse = await axios.delete(deleteBookingUrl(id));
+    let response: AxiosResponse = await axios.delete(deleteBookingUrl(id), {headers: {"Accept-Language": locale}});
 
     return response.status === 200;
 }

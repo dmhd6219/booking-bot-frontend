@@ -45,20 +45,20 @@ export default function RulesPage() {
 
             <CenteredTitle>{LOCALE[lang].Rules.Title}</CenteredTitle>
             <CenteredSpace>
-                <CardWithPadding title="Booking time" style={{width: 300}}>
+                <CardWithPadding title={LOCALE[lang].Rules.FirstRule.Title} style={{width: 300}}>
                     <p>{LOCALE[lang].Rules.FirstRule.FirstParagraph}</p>
                     <p>{LOCALE[lang].Rules.FirstRule.SecondParagraph}</p>
                 </CardWithPadding>
-                <CardWithPadding title="Available rooms" extra={<Link to="#">{LOCALE[lang].Rules.SecondRule.Button}</Link>}
+                <CardWithPadding title={LOCALE[lang].Rules.SecondRule.Title} extra={<Link to="#">{LOCALE[lang].Rules.SecondRule.Button}</Link>}
                                  style={{width: 300}}>
                     <p>{LOCALE[lang].Rules.SecondRule.FirstParagraph}</p>
                     <p>{LOCALE[lang].Rules.SecondRule.SecondParagraph}"</p>
                 </CardWithPadding>
-                <CardWithPadding title="Booking time" style={{width: 300}}>
+                <CardWithPadding title={LOCALE[lang].Rules.ThirdRule.Title} style={{width: 300}}>
                     <p>{LOCALE[lang].Rules.ThirdRule.FirstParagraph}</p>
                     <p>{LOCALE[lang].Rules.ThirdRule.SecondParagraph}</p>
                 </CardWithPadding>
-                <CardWithPadding title="Please respect" style={{width: 300}}>
+                <CardWithPadding title={LOCALE[lang].Rules.FourthRule.Title} style={{width: 300}}>
                     <p>{LOCALE[lang].Rules.FourthRule.FirstParagraph}</p>
                     <p>{LOCALE[lang].Rules.FourthRule.SecondParagraph}</p>
                 </CardWithPadding>
