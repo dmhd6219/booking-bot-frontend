@@ -30,7 +30,7 @@ export default function RulesPage() {
             tg.BackButton.show();
             tg.BackButton.offClick(() => {navigate("/")});
         }
-    }, []);
+    }, [navigate]);
 
     return (
         <div>

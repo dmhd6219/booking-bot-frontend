@@ -71,13 +71,14 @@ export default function MyBookingsPage() {
     }
 
     useEffect(() => {
+        console.log('everything is ok')
         if (isTelegramWindow){
             tg.expand();
             tg.BackButton.show();
             tg.BackButton.offClick(() => {navigate("/")});
         }
         load()
-    }, []);
+    }, [navigate]);
 
     return (
         <div>

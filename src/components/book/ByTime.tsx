@@ -60,7 +60,7 @@ export default function ByTime() {
                 navigate("/")
             });
         }
-    }, [])
+    }, [navigate])
 
     return (
         <div id={"time"}>
