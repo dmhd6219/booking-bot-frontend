@@ -42,13 +42,15 @@ export default function ByTime() {
     const [loadingRooms, setLoadingRooms] = useState<boolean>(false);
 
 
-    const [buttonState, setButtonState] = useState({
+    const [mainButtonState, setMainButtonState] = useState({
         text: 'BUTTON TEXT',
         show: false,
         progress: false,
         disable: false,
     });
     const navigate = useNavigate();
+    const [backButtonState,] = useState<{ show: boolean }>({show: true});
+
 
     const showPopup = useShowPopup();
     useEffect(() => {
@@ -61,7 +63,7 @@ export default function ByTime() {
 
     return (
         <div id={"time"}>
-            {buttonState.show &&
+            {backButtonState.show &&
                 <BackButton onClick={() => {
                     navigate("/")
                 }}/>
@@ -75,7 +77,7 @@ export default function ByTime() {
                 setTime(null);
                 setDuration(null);
                 setRoom(null);
-                setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
+                setMainButtonState({text: "BOOK", show: false, progress: false, disable: false,});
 
                 let cStartDate: Date = new Date(value);
                 cStartDate.setHours(0, 0, 0, 0)
@@ -96,7 +98,7 @@ export default function ByTime() {
                 setTime(value);
                 setDuration(null);
                 setRoom(null);
-                setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
+                setMainButtonState({text: "BOOK", show: false, progress: false, disable: false,});
 
                 (completeStartDate as Date).setHours(timezone + value.hour(), value.minute());
 
@@ -126,7 +128,7 @@ export default function ByTime() {
                 console.log(`On Select (Range) - ${value}`);
                 setDuration(value);
                 setRoom(null);
-                setButtonState({text: "BOOK", show: false, progress: false, disable: false,});
+                setMainButtonState({text: "BOOK", show: false, progress: false, disable: false,});
 
                 let cEndDate: Date = new Date((completeStartDate as Date).toISOString());
                 cEndDate.setMinutes((cEndDate as Date).getMinutes() + value);
@@ -148,7 +150,7 @@ export default function ByTime() {
             <Typography.Title>Room</Typography.Title>
             <Select size={"large"} onSelect={(value) => {
                 setRoomSelected(() => {
-                    setButtonState({text: "BOOK", show: true, progress: false, disable: false,});
+                    setMainButtonState({text: "BOOK", show: true, progress: false, disable: false,});
                     return true;
                 });
                 setRoom(value);
@@ -163,7 +165,7 @@ export default function ByTime() {
             />
 
 
-            <div>{buttonState?.show && <MainButton {...buttonState} onClick={async () => {
+            <div>{mainButtonState?.show && <MainButton {...mainButtonState} onClick={async () => {
                 let cStartDate: Date = new Date((completeStartDate as Date).toISOString());
                 cStartDate.setHours(cStartDate.getHours() - timezone);
                 // TODO change to tg.showConfirm

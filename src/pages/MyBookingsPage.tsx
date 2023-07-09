@@ -28,6 +28,7 @@ const CardWithPadding = styled(Card)`
 
 export default function MyBookingsPage() {
     const navigate = useNavigate();
+    const [buttonState,] = useState<{ show: boolean }>({show: true});
 
     const [loading, setLoading] = useState(true);
     const [cards, setCards] = useState<Booking[]>([]);
