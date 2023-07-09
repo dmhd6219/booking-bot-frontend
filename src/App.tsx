@@ -10,6 +10,7 @@ import locale from 'antd/locale/en_US';
 import Pages from "./pages/Pages";
 import React from "react";
 import {BrowserRouter} from "react-router-dom";
+import {isTelegramWindow} from "./utils/TelegramWebApp";
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -29,33 +30,38 @@ const BigHeader = styled.div`
 function App(): JSX.Element {
     const [colorScheme, themeParams] = useThemeParams();
     return (
-        <ConfigProvider
-            theme={
-                themeParams.text_color
-                    ? {
-                        algorithm:
-                            colorScheme === 'dark'
-                                ? theme.darkAlgorithm
-                                : theme.defaultAlgorithm,
-                        token: {
-                            colorText: themeParams.text_color,
-                            colorPrimary: themeParams.button_color,
-                            colorBgBase: themeParams.bg_color,
-                        },
-                    }
-                    : undefined
-            }
-            locale={locale}
-        >
-            <BigHeader>
-                <Logo lang="en" fill={colorScheme === "dark" ? "white" : "black"}/>
-            </BigHeader>
-            <Wrapper>
-                <BrowserRouter>
-                    <Pages/>
-                </BrowserRouter>
-            </Wrapper>
-        </ConfigProvider>
+        <div>
+            {isTelegramWindow && <ConfigProvider
+                theme={
+                    themeParams.text_color
+                        ? {
+                            algorithm:
+                                colorScheme === 'dark'
+                                    ? theme.darkAlgorithm
+                                    : theme.defaultAlgorithm,
+                            token: {
+                                colorText: themeParams.text_color,
+                                colorPrimary: themeParams.button_color,
+                                colorBgBase: themeParams.bg_color,
+                            },
+                        }
+                        : undefined
+                }
+                locale={locale}
+            >
+                <BigHeader>
+                    <Logo lang="en" fill={colorScheme === "dark" ? "white" : "black"}/>
+                </BigHeader>
+                <Wrapper>
+                    <BrowserRouter>
+                        <Pages/>
+                    </BrowserRouter>
+                </Wrapper>
+            </ConfigProvider>}
+
+            {!isTelegramWindow &&
+                <p>Please, open in <a href="t.me/https://t.me/web_app_react_test_bot" target="_blank">Telegram</a></p>}
+        </div>
     );
 }
 
