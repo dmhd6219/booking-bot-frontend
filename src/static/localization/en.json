@@ -37,7 +37,7 @@
     "My": {
       "Title": "My Bookings",
       "Empty": "You have no active bookings!",
-      "At": "At",
+      "At": "At ",
       "From": "From",
       "To": "To"
     },

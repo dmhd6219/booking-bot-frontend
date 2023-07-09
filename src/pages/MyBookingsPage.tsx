@@ -113,7 +113,7 @@ export default function MyBookingsPage() {
                                      title={booking.title}
                                      key={booking.id}>
                         <ul>
-                            <li>{LOCALE[lang].My.At} {(new Date(booking.start).toLocaleDateString([locale],
+                            <li>{LOCALE[lang].My.At}{(new Date(booking.start).toLocaleDateString([locale],
                                 {year: 'numeric', month: 'long', day: 'numeric'}))}</li>
                             <li>{LOCALE[lang].My.From} {(new Date(booking.start)).toLocaleTimeString(["ru-RU"], {
                                 hour: '2-digit',
