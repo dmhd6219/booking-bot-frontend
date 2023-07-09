@@ -54,18 +54,17 @@ export interface Localization {
         "To": string
     },
     "Book": {
-        "ByTime": {
-            "Date": string,
-            "Time": string,
-            "Duration": string,
-            "Room": string,
-            "Title" : string,
-            "Confirm": string,
-            "Book" : string,
-            "At": string,
-            "For": string,
-            "Minutes": string
-        }
+        "Date": string,
+        "Time": string,
+        "Duration": string,
+        "Room": string,
+        "Title": string,
+        "Confirm": string,
+        "Cancel": string,
+        "Book": string,
+        "At": string,
+        "For": string,
+        "Minutes": string
     }
 }
 

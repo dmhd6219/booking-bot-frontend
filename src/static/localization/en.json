@@ -38,18 +38,17 @@
       "To": "To"
     },
     "Book": {
-      "ByTime": {
-        "Date": "Date",
-        "Time": "Time of Start",
-        "Duration": "Duration of Booking",
-        "Room": "Room",
-        "Title" : "Title",
-        "Confirm": "Confirm",
-        "Book" : "Book",
-        "At" : "At",
-        "For" : "For",
-        "Minutes" : "Minutes"
-      }
+      "Date": "Date",
+      "Time": "Time of Start",
+      "Duration": "Duration of Booking",
+      "Room": "Room",
+      "Title" : "Title",
+      "Confirm": "Confirm",
+      "Cancel" : "Cancel",
+      "Book" : "Book",
+      "At" : "At",
+      "For" : "For",
+      "Minutes" : "Minutes"
     }
   }
 }
