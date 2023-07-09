@@ -3,6 +3,7 @@ import {Button, Card, Typography} from "antd";
 import styled from "styled-components";
 import {DeleteOutlined} from '@ant-design/icons';
 import {Booking, bookingsQuery, deleteBooking, Filter} from "../utils/BookingApi";
+import {timezone} from "../utils/Utils";
 
 const CenteredSpace = styled.div`
   display: flex;
@@ -50,6 +51,13 @@ export default function MyBookingsPage() {
             owner_email_in: ["s.sviatkin@innopolis.university"]
         }
         const bookings: Booking[] = await bookingsQuery(filter);
+        for (let book of bookings) {
+            let start: Date = new Date(book.start);
+            let end: Date = new Date(book.end);
+
+            start.setHours(start.getHours() - timezone);
+            end.setHours(start.getHours() - timezone);
+        }
         console.log(bookings);
         setCards(bookings);
 
