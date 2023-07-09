@@ -157,11 +157,12 @@ const Test: FunctionComponent = () => {
 
 
             <div>{buttonState?.show && <MainButton {...buttonState} onClick={async () => {
-                console.log("Button pressed")
+                let cStartDate: Date = new Date((completeStartDate as Date).toISOString());
+                cStartDate.setHours(cStartDate.getHours() - timezone);
                 // TODO change to tg.showConfirm
                 showPopup({
                     title: `Confirm ${title}`,
-                    message: `Book ${room} at ${(completeStartDate as Date).toLocaleTimeString(["ru-RU"], {
+                    message: `Book ${room} at ${cStartDate.toLocaleTimeString(["ru-RU"], {
                         hour: '2-digit',
                         minute: '2-digit'
                     })} for ${duration} minutes?`,
@@ -177,10 +178,8 @@ const Test: FunctionComponent = () => {
                         },
                     ],
                 }).then(async (id: string) => {
-                    console.log(id)
                     if (id === "ok") {
-                        console.log(`Room - ${room}\nTitle - ${title}\nStart Date - ${(completeStartDate as Date).toISOString()}\nEnd Date - ${(completeEndDate as Date).toISOString()}`)
-
+                        console.log(`Room - ${room}\nTitle - ${title}\nStart Date - ${cStartDate.toISOString()}\nEnd Date - ${(completeEndDate as Date).toISOString()}`)
                         bookRoom(room as string, title, (completeStartDate as Date).toISOString(), (completeEndDate as Date).toISOString(),
                             await getUsersEmailByTgId(tg.initDataUnsafe.user.id.toString())).then(r => console.log(r));
                         // TODO : make a book
