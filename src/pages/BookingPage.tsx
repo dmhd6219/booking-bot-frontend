@@ -1,7 +1,4 @@
 import React from 'react';
-// @ts-ignore
-import {HashLink} from 'react-router-hash-link';
-
 import ByTime from "../components/book/ByTime";
 
 // const HorizontalList = styled.div`
