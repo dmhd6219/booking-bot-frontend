@@ -45,7 +45,7 @@ function App(): JSX.Element {
         getUsersEmailByTgId(tg.initDataUnsafe.user).then(r => {
             if (r === undefined){
                 console.log(tg.initDataUnsafe.user);
-                comsole.log("---")
+                console.log("---")
                 console.log(tg.initDataUnsafe);
                 setActive(false);
             }
