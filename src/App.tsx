@@ -7,13 +7,14 @@ import styled from "styled-components";
 import {ConfigProvider, theme} from 'antd';
 import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
 import Pages from "./pages/Pages";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {BrowserRouter} from "react-router-dom";
 import {isTelegramWindow, tg} from "./utils/TelegramWebApp";
 import {LOCALE} from "./utils/Utils";
 import enUS from 'antd/locale/en_US';
 import ruRU from 'antd/locale/ru_RU';
 import {Locale} from "antd/es/locale";
+import {getUsersEmailByTgId} from "./utils/Firebase";
 
 
 const Wrapper = styled.div`
@@ -37,6 +38,16 @@ function App(): JSX.Element {
     const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
 
     const locale: Locale = lang === "ru" ? ruRU : enUS;
+
+    const [active, setActive] = useState(true);
+
+    useEffect( () => {
+        getUsersEmailByTgId(tg.initDataUnsafe.user).then(r => {
+            if (r === undefined){
+                setActive(false);
+            }
+        });
+    }, [])
 
     return (
         <div>
@@ -72,6 +83,9 @@ function App(): JSX.Element {
             {!isTelegramWindow &&
                 <p>{LOCALE[lang].App.TelegramWebAppError} <a href="t.me/https://t.me/web_app_react_test_bot"
                                                              target="_blank">Telegram</a></p>}
+
+            {!active &&
+                <p>{LOCALE[lang].App.TelegramUserError}</p>}
         </div>
     );
 }

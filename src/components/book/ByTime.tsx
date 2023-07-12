@@ -12,7 +12,8 @@ import {
     DateOption, DurationOption, RoomOption
 } from "../../utils/BookingApi";
 import {getUsersEmailByTgId} from "../../utils/Firebase";
-import {LOCALE, range, step, timezone} from "../../utils/Utils";
+import {generateErrorPopupParams, LOCALE, range, step, timezone, UniversityEmail} from "../../utils/Utils";
+import {AxiosResponse} from "axios";
 
 dayjs.extend(customParseFormat);
 export default function ByTime() {
@@ -166,9 +167,15 @@ export default function ByTime() {
         showPopup(generateConfirmParams()).then(async (id: string) => {
             if (id === "ok") {
                 bookRoom(room as string, title, (completeStartDate as Date).toISOString(), (completeEndDate as Date).toISOString(),
-                    await getUsersEmailByTgId(tg.initDataUnsafe.user.id.toString())).then(r => {
-                    console.log(r);
-                    navigate("/");
+                    (await getUsersEmailByTgId(tg.initDataUnsafe.user.id.toString())) as UniversityEmail).then((r:AxiosResponse) => {
+                    if (r.status === 200){
+                        console.log(r.data);
+                        navigate("/");
+                    }
+                    else {
+                        showPopup(generateErrorPopupParams(r.data[0].detail.message, lang));
+                    }
+
                 });
             }
         })

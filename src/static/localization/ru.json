@@ -1,7 +1,8 @@
 {
   "LocalizationRu": {
     "App": {
-      "TelegramWebAppError": "Пожалуйста, откройте в"
+      "TelegramWebAppError": "Пожалуйста, откройте в",
+      "TelegramUserError" : "Пожалуйста, войдите, написав /sign_in боту"
     },
     "Rules": {
       "Title": "Правила",

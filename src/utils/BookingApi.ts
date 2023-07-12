@@ -1,6 +1,7 @@
 import {getDisabledHours, getDisabledMinutes} from "./TimeDisabler";
 import axios, {AxiosResponse} from "axios";
 import {tg} from "./TelegramWebApp";
+import {UniversityEmail} from "./Utils";
 
 export const apiUrl: string = `${process.env.REACT_APP_API_URL}`;
 export const roomsUrl: string = `${apiUrl}/rooms`;
@@ -43,7 +44,7 @@ export async function getFreeRooms(start: DateIso, end: DateIso): Promise<AxiosR
 
 }
 
-type UniversityEmail = `${string}.${string}@innopolis.university`;
+
 
 export interface Booking {
     id: string,

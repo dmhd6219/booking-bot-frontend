@@ -4,6 +4,7 @@ import {initializeApp} from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 import {collection, getDocs, getFirestore, addDoc} from 'firebase/firestore/lite';
+import {UniversityEmail} from "./Utils";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -36,10 +37,12 @@ export async function setNewUser() {
 }
 
 
-export async function getUsersEmailByTgId(id:string) {
+export async function getUsersEmailByTgId(id: string): Promise<UniversityEmail | undefined> {
     const usersCol = collection(db, 'users');
     const userSnapshot = await getDocs(usersCol);
     let data = userSnapshot.docs.map(doc => doc.data());
 
-    return data.filter(elem => elem.tg_id === id)[0].id;
+    let users = data.filter(elem => elem.tg_id === id);
+
+    return users.length > 0 ? users[0].id : undefined;
 }

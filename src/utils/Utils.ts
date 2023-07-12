@@ -15,7 +15,8 @@ export const timezone = 3;
 
 export interface Localization {
     "App": {
-        "TelegramWebAppError": string
+        "TelegramWebAppError": string,
+        "TelegramUserError": string
     },
 
     "Rules": {
@@ -96,3 +97,5 @@ export const generateErrorPopupParams = (message: string, lang: "en" | "ru") => 
         ],
     }
 }
+
+export type UniversityEmail = `${string}.${string}@innopolis.university`;

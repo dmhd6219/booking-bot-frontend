@@ -1,7 +1,8 @@
 {
   "LocalizationEn" : {
     "App": {
-      "TelegramWebAppError": "Please, open in"
+      "TelegramWebAppError": "Please, open in",
+      "TelegramUserError" : "Please, sign in bu sending /sign_in to bot"
     },
     "Rules": {
       "Title": "Rules",
