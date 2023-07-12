@@ -1,7 +1,6 @@
-import {getDisabledHours, getDisabledMinutes} from "./TimeDisabler";
 import axios, {AxiosResponse} from "axios";
 import {tg} from "./TelegramWebApp";
-import {UniversityEmail} from "./Utils";
+import {daysToChoose, UniversityEmail} from "./Utils";
 
 export const apiUrl: string = `${process.env.REACT_APP_API_URL}`;
 export const roomsUrl: string = `${apiUrl}/rooms`;
@@ -43,7 +42,6 @@ export async function getFreeRooms(start: DateIso, end: DateIso): Promise<AxiosR
     }), {headers: {"Accept-Language": locale}});
 
 }
-
 
 
 export interface Booking {
@@ -204,41 +202,32 @@ export function getOptionsOfDate(): DateOption[] {
     const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
     const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
 
+    let options: DateOption[] = []
+
     let today: Date = new Date();
-    today.setHours(0, 0, 0, 0)
+    today.setHours(0, 0, 0, 0);
 
-    let tomorrow: Date = new Date(today.toISOString());
-    tomorrow.setDate(today.getDate() + 1);
+    for (let i = 0; i < daysToChoose; i++) {
+        let next: Date = new Date(today.toISOString());
+        next.setDate(next.getDate() + i);
 
-    let dayAfterTomorrow: Date = new Date(tomorrow.toISOString());
-    dayAfterTomorrow.setDate(tomorrow.getDate() + 1);
+        options.push({
+            label: next.toLocaleDateString([locale],
+                {year: 'numeric', month: 'long', day: 'numeric'}),
+            value: next.toISOString()
+        })
+    }
 
-    return [
-        {
-            label: today.toLocaleDateString([locale],
-                {year: 'numeric', month: 'long', day: 'numeric'}),
-            value: today.toISOString()
-        },
-        {
-            label: tomorrow.toLocaleDateString([locale],
-                {year: 'numeric', month: 'long', day: 'numeric'}),
-            value: tomorrow.toISOString()
-        },
-        {
-            label: dayAfterTomorrow.toLocaleDateString([locale],
-                {year: 'numeric', month: 'long', day: 'numeric'}),
-            value: dayAfterTomorrow.toISOString()
-        }
-    ]
+    return options;
 }
 
-export const disabledDateTime = (dates: Date[]): {
-    disabledHours: () => number[],
-    disabledMinutes: (selectedHour: number) => number[]
-} => ({
-    disabledHours: (): number[] => getDisabledHours(dates),
-    disabledMinutes: (selectedHour: number): number[] => getDisabledMinutes(dates, selectedHour),
-});
+// export const disabledDateTime = (dates: Date[]): {
+//     disabledHours: () => number[],
+//     disabledMinutes: (selectedHour: number) => number[]
+// } => ({
+//     disabledHours: (): number[] => getDisabledHours(dates),
+//     disabledMinutes: (selectedHour: number): number[] => getDisabledMinutes(dates, selectedHour),
+// });
 
 export interface DurationOption {
     label: string,

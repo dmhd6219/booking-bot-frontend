@@ -1,6 +1,5 @@
 import {range, step} from "./Utils";
 import {getClosestRoundedTime} from "./BookingApi";
-import {Dayjs} from "dayjs";
 
 export const allHours = range(0, 24);
 export const allMinutes = range(0, 60, step);
@@ -11,41 +10,16 @@ export const allMinutes = range(0, 60, step);
 //     disabledSeconds?: (selectedHour: number, selectedMinute: number) => number[];
 // };
 
-export function getDisabledHours(dates: Date[]): number[] {
-    let meetedHours: number[] = [];
-    for (let hour of allHours) {
+export function getDisabledHours(date: Date): number[] {
+    let constantlyRemoved = range(7, 19);
 
-        for (let date of dates) {
-            if (date.getHours() === hour) {
-                meetedHours.push(hour);
-            }
-        }
-
-    }
-
-    let disabledHours: number[] = allHours.filter((x: number) => !meetedHours.includes(x) || x < (new Dayjs()).get('hour'));
-    for (let hour of range(7, 19)) {
-        if (!disabledHours.includes(hour)) {
-            disabledHours.push(hour)
-        }
-    }
-    return disabledHours;
+    return allHours.filter((x: number) => constantlyRemoved.includes(x) ||
+        (date.getUTCDay() === (new Date()).getUTCDay() && x < (new Date()).getHours()));
 }
 
-export function getDisabledMinutes(dates: Date[], selectedHour: number): number[] {
-    let meetedMinutes: number[] = [];
-    for (let hour of allHours) {
-
-        for (let date of dates) {
-            if (date.getHours() === hour && date.getHours() === selectedHour) {
-                meetedMinutes.push(hour);
-            }
-        }
-
-    }
-
+export function getDisabledMinutes(date: Date, selectedHour: number): number[] {
     let today: Date = getClosestRoundedTime(new Date(), step);
 
-    return allMinutes.filter(x => !meetedMinutes.includes(x) || (selectedHour === today.getHours() && x < today.getMinutes()));
+    return allMinutes.filter(x => (selectedHour === today.getHours() && x < today.getMinutes()));
 }
 

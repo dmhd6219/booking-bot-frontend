@@ -12,8 +12,9 @@ import {
     DateOption, DurationOption, RoomOption
 } from "../../utils/BookingApi";
 import {getUsersEmailByTgId} from "../../utils/Firebase";
-import {generateErrorPopupParams, LOCALE, range, step, timezone, UniversityEmail} from "../../utils/Utils";
+import {generateErrorPopupParams, LOCALE, step, timezone, UniversityEmail} from "../../utils/Utils";
 import {AxiosResponse} from "axios";
+import {getDisabledHours, getDisabledMinutes} from "../../utils/TimeDisabler";
 
 dayjs.extend(customParseFormat);
 export default function ByTime() {
@@ -167,12 +168,11 @@ export default function ByTime() {
         showPopup(generateConfirmParams()).then(async (id: string) => {
             if (id === "ok") {
                 bookRoom(room as string, title, (completeStartDate as Date).toISOString(), (completeEndDate as Date).toISOString(),
-                    (await getUsersEmailByTgId(tg.initDataUnsafe.user.id.toString())) as UniversityEmail).then((r:AxiosResponse) => {
-                    if (r.status === 200){
+                    (await getUsersEmailByTgId(tg.initDataUnsafe.user.id.toString())) as UniversityEmail).then((r: AxiosResponse) => {
+                    if (r.status === 200) {
                         console.log(r.data);
                         navigate("/");
-                    }
-                    else {
+                    } else {
                         showPopup(generateErrorPopupParams(r.data[0].detail.message, lang));
                     }
 
@@ -200,7 +200,8 @@ export default function ByTime() {
                         disabled={date === null}
                         value={time} disabledTime={() => {
                 return {
-                    disabledHours: () => range(7, 19)
+                    disabledHours: () => getDisabledHours(completeStartDate as Date),
+                    disabledMinutes: (selectedHour: number) => getDisabledMinutes(completeStartDate as Date, selectedHour)
                 }
             }} showNow={false}
                 // on close => start loading durations
