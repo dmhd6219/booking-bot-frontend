@@ -94,7 +94,7 @@ export default function MyBookingsPage() {
             tg.BackButton.show();
         }
         load()
-    }, []);
+    }, [load]);
 
     const generateConfirmParams = (booking: Booking) => {
         return {
