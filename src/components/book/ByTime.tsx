@@ -44,18 +44,17 @@ export default function ByTime() {
     const [loadingDurations, setLoadingDurations] = useState<boolean>(false);
     const [loadingRooms, setLoadingRooms] = useState<boolean>(false);
 
-
+    // Define Telegram Interface items
     const [mainButtonState, setMainButtonState] = useState({
-        text: 'BUTTON TEXT',
+        text: "",
         show: false,
         progress: false,
         disable: false,
     });
     const navigate = useNavigate();
     const [backButtonState,] = useState<{ show: boolean }>({show: true});
-
-
     const showPopup = useShowPopup();
+
     useEffect(() => {
         setDateOptions(getOptionsOfDate());
         if (isTelegramWindow) {
@@ -64,100 +63,131 @@ export default function ByTime() {
         }
     }, [])
 
+    // Handlers of changing values
+    const handleDateChange = (value: string): void => {
+        setDateSelected(true);
+
+        setDate(value);
+        setTime(null);
+        setDuration(null);
+        setRoom(null);
+        setMainButtonState({text: "", show: false, progress: false, disable: false,});
+
+        let cStartDate: Date = new Date(value);
+        cStartDate.setHours(0, 0, 0, 0);
+
+        setCompleteStartDate(cStartDate);
+        setCompleteEndDate(null);
+    }
+
+    const handleTimeChange = async (value: Dayjs): Promise<void> => {
+        setTimeSelected(true);
+
+        setTime(value);
+        setDuration(null);
+        setRoom(null);
+        setMainButtonState({text: "", show: false, progress: false, disable: false,});
+
+        (completeStartDate as Date).setHours(timezone + value.hour(), value.minute());
+
+        setCompleteStartDate(completeStartDate);
+        setCompleteEndDate(null);
+
+        setDurationOptions([]);
+        setRoomOptions([]);
+        setLoadingDurations(true);
+    }
+
+    const handleDurationChange = async (value: number): Promise<void> => {
+        setRangeSelected(true);
+
+        setDuration(value);
+        setRoom(null);
+        setMainButtonState({text: "BOOK", show: false, progress: false, disable: false,});
+
+        let cEndDate: Date = new Date((completeStartDate as Date).toISOString());
+        cEndDate.setMinutes((cEndDate as Date).getMinutes() + value);
+        setCompleteEndDate(cEndDate);
+
+        setRoomOptions([]);
+        setLoadingRooms(true);
+    }
+
+    const handleRoomChange = (value: string): void => {
+        setMainButtonState({
+            text: LOCALE[lang].Book.Book.toUpperCase(),
+            show: true,
+            progress: false,
+            disable: false,
+        });
+
+        setRoomSelected(true);
+        setRoom(value);
+    }
+
+    // loaders of dynamic data
+
+    const loadRooms = async (): Promise<void> => {
+        setRoomOptions(await getRoomsOptions((completeStartDate as Date), duration as number).then((r: RoomOption[]) => {
+            setLoadingRooms(false);
+            return r;
+        }));
+    }
+
+    const loadDurations = async () : Promise<void> => {
+        setDurationOptions(await getDurationsOptions((completeStartDate as Date), step).then((r: DurationOption[]) => {
+            setLoadingDurations(false);
+            return r;
+        }))
+    }
+
     return (
         <div id={"time"}>
             {backButtonState.show &&
-                <BackButton onClick={() => {
-                    navigate("/")
-                }}/>
+                <BackButton onClick={() => navigate("/")}/>
             }
 
             <Typography.Title>{LOCALE[lang].Book.Date}</Typography.Title>
-            <Select size={"large"} onSelect={(value: string) => {
-                setDateSelected(true);
-                console.log("On Select (Date) - " + value)
-                setDate(value);
-                setTime(null);
-                setDuration(null);
-                setRoom(null);
-                setMainButtonState({text: "BOOK", show: false, progress: false, disable: false,});
-
-                let cStartDate: Date = new Date(value);
-                cStartDate.setHours(0, 0, 0, 0)
-
-                setCompleteStartDate(cStartDate);
-                setCompleteEndDate(null);
-
-            }} value={date} options={dateOptions}>
+            <Select size={"large"} onSelect={handleDateChange} value={date} options={dateOptions}>
             </Select>
 
             <Typography.Title>{LOCALE[lang].Book.Time}</Typography.Title>
             <TimePicker inputReadOnly={true}
                         format={"HH:mm"}
-                        minuteStep={step} size={"large"} onSelect={async (value: Dayjs) => {
-                setTimeSelected(true);
-
-                console.log(`On Select (Time) - ${value.toISOString()}`);
-                setTime(value);
-                setDuration(null);
-                setRoom(null);
-                setMainButtonState({text: "BOOK", show: false, progress: false, disable: false,});
-
-                (completeStartDate as Date).setHours(timezone + value.hour(), value.minute());
-
-                setCompleteStartDate(completeStartDate);
-                setCompleteEndDate(null);
-
-                setDurationOptions([]);
-                setRoomOptions([]);
-                setLoadingDurations(true);
-                // TODO reload changes from backend
-            }} disabled={!dateSelected} value={time} disabledTime={() => {
+                        minuteStep={step}
+                        size={"large"}
+                        onSelect={handleTimeChange}
+                        disabled={!dateSelected}
+                        value={time} disabledTime={() => {
                 return {
                     disabledHours: () => range(7, 19)
                 }
-            }} showNow={false} onOpenChange={async (open: boolean) => {
-                if (!open) {
-                    setDurationOptions(await getDurationsOptions((completeStartDate as Date), step).then((r: DurationOption[]) => {
-                        setLoadingDurations(false);
-                        return r;
-                    }))
-                }
-            }}/>
+            }} showNow={false}
+                // on close => start loading durations
+                        onOpenChange={async (open: boolean) => {
+                            if (!open) {
+                                loadDurations();
+                            }
+                        }}/>
 
             <Typography.Title>{LOCALE[lang].Book.Duration}</Typography.Title>
-            <Select size={"large"} onSelect={async (value: number) => {
-                setRangeSelected(true);
-                console.log(`On Select (Range) - ${value}`);
-                setDuration(value);
-                setRoom(null);
-                setMainButtonState({text: "BOOK", show: false, progress: false, disable: false,});
+            <Select size={"large"} onSelect={handleDurationChange}
+                    disabled={(!(dateSelected && timeSelected))}
+                    value={duration} options={durationOptions}
+                    loading={loadingDurations}
 
-                let cEndDate: Date = new Date((completeStartDate as Date).toISOString());
-                cEndDate.setMinutes((cEndDate as Date).getMinutes() + value);
-                setCompleteEndDate(cEndDate);
-
-                setRoomOptions([]);
-                setLoadingRooms(true);
-                // TODO reload changes from backend
-            }} disabled={(!(dateSelected && timeSelected))} value={duration} options={durationOptions}
-                    loading={loadingDurations} onDropdownVisibleChange={async (open: boolean) => {
-                if (!open) {
-                    setRoomOptions(await getRoomsOptions((completeStartDate as Date), duration as number).then((r: RoomOption[]) => {
-                        setLoadingRooms(false);
-                        return r;
-                    }));
-                }
-            }}/>
+                // on close => start loading rooms
+                    onDropdownVisibleChange={async (open: boolean) => {
+                        if (!open) {
+                            loadRooms();
+                        }
+                    }}/>
 
             <Typography.Title>{LOCALE[lang].Book.Room}</Typography.Title>
-            <Select size={"large"} onSelect={(value) => {
-                setRoomSelected(() => {
-                    setMainButtonState({text: LOCALE[lang].Book.Book.toUpperCase(), show: true, progress: false, disable: false,});
-                    return true;
-                });
-                setRoom(value);
-            }} disabled={!(dateSelected && timeSelected && rangeSelected)} value={room} options={roomOptions}
+            <Select size={"large"} onSelect={handleRoomChange}
+                    disabled={!(dateSelected && timeSelected && rangeSelected)}
+                    value={room}
+                    options={roomOptions}
                     loading={loadingRooms}/>
 
             <Typography.Title>{LOCALE[lang].Book.Title}</Typography.Title>
