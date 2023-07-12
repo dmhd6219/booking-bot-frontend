@@ -3,11 +3,12 @@ import {Button, Card, Typography} from "antd";
 import styled from "styled-components";
 import {DeleteOutlined} from '@ant-design/icons';
 import {Booking, bookingsQuery, deleteBooking, Filter} from "../utils/BookingApi";
-import {LOCALE, timezone} from "../utils/Utils";
+import {generateErrorPopupParams, LOCALE, timezone} from "../utils/Utils";
 import {isTelegramWindow, tg} from "../utils/TelegramWebApp";
 import {useNavigate} from "react-router-dom";
-import {BackButton} from "@vkruglikov/react-telegram-web-app";
+import {BackButton, useShowPopup} from "@vkruglikov/react-telegram-web-app";
 import {getUsersEmailByTgId} from "../utils/Firebase";
+import {AxiosResponse} from "axios";
 
 const CenteredSpace = styled.div`
   display: flex;
@@ -31,6 +32,8 @@ export default function MyBookingsPage() {
     const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
     const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
 
+    const [message, setMessage] = useState<string>(LOCALE[lang].My.Empty);
+
     const navigate = useNavigate();
     const [buttonState,] = useState<{ show: boolean }>({show: true});
 
@@ -38,12 +41,7 @@ export default function MyBookingsPage() {
     const [cards, setCards] = useState<Booking[]>([]);
 
 
-    // const onChange = (checked: boolean) => {
-    //     setLoading(!checked);
-    // };
-    //
-    // let user: string;
-    // let bookings: Booking[];
+    const showPopup = useShowPopup();
 
     const load = async () => {
         setLoading(true);
@@ -61,21 +59,33 @@ export default function MyBookingsPage() {
             room_id_in: [],
             owner_email_in: [user]
         }
-        const bookings: Booking[] = await bookingsQuery(filter);
-        for (let book of bookings) {
-            let start: Date = new Date(book.start);
-            let end: Date = new Date(book.end);
 
-            start.setHours(start.getHours() - timezone);
-            end.setHours(end.getHours() - timezone);
+        const response : AxiosResponse = await bookingsQuery(filter);
 
-            book.start = start.toISOString();
-            book.end = end.toISOString();
+        if (response.status === 200){
+            const bookings: Booking[] = response.data;
+            for (let book of bookings) {
+                let start: Date = new Date(book.start);
+                let end: Date = new Date(book.end);
+
+                start.setHours(start.getHours() - timezone);
+                end.setHours(end.getHours() - timezone);
+
+                book.start = start.toISOString();
+                book.end = end.toISOString();
+            }
+
+            setCards(bookings);
+
+            setLoading(false);
         }
-        console.log(bookings);
-        setCards(bookings);
 
-        setLoading(false);
+        else {
+            setMessage(`Oops, an error has occurred...\n${response.data[0].detail.message}`);
+            setCards([]);
+
+            setLoading(false);
+        }
     }
 
     useEffect(() => {
@@ -85,6 +95,40 @@ export default function MyBookingsPage() {
         }
         load()
     }, []);
+
+    const generateConfirmParams = (booking: Booking) => {
+        return {
+            title: `Confirm deletion`,
+            message: `Do you really want to delete ${booking.title}`,
+            buttons: [
+                {
+                    id: "ok",
+                    type: 'ok',
+                },
+                {
+                    id: "cancel",
+                    type: 'destructive',
+                    text: `Cancel`,
+                },
+            ],
+        }
+    }
+
+    const handleDeleteButtonClick = async (booking: Booking): Promise<void> => {
+        showPopup(generateConfirmParams(booking)).then(async (id: string) => {
+            if (id === "ok") {
+                const response: AxiosResponse = await deleteBooking(booking.id);
+                if (response.status === 200) {
+                    setCards([]);
+                    await load();
+                } else {
+                    await showPopup(generateErrorPopupParams(response.data[0].detail.message))
+                }
+            }
+        })
+
+
+    }
 
     return (
         <div>
@@ -99,17 +143,14 @@ export default function MyBookingsPage() {
                 {loading && <CardWithPadding style={{width: 300}} loading={loading} actions={[<DeleteOutlined/>]}>
                 </CardWithPadding>}
 
-                {!loading && cards.length === 0 && <p>{LOCALE[lang].My.Empty}</p>}
+                {!loading && cards.length === 0 && <p>{message}</p>}
 
                 {!loading && cards.map((booking: Booking) =>
                     <CardWithPadding style={{width: 300}}
-                                     actions={[<Button onClick={async () => {
-                                         const result: boolean = await deleteBooking(booking.id);
-                                         if (result) {
-                                             setCards([]);
-                                             load();
-                                         }
-                                     }}><DeleteOutlined/></Button>]}
+                                     actions={[
+                                         <Button onClick={async () => handleDeleteButtonClick(booking)}>
+                                             <DeleteOutlined/></Button>
+                                     ]}
                                      title={booking.title}
                                      key={booking.id}>
                         <ul>

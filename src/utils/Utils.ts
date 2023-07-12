@@ -76,3 +76,16 @@ export const LOCALE: { en: Localization, ru: Localization } = {
     en: LocalizationEn.LocalizationEn,
     ru: LocalizationRu.LocalizationRu,
 }
+
+export const generateErrorPopupParams = (message : string) => {
+    return {
+        title: `Oops.. An error has occured`,
+        message: `${message}`,
+        buttons: [
+            {
+                id: "ok",
+                type: 'ok',
+            }
+        ],
+    }
+}

@@ -20,32 +20,26 @@ interface Room {
 }
 
 
-export async function getRooms(): Promise<Room[]> {
+export async function getRooms(): Promise<AxiosResponse<Room[] | ErrorType>> {
     console.log("Fetching rooms...");
     const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
     const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
 
 
-    let response: AxiosResponse = await axios.get(roomsUrl, {headers: {"Accept-Language": locale}});
-
-    return response.data;
+    return await axios.get(roomsUrl, {headers: {"Accept-Language": locale}});
 }
 
-// type DateIso = `${number}${number}${number}${number}-${number}${number}-
-//         ${number}${number}T${number}${number}:${number}${number}:${number}${number}.${number}${number}${number}Z`
 export type DateIso = string;
 
-export async function getFreeRooms(start: DateIso, end: DateIso): Promise<Room[]> {
+export async function getFreeRooms(start: DateIso, end: DateIso): Promise<AxiosResponse<Room[] | ErrorType>> {
     console.log("Fetching free rooms...");
     const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
     const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
 
-    let response: AxiosResponse = await axios.post(freeRoomsUrl, JSON.stringify({
+    return await axios.post(freeRoomsUrl, JSON.stringify({
         start: start,
         end: end
     }), {headers: {"Accept-Language": locale}});
-
-    return response.data;
 
 }
 
@@ -60,8 +54,7 @@ export interface Booking {
     owner_email: UniversityEmail;
 }
 
-export async function bookRoom(id: string, title: string, start: DateIso, end: DateIso, owner_email: UniversityEmail): Promise<Booking> {
-    console.log("Fetching book rooms...");
+export async function bookRoom(id: string, title: string, start: DateIso, end: DateIso, owner_email: UniversityEmail): Promise<AxiosResponse<Booking | ErrorType>> {
     const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
     const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
 
@@ -72,13 +65,7 @@ export async function bookRoom(id: string, title: string, start: DateIso, end: D
         owner_email: owner_email
     });
 
-    console.log(body)
-
-    let response: AxiosResponse = await axios.post(bookRoomUrl(id), body, {headers: {"Accept-Language": locale}});
-
-    console.log(`Book response - ${response.status}`)
-
-    return response.data;
+    return await axios.post(bookRoomUrl(id), body, {headers: {"Accept-Language": locale}});
 }
 
 export interface Filter {
@@ -88,26 +75,33 @@ export interface Filter {
     owner_email_in?: string[]
 }
 
-export async function bookingsQuery(filter: Filter): Promise<Booking[]> {
+export async function bookingsQuery(filter: Filter): Promise<AxiosResponse<Booking[] | ErrorType>> {
     console.log("Fetching books query...");
     const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
     const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
 
     let response: AxiosResponse = await axios.post(bookingsQueryUrl, JSON.stringify({filter: filter}), {headers: {"Accept-Language": locale}});
     console.log("Fetched query")
-    return response.data;
+    return response;
 }
 
 
-export async function deleteBooking(id: string): Promise<boolean> {
+export async function deleteBooking(id: string): Promise<AxiosResponse<string | ErrorType>> {
     console.log("Deleting rooms...");
     const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
     const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
 
-    let response: AxiosResponse = await axios.delete(deleteBookingUrl(id), {headers: {"Accept-Language": locale}});
-
-    return response.status === 200;
+    return await axios.delete(deleteBookingUrl(id), {headers: {"Accept-Language": locale}});
 }
+
+export interface ErrorType {
+    detail: {
+        loc: string,
+        msg: string,
+        type: string
+    }[]
+}
+
 
 // actually logic
 
@@ -131,10 +125,14 @@ export async function getTimeByDate(date: Date, step: number): Promise<Date[]> {
         let next: Date = new Date(temp.toISOString());
         next.setMinutes(next.getMinutes() + step)
 
-        let freeRooms: Room[] = await getFreeRooms(temp.toISOString(), next.toISOString());
-        if (!(freeRooms.length === 0)) {
-            freeSlots.push(temp);
+        let response: AxiosResponse = await getFreeRooms(temp.toISOString(), next.toISOString());
+        if (response.status === 200) {
+            let freeRooms: Room[] = (response).data;
+            if (!(freeRooms.length === 0)) {
+                freeSlots.push(temp);
+            }
         }
+
     }
 
     return freeSlots;
@@ -151,15 +149,19 @@ export async function getDurationByTime(date: Date, step: number): Promise<numbe
     let freeMinutes: number[] = [];
 
     for (let temp: Date = new Date(startDate.toISOString()); temp <= endDate; temp.setMinutes(temp.getMinutes() + step)) {
-        let freeRooms: Room[] = await getFreeRooms(startDate.toISOString(), temp.toISOString());
+        let response: AxiosResponse = await getFreeRooms(startDate.toISOString(), temp.toISOString());
+        if (response.status === 200) {
+            let freeRooms: Room[] = (response).data;
 
-        if (!(freeRooms.length === 0)) {
-            // @ts-ignore
-            let diff: number = Math.abs((temp - startDate) / (1000 * 60));
-            if (diff > 0) {
-                freeMinutes.push(diff);
+            if (!(freeRooms.length === 0)) {
+                // @ts-ignore
+                let diff: number = Math.abs((temp - startDate) / (1000 * 60));
+                if (diff > 0) {
+                    freeMinutes.push(diff);
+                }
             }
         }
+
 
     }
 
@@ -175,13 +177,19 @@ export async function getRoomByTimeAndDuration(date: Date, duration: number): Pr
 
     let availableRooms: Room[] = [];
 
-    let freeRooms: Room[] = await getFreeRooms(startDate.toISOString(), endDate.toISOString());
+    let response: AxiosResponse = await getFreeRooms(startDate.toISOString(), endDate.toISOString());
+    if (response.status === 200) {
+        let freeRooms: Room[] = (response).data;
 
-    for (let room of freeRooms) {
-        availableRooms.push(room);
+        for (let room of freeRooms) {
+            availableRooms.push(room);
+        }
+
+        return availableRooms;
     }
 
-    return availableRooms;
+    return []
+
 }
 
 // Form valid options
