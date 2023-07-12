@@ -32,7 +32,7 @@ export default function MyBookingsPage() {
     const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
     const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
 
-    const [message, setMessage] = useState<string>(LOCALE[lang].My.Empty);
+    // const [message, setMessage] = useState<string>(LOCALE[lang].My.Empty);
 
     const navigate = useNavigate();
     const [buttonState,] = useState<{ show: boolean }>({show: true});
@@ -81,7 +81,7 @@ export default function MyBookingsPage() {
         }
 
         else {
-            setMessage(`${LOCALE[lang].My.Error}\n${response.data[0].detail.message}`);
+            // setMessage(`${LOCALE[lang].My.Error}\n${response.data[0].detail.message}`);
             setCards([]);
 
             setLoading(false);
@@ -94,7 +94,7 @@ export default function MyBookingsPage() {
             tg.BackButton.show();
         }
         load()
-    }, [load]);
+    }, []);
 
     const generateConfirmParams = (booking: Booking) => {
         return {
