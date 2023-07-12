@@ -190,7 +190,7 @@ export default function ByTime() {
                         minuteStep={step}
                         size={"large"}
                         onSelect={handleTimeChange}
-                        disabled={!(date === null)}
+                        disabled={date === null}
                         value={time} disabledTime={() => {
                 return {
                     disabledHours: () => range(7, 19)
@@ -205,7 +205,7 @@ export default function ByTime() {
 
             <Typography.Title>{LOCALE[lang].Book.Duration}</Typography.Title>
             <Select size={"large"} onSelect={handleDurationChange}
-                    disabled={(!((date === null) && (time === null)))}
+                    disabled={(date === null) && (time === null)}
                     value={duration} options={durationOptions}
                     loading={loadingDurations}
 
@@ -218,7 +218,7 @@ export default function ByTime() {
 
             <Typography.Title>{LOCALE[lang].Book.Room}</Typography.Title>
             <Select size={"large"} onSelect={handleRoomChange}
-                    disabled={!((date === null) && (time === null) && (duration === null))}
+                    disabled={(date === null) && (time === null) && (duration === null)}
                     value={room}
                     options={roomOptions}
                     loading={loadingRooms}/>
@@ -227,7 +227,6 @@ export default function ByTime() {
             <Input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="by-room-input"
             />
 
 
