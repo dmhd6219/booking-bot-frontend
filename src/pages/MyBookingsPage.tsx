@@ -3,7 +3,7 @@ import {Button, Card, Typography} from "antd";
 import styled from "styled-components";
 import {DeleteOutlined} from '@ant-design/icons';
 import {Booking, bookingsQuery, deleteBooking, Filter} from "../utils/BookingApi";
-import {generateErrorPopupParams, LOCALE, timezone} from "../utils/Utils";
+import {generateErrorPopupParams, LOCALE, timezone, UniversityEmail} from "../utils/Utils";
 import {isTelegramWindow, tg} from "../utils/TelegramWebApp";
 import {useNavigate} from "react-router-dom";
 import {BackButton, useShowPopup} from "@vkruglikov/react-telegram-web-app";
@@ -57,7 +57,7 @@ export default function MyBookingsPage() {
             started_at_or_after: (past).toISOString(),
             ended_at_or_before: (future).toISOString(),
             room_id_in: [],
-            owner_email_in: [user]
+            owner_email_in: [user as UniversityEmail]
         }
 
         const response : AxiosResponse = await bookingsQuery(filter);

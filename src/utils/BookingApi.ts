@@ -73,7 +73,7 @@ export interface Filter {
     started_at_or_after?: DateIso,
     ended_at_or_before?: DateIso,
     room_id_in?: string[],
-    owner_email_in?: string[]
+    owner_email_in?: UniversityEmail[]
 }
 
 export async function bookingsQuery(filter: Filter): Promise<AxiosResponse<Booking[] | ErrorType>> {
