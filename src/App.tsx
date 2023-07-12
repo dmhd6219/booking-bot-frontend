@@ -42,11 +42,8 @@ function App(): JSX.Element {
     const [active, setActive] = useState(true);
 
     useEffect( () => {
-        getUsersEmailByTgId(tg.initDataUnsafe.user).then(r => {
+        getUsersEmailByTgId(tg.initDataUnsafe.user.id.toString()).then(r => {
             if (r === undefined){
-                console.log(tg.initDataUnsafe.user);
-                console.log("---")
-                console.log(tg.initDataUnsafe);
                 setActive(false);
             }
         });
