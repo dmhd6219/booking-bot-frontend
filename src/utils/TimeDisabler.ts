@@ -14,7 +14,7 @@ export function getDisabledHours(date: Date): number[] {
     let constantlyRemoved = range(7, 19);
 
     return allHours.filter((x: number) => constantlyRemoved.includes(x) ||
-        (date.getUTCDay() === (new Date()).getUTCDay() && x < (new Date()).getHours()));
+        (date.getDay() === (new Date()).getDay() && x < (new Date()).getHours()));
 }
 
 export function getDisabledMinutes(date: Date, selectedHour: number): number[] {
