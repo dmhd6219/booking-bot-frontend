@@ -4,20 +4,15 @@ import {BackButton, MainButton, useShowPopup} from "@vkruglikov/react-telegram-w
 import {Dayjs} from 'dayjs';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import {useNavigate} from "react-router-dom";
 
 import {isTelegramWindow, tg} from "../../utils/TelegramWebApp";
-
 import {
-    bookRoom, DateOption, DurationOption,
-    getDurationsOptions,
-    getOptionsOfDate,
-    getRoomsOptions,
-    RoomOption
+    bookRoom, getDurationsOptions, getOptionsOfDate, getRoomsOptions,
+    DateOption, DurationOption, RoomOption
 } from "../../utils/BookingApi";
 import {getUsersEmailByTgId} from "../../utils/Firebase";
-
 import {LOCALE, range, step, timezone} from "../../utils/Utils";
-import {useNavigate} from "react-router-dom";
 
 dayjs.extend(customParseFormat);
 export default function ByTime() {
@@ -27,11 +22,6 @@ export default function ByTime() {
     const [dateOptions, setDateOptions] = useState<DateOption[]>([]);
     const [durationOptions, setDurationOptions] = useState<DurationOption[]>([]);
     const [roomOptions, setRoomOptions] = useState<RoomOption[]>([]);
-
-    const [dateSelected, setDateSelected] = useState(false);
-    const [timeSelected, setTimeSelected] = useState(false);
-    const [rangeSelected, setRangeSelected] = useState(false);
-    const [, setRoomSelected] = useState(false);
 
     const [title, setTitle] = useState<string>("");
     const [date, setDate] = useState<string | null>(null);
@@ -65,8 +55,6 @@ export default function ByTime() {
 
     // Handlers of changing values
     const handleDateChange = (value: string): void => {
-        setDateSelected(true);
-
         setDate(value);
         setTime(null);
         setDuration(null);
@@ -81,8 +69,6 @@ export default function ByTime() {
     }
 
     const handleTimeChange = async (value: Dayjs): Promise<void> => {
-        setTimeSelected(true);
-
         setTime(value);
         setDuration(null);
         setRoom(null);
@@ -99,8 +85,6 @@ export default function ByTime() {
     }
 
     const handleDurationChange = async (value: number): Promise<void> => {
-        setRangeSelected(true);
-
         setDuration(value);
         setRoom(null);
         setMainButtonState({text: "BOOK", show: false, progress: false, disable: false,});
@@ -121,12 +105,14 @@ export default function ByTime() {
             disable: false,
         });
 
-        setRoomSelected(true);
         setRoom(value);
     }
 
     // loaders of dynamic data
 
+    /**
+     * Loads available rooms
+     */
     const loadRooms = async (): Promise<void> => {
         setRoomOptions(await getRoomsOptions((completeStartDate as Date), duration as number).then((r: RoomOption[]) => {
             setLoadingRooms(false);
@@ -134,11 +120,58 @@ export default function ByTime() {
         }));
     }
 
-    const loadDurations = async () : Promise<void> => {
+    /**
+     * Loads available durations
+     */
+    const loadDurations = async (): Promise<void> => {
         setDurationOptions(await getDurationsOptions((completeStartDate as Date), step).then((r: DurationOption[]) => {
             setLoadingDurations(false);
             return r;
         }))
+    }
+
+
+    /**
+     * Generates content for confirmation button
+     */
+    const generateConfirmParams = () => {
+        let cStartDate: Date = new Date((completeStartDate as Date).toISOString());
+        cStartDate.setHours(cStartDate.getHours() - timezone);
+
+        return {
+            title: `${LOCALE[lang].Book.Confirm} ${title}`,
+            message: `${LOCALE[lang].Book.Book} ${room} ${LOCALE[lang].Book.At.toLowerCase()} ${cStartDate.toLocaleTimeString([locale], {
+                hour: '2-digit',
+                minute: '2-digit'
+            })} ${LOCALE[lang].Book.For.toLowerCase()} ${duration} ${LOCALE[lang].Book.Minutes.toLowerCase()}?`,
+            buttons: [
+                {
+                    id: "ok",
+                    type: 'ok',
+                },
+                {
+                    id: "cancel",
+                    type: 'destructive',
+                    text: LOCALE[lang].Book.Cancel,
+                },
+            ],
+        }
+    }
+
+    /**
+     * Handles click on Main Button
+     * If button is pressed => room will be booked
+     */
+    const handleMainButtonClick = async () => {
+        showPopup(generateConfirmParams()).then(async (id: string) => {
+            if (id === "ok") {
+                bookRoom(room as string, title, (completeStartDate as Date).toISOString(), (completeEndDate as Date).toISOString(),
+                    await getUsersEmailByTgId(tg.initDataUnsafe.user.id.toString())).then(r => {
+                    console.log(r);
+                    navigate("/");
+                });
+            }
+        })
     }
 
     return (
@@ -157,7 +190,7 @@ export default function ByTime() {
                         minuteStep={step}
                         size={"large"}
                         onSelect={handleTimeChange}
-                        disabled={!dateSelected}
+                        disabled={!(date === null)}
                         value={time} disabledTime={() => {
                 return {
                     disabledHours: () => range(7, 19)
@@ -172,7 +205,7 @@ export default function ByTime() {
 
             <Typography.Title>{LOCALE[lang].Book.Duration}</Typography.Title>
             <Select size={"large"} onSelect={handleDurationChange}
-                    disabled={(!(dateSelected && timeSelected))}
+                    disabled={(!((date === null) && (time === null)))}
                     value={duration} options={durationOptions}
                     loading={loadingDurations}
 
@@ -185,7 +218,7 @@ export default function ByTime() {
 
             <Typography.Title>{LOCALE[lang].Book.Room}</Typography.Title>
             <Select size={"large"} onSelect={handleRoomChange}
-                    disabled={!(dateSelected && timeSelected && rangeSelected)}
+                    disabled={!((date === null) && (time === null) && (duration === null))}
                     value={room}
                     options={roomOptions}
                     loading={loadingRooms}/>
@@ -198,39 +231,9 @@ export default function ByTime() {
             />
 
 
-            <div>{mainButtonState?.show && <MainButton {...mainButtonState} onClick={async () => {
-                let cStartDate: Date = new Date((completeStartDate as Date).toISOString());
-                cStartDate.setHours(cStartDate.getHours() - timezone);
-                // TODO change to tg.showConfirm
-                showPopup({
-                    title: `${LOCALE[lang].Book.Confirm} ${title}`,
-                    message: `${LOCALE[lang].Book.Book} ${room} ${LOCALE[lang].Book.At.toLowerCase()} ${cStartDate.toLocaleTimeString([locale], {
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    })} ${LOCALE[lang].Book.For.toLowerCase()} ${duration} ${LOCALE[lang].Book.Minutes.toLowerCase()}?`,
-                    buttons: [
-                        {
-                            id: "ok",
-                            type: 'ok',
-                        },
-                        {
-                            id: "cancel",
-                            type: 'destructive',
-                            text: LOCALE[lang].Book.Cancel,
-                        },
-                    ],
-                }).then(async (id: string) => {
-                    if (id === "ok") {
-                        console.log(`Room - ${room}\nTitle - ${title}\nStart Date - ${cStartDate.toISOString()}\nEnd Date - ${(completeEndDate as Date).toISOString()}`)
-                        bookRoom(room as string, title, (completeStartDate as Date).toISOString(), (completeEndDate as Date).toISOString(),
-                            await getUsersEmailByTgId(tg.initDataUnsafe.user.id.toString())).then(r => {
-                            console.log(r);
-                            navigate("/");
-                        });
-                        // TODO : make a book
-                    }
-                })
-            }}/>}</div>
+            {mainButtonState?.show &&
+                <MainButton {...mainButtonState} onClick={handleMainButtonClick}/>
+            }
 
         </div>
     )
