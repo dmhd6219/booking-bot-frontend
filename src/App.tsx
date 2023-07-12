@@ -51,7 +51,7 @@ function App(): JSX.Element {
 
     return (
         <div>
-            {isTelegramWindow && <ConfigProvider
+            {isTelegramWindow && active && <ConfigProvider
                 theme={
                     themeParams.text_color
                         ? {
