@@ -143,7 +143,7 @@ export default function MyBookingsPage() {
                 {loading && <CardWithPadding style={{width: 300}} loading={loading} actions={[<DeleteOutlined/>]}>
                 </CardWithPadding>}
 
-                {!loading && cards.length === 0 && <p>NO</p>}
+                {!loading && cards.length === 0 && <p>LOCALE[lang].My.Empty</p>}
 
                 {!loading && cards.map((booking: Booking) =>
                     <CardWithPadding style={{width: 300}}
