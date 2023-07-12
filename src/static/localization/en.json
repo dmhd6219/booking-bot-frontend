@@ -39,12 +39,16 @@
       "Empty": "You have no active bookings!",
       "At": "At ",
       "From": "From",
-      "To": "To"
+      "To": "To",
+      "Confirm" : "Confirm deletion",
+      "ConfirmFull" : "Do you really want to delete",
+      "Cancel" : "Cancel",
+      "Error" : "Oops, an error has occurred..."
     },
     "Book": {
       "Date": "Date",
       "Time": "Time of Start",
-      "Duration": "Duration of Booking",
+      "Duration": "Duration",
       "Room": "Room",
       "Title" : "Title",
       "Confirm": "Confirm",
@@ -53,6 +57,9 @@
       "At" : "At",
       "For" : "For",
       "Minutes" : "Minutes"
+    },
+    "Utils" : {
+      "Error" : "Oops, an error has occurred..."
     }
   }
 }

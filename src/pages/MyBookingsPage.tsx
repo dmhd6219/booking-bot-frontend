@@ -81,7 +81,7 @@ export default function MyBookingsPage() {
         }
 
         else {
-            setMessage(`Oops, an error has occurred...\n${response.data[0].detail.message}`);
+            setMessage(`${LOCALE[lang].My.Error}\n${response.data[0].detail.message}`);
             setCards([]);
 
             setLoading(false);
@@ -98,8 +98,8 @@ export default function MyBookingsPage() {
 
     const generateConfirmParams = (booking: Booking) => {
         return {
-            title: `Confirm deletion`,
-            message: `Do you really want to delete ${booking.title}`,
+            title: `${LOCALE[lang].My.Confirm}`,
+            message: `${LOCALE[lang].My.ConfirmFull} ${booking.title}?`,
             buttons: [
                 {
                     id: "ok",
@@ -108,7 +108,7 @@ export default function MyBookingsPage() {
                 {
                     id: "cancel",
                     type: 'destructive',
-                    text: `Cancel`,
+                    text: `${LOCALE[lang].My.Cancel}`,
                 },
             ],
         }
@@ -122,7 +122,7 @@ export default function MyBookingsPage() {
                     setCards([]);
                     await load();
                 } else {
-                    await showPopup(generateErrorPopupParams(response.data[0].detail.message))
+                    await showPopup(generateErrorPopupParams(response.data[0].detail.message, lang))
                 }
             }
         })

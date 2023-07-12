@@ -21,23 +21,23 @@ export interface Localization {
     "Rules": {
         "Title": string,
         "FirstRule": {
-            "Title" : string,
+            "Title": string,
             "FirstParagraph": string,
             "SecondParagraph": string
         },
         "SecondRule": {
-            "Title" : string,
+            "Title": string,
             "FirstParagraph": string,
             "SecondParagraph": string,
             "Button": string
         },
         "ThirdRule": {
-            "Title" : string,
+            "Title": string,
             "FirstParagraph": string,
             "SecondParagraph": string
         },
         "FourthRule": {
-            "Title" : string,
+            "Title": string,
             "FirstParagraph": string,
             "SecondParagraph": string
         }
@@ -55,7 +55,11 @@ export interface Localization {
         "Empty": string,
         "At": string,
         "From": string,
-        "To": string
+        "To": string,
+        "Confirm": string,
+        "ConfirmFull": string,
+        "Cancel": string,
+        "Error": string
     },
     "Book": {
         "Date": string,
@@ -69,6 +73,9 @@ export interface Localization {
         "At": string,
         "For": string,
         "Minutes": string
+    },
+    "Utils": {
+        "Error": string
     }
 }
 
@@ -77,9 +84,9 @@ export const LOCALE: { en: Localization, ru: Localization } = {
     ru: LocalizationRu.LocalizationRu,
 }
 
-export const generateErrorPopupParams = (message : string) => {
+export const generateErrorPopupParams = (message: string, lang: "en" | "ru") => {
     return {
-        title: `Oops.. An error has occured`,
+        title: `${LOCALE[lang].Utils.Error}`,
         message: `${message}`,
         buttons: [
             {
