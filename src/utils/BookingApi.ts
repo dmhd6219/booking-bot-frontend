@@ -147,7 +147,7 @@ export async function getDurationByTime(date: Date, step: number): Promise<numbe
             if (!(freeRooms.length === 0)) {
                 // @ts-ignore
                 let diff: number = Math.abs((temp - startDate) / (1000 * 60));
-                if (diff > 0) {
+                if (diff > 0 && temp.getHours() > 18 && temp.getHours() < 7) {
                     freeMinutes.push(diff);
                 }
             }
@@ -238,6 +238,8 @@ export async function getDurationsOptions(date: Date, step: number): Promise<Dur
     let data: number[] = await getDurationByTime(date, step);
 
     return data.map((x: number): DurationOption => {
+
+
         let hours: number = Math.floor(x / 60);
         let minutes: number = x % 60;
 
