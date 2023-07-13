@@ -1,5 +1,6 @@
 import LocalizationEn from "../static/localization/en.json"
 import LocalizationRu from "../static/localization/ru.json"
+import {lang} from "./TelegramWebApp";
 
 export const range = (start: number, end: number, step = 1): number[] => {
     const result: number[] = [];
@@ -86,7 +87,7 @@ export const LOCALE: { en: Localization, ru: Localization } = {
     ru: LocalizationRu.LocalizationRu,
 }
 
-export const generateErrorPopupParams = (message: string, lang: "en" | "ru") => {
+export const generateErrorPopupParams = (message: string) => {
     return {
         title: `${LOCALE[lang].Utils.Error}`,
         message: `${message}`,
