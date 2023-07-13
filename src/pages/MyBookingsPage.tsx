@@ -4,7 +4,7 @@ import styled from "styled-components";
 import {DeleteOutlined} from '@ant-design/icons';
 import {Booking, bookingsQuery, deleteBooking, Filter} from "../utils/BookingApi";
 import {generateErrorPopupParams, LOCALE, timezone, UniversityEmail} from "../utils/Utils";
-import {isTelegramWindow, lang, tg} from "../utils/TelegramWebApp";
+import {isTelegramWindow, lang, locale, tg} from "../utils/TelegramWebApp";
 import {useNavigate} from "react-router-dom";
 import {BackButton, useShowPopup} from "@vkruglikov/react-telegram-web-app";
 import {getUsersEmailByTgId} from "../utils/Firebase";
