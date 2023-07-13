@@ -79,7 +79,7 @@ export default function MyBookingsPage() {
         }
 
         else {
-            setMessage(`${LOCALE[lang].My.Error}\n${response.data[0].detail.message}`);
+            setMessage(`${LOCALE[lang].My.Error}\n${response.data[0].detail.msg}`);
             setCards([]);
 
             setLoading(false);
@@ -119,7 +119,7 @@ export default function MyBookingsPage() {
                     setCards([]);
                     await load();
                 } else {
-                    await showPopup(generateErrorPopupParams(response.data[0].detail.message))
+                    await showPopup(generateErrorPopupParams(response.data[0].detail.msg))
                 }
             }
         })

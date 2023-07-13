@@ -170,7 +170,7 @@ export default function ByTime() {
                         console.log(r.data);
                         navigate("/");
                     } else {
-                        showPopup(generateErrorPopupParams(r.data[0].detail.message));
+                        showPopup(generateErrorPopupParams(r.data[0].detail.msg));
                     }
 
                 });
