@@ -30,7 +30,7 @@ const CardWithPadding = styled(Card)`
 
 export default function MyBookingsPage() {
 
-    // const [message, setMessage] = useState<string>(LOCALE[lang].My.Empty);
+    const [message, setMessage] = useState<string>(LOCALE[lang].My.Empty);
 
     const navigate = useNavigate();
     const [buttonState,] = useState<{ show: boolean }>({show: true});
@@ -79,7 +79,7 @@ export default function MyBookingsPage() {
         }
 
         else {
-            // setMessage(`${LOCALE[lang].My.Error}\n${response.data[0].detail.message}`);
+            setMessage(`${LOCALE[lang].My.Error}\n${response.data[0].detail.message}`);
             setCards([]);
 
             setLoading(false);
@@ -119,7 +119,7 @@ export default function MyBookingsPage() {
                     setCards([]);
                     await load();
                 } else {
-                    await showPopup(generateErrorPopupParams(response.data[0].detail.message, lang))
+                    await showPopup(generateErrorPopupParams(response.data[0].detail.message))
                 }
             }
         })
@@ -140,7 +140,7 @@ export default function MyBookingsPage() {
                 {loading && <CardWithPadding style={{width: 300}} loading={loading} actions={[<DeleteOutlined/>]}>
                 </CardWithPadding>}
 
-                {!loading && cards.length === 0 && <p>{LOCALE[lang].My.Empty}</p>}
+                {!loading && cards.length === 0 && <p>{message}</p>}
 
                 {!loading && cards.map((booking: Booking) =>
                     <CardWithPadding style={{width: 300}}
