@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {Card, Typography} from "antd";
 import styled from "styled-components";
 import {Link, useNavigate} from "react-router-dom";
-import {isTelegramWindow, tg} from "../utils/TelegramWebApp";
+import {isTelegramWindow, lang, tg} from "../utils/TelegramWebApp";
 import {BackButton} from "@vkruglikov/react-telegram-web-app";
 import {LOCALE} from "../utils/Utils";
 
@@ -23,7 +23,6 @@ const CardWithPadding = styled(Card)`
   margin-bottom: 5px;
 `
 export default function RulesPage() {
-    const lang : "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
     const navigate = useNavigate();
     const [buttonState,] = useState<{ show: boolean }>({show: true});
 
@@ -31,7 +30,6 @@ export default function RulesPage() {
         console.log("opened 1st time");
         if (isTelegramWindow) {
             tg.expand();
-            tg.BackButton.show();
         }
     }, []);
 

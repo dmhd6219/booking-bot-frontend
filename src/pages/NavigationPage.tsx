@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {Link} from "react-router-dom";
 import {Button, Typography} from "antd";
 import styled from "styled-components";
-import {tg} from "../utils/TelegramWebApp";
+import {lang, tg} from "../utils/TelegramWebApp";
 import {LOCALE} from "../utils/Utils";
 
 const CenteredSpace = styled.div`
@@ -29,7 +29,6 @@ const BlockLink = styled(Link)`
 `;
 
 const NavigationPage = () => {
-    const lang : "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
 
     useEffect(() => {
         tg.BackButton.hide();

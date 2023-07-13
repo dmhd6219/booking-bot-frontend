@@ -5,3 +5,6 @@ export const tg = window.Telegram.WebApp;
 console.log(tg);
 
 export const isTelegramWindow : boolean = tg.initData !== "";
+
+export const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
+export const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";

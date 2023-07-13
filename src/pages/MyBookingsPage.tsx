@@ -4,7 +4,7 @@ import styled from "styled-components";
 import {DeleteOutlined} from '@ant-design/icons';
 import {Booking, bookingsQuery, deleteBooking, Filter} from "../utils/BookingApi";
 import {generateErrorPopupParams, LOCALE, timezone, UniversityEmail} from "../utils/Utils";
-import {isTelegramWindow, tg} from "../utils/TelegramWebApp";
+import {isTelegramWindow, lang, tg} from "../utils/TelegramWebApp";
 import {useNavigate} from "react-router-dom";
 import {BackButton, useShowPopup} from "@vkruglikov/react-telegram-web-app";
 import {getUsersEmailByTgId} from "../utils/Firebase";
@@ -29,8 +29,6 @@ const CardWithPadding = styled(Card)`
 
 
 export default function MyBookingsPage() {
-    const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
-    const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
 
     // const [message, setMessage] = useState<string>(LOCALE[lang].My.Empty);
 
@@ -91,7 +89,6 @@ export default function MyBookingsPage() {
     useEffect(() => {
         if (isTelegramWindow) {
             tg.expand();
-            tg.BackButton.show();
         }
         load()
     }, []);

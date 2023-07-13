@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import {tg} from "./TelegramWebApp";
+import {lang, locale} from "./TelegramWebApp";
 import {daysToChoose, UniversityEmail} from "./Utils";
 
 export const apiUrl: string = `${process.env.REACT_APP_API_URL}`;
@@ -22,8 +22,6 @@ interface Room {
 
 export async function getRooms(): Promise<AxiosResponse<Room[] | ErrorType>> {
     console.log("Fetching rooms...");
-    const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
-    const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
 
 
     return await axios.get(roomsUrl, {headers: {"Accept-Language": locale}});
@@ -33,8 +31,6 @@ export type DateIso = string;
 
 export async function getFreeRooms(start: DateIso, end: DateIso): Promise<AxiosResponse<Room[] | ErrorType>> {
     console.log("Fetching free rooms...");
-    const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
-    const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
 
     return await axios.post(freeRoomsUrl, JSON.stringify({
         start: start,
@@ -54,8 +50,6 @@ export interface Booking {
 }
 
 export async function bookRoom(id: string, title: string, start: DateIso, end: DateIso, owner_email: UniversityEmail): Promise<AxiosResponse<Booking | ErrorType>> {
-    const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
-    const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
 
     let body = JSON.stringify({
         title: title,
@@ -76,8 +70,7 @@ export interface Filter {
 
 export async function bookingsQuery(filter: Filter): Promise<AxiosResponse<Booking[] | ErrorType>> {
     console.log("Fetching books query...");
-    const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
-    const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
+
 
     let response: AxiosResponse = await axios.post(bookingsQueryUrl, JSON.stringify({filter: filter}), {headers: {"Accept-Language": locale}});
     console.log("Fetched query")
@@ -87,8 +80,7 @@ export async function bookingsQuery(filter: Filter): Promise<AxiosResponse<Booki
 
 export async function deleteBooking(id: string): Promise<AxiosResponse<string | ErrorType>> {
     console.log("Deleting rooms...");
-    const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
-    const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
+
 
     return await axios.delete(deleteBookingUrl(id), {headers: {"Accept-Language": locale}});
 }
@@ -199,8 +191,6 @@ export interface DateOption {
 }
 
 export function getOptionsOfDate(): DateOption[] {
-    const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
-    const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
 
     let options: DateOption[] = []
 
@@ -245,7 +235,6 @@ function declOfHours(number: number): string {
 }
 
 export async function getDurationsOptions(date: Date, step: number): Promise<DurationOption[]> {
-    const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
     let data: number[] = await getDurationByTime(date, step);
 
     return data.map((x: number): DurationOption => {

@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {useNavigate} from "react-router-dom";
 
-import {isTelegramWindow, tg} from "../../utils/TelegramWebApp";
+import {isTelegramWindow, lang, locale, tg} from "../../utils/TelegramWebApp";
 import {
     bookRoom, getDurationsOptions, getOptionsOfDate, getRoomsOptions,
     DateOption, DurationOption, RoomOption
@@ -18,8 +18,6 @@ import {getDisabledHours, getDisabledMinutes} from "../../utils/TimeDisabler";
 
 dayjs.extend(customParseFormat);
 export default function ByTime() {
-    const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
-    const locale: "ru-RU" | "en-US" = lang === "ru" ? "ru-RU" : "en-US";
 
     const [dateOptions, setDateOptions] = useState<DateOption[]>([]);
     const [durationOptions, setDurationOptions] = useState<DurationOption[]>([]);
@@ -51,7 +49,6 @@ export default function ByTime() {
         setDateOptions(getOptionsOfDate());
         if (isTelegramWindow) {
             tg.expand();
-            tg.BackButton.show();
         }
     }, [])
 

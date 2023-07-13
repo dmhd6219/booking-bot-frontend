@@ -9,7 +9,7 @@ import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
 import Pages from "./pages/Pages";
 import React, {useEffect, useState} from "react";
 import {BrowserRouter} from "react-router-dom";
-import {isTelegramWindow, tg} from "./utils/TelegramWebApp";
+import {isTelegramWindow, lang, tg} from "./utils/TelegramWebApp";
 import {LOCALE} from "./utils/Utils";
 import enUS from 'antd/locale/en_US';
 import ruRU from 'antd/locale/ru_RU';
@@ -35,7 +35,6 @@ const BigHeader = styled.div`
 function App(): JSX.Element {
     const [colorScheme, themeParams] = useThemeParams();
 
-    const lang: "en" | "ru" = tg.initDataUnsafe.user.language_code === "ru" ? "ru" : "en";
 
     const locale: Locale = lang === "ru" ? ruRU : enUS;
 
