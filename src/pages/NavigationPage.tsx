@@ -37,7 +37,7 @@ const NavigationPage = () => {
     return (
         <div>
             <CenteredSpace>
-                <CenteredTitle>{LOCALE[lang].Navigation.Title + " " + lang}</CenteredTitle>
+                <CenteredTitle>{LOCALE[lang].Navigation.Title}</CenteredTitle>
                 <BlockLink to="/book">
                     <BlockButton type="default" block>
                         {LOCALE[lang].Navigation.Book}
