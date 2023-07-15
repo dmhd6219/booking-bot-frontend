@@ -8,7 +8,7 @@ import {ConfigProvider, theme} from 'antd';
 import {useThemeParams} from "@vkruglikov/react-telegram-web-app";
 import Pages from "./pages/Pages";
 import React, {useEffect, useState} from "react";
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter, Link} from "react-router-dom";
 import {isTelegramWindow, lang, tg} from "./utils/TelegramWebApp";
 import {LOCALE} from "./utils/Utils";
 import enUS from 'antd/locale/en_US';
@@ -31,6 +31,14 @@ const BigHeader = styled.div`
   height: 30vh;
   transform: scale(0.5, 0.5);
 `;
+
+const Centered = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`
 
 function App(): JSX.Element {
     const [colorScheme, themeParams] = useThemeParams();
@@ -80,11 +88,18 @@ function App(): JSX.Element {
             </ConfigProvider>}
 
             {!isTelegramWindow &&
-                <p>{LOCALE[lang].App.TelegramWebAppError} <a href="t.me/https://t.me/web_app_react_test_bot"
-                                                             target="_blank">Telegram</a></p>}
+                <Centered>
+                    <p>{LOCALE[lang].App.TelegramWebAppError} <Link to="t.me/https://t.me/InnoBooking_bot">Telegram</Link></p>
+                    <img src="https://media.tenor.com/-aMDPDf-wY4AAAAd/floppa.gif" alt="Just useless photo for fun"/>
+                </Centered>
+            }
 
             {!active &&
-                <p>{LOCALE[lang].App.TelegramUserError}</p>}
+                <Centered>
+                    <p>{LOCALE[lang].App.TelegramUserError}</p>
+                    <img src="https://media.tenor.com/-aMDPDf-wY4AAAAd/floppa.gif" alt="Just useless photo for fun"/>
+                </Centered>
+            }
         </div>
     );
 }
