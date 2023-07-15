@@ -16,6 +16,7 @@ export default function AvailableRooms() {
     const [buttonState,] = useState<{ show: boolean }>({show: true});
 
     const [rooms, setRooms] = useState<Room[]>([]);
+    const [loadingRooms, setLoadingRooms] = useState<boolean>(true);
 
     useEffect(() => {
         console.log("opened 1st time");
@@ -23,7 +24,10 @@ export default function AvailableRooms() {
             tg.expand();
         }
 
-        getAvailableRoomOptions().then((r: Room[]) => setRooms(r));
+        getAvailableRoomOptions().then((r: Room[]) => {
+            setRooms(r);
+            setLoadingRooms(false);
+        });
     }, []);
 
     return (
@@ -47,6 +51,7 @@ export default function AvailableRooms() {
                         />
                     </List.Item>
                 )}
+                loading={loadingRooms}
             />
         </div>
 
