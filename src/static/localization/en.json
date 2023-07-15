@@ -59,6 +59,11 @@
       "For" : "For",
       "Minutes" : "Minutes"
     },
+    "Rooms" : {
+      "Title" : "Available Rooms",
+      "Capacity" : "Capacity is",
+      "Places" : "Places"
+    },
     "Utils" : {
       "Error" : "Oops, an error has occurred..."
     }

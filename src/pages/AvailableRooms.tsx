@@ -23,7 +23,7 @@ export default function AvailableRooms() {
             tg.expand();
         }
 
-        getAvailableRoomOptions().then((r : Room[]) => setRooms(r));
+        getAvailableRoomOptions().then((r: Room[]) => setRooms(r));
     }, []);
 
     return (
@@ -34,7 +34,7 @@ export default function AvailableRooms() {
                 }}/>
             }
 
-            <CenteredTitle>{LOCALE[lang].Rules.Title}</CenteredTitle>
+            <CenteredTitle>{LOCALE[lang].Rooms.Title}</CenteredTitle>
 
             <List
                 bordered
@@ -43,7 +43,7 @@ export default function AvailableRooms() {
                     <List.Item>
                         <List.Item.Meta
                             title={item.name}
-                            description={`Capacity is ${item.capacity} places.`}
+                            description={`${LOCALE[lang].Rooms.Capacity} ${item.capacity} ${LOCALE[lang].Rooms.Places.toLowerCase()}.`}
                         />
                     </List.Item>
                 )}

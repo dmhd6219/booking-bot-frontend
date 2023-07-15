@@ -77,6 +77,11 @@ export interface Localization {
         "For": string,
         "Minutes": string
     },
+    "Rooms" : {
+        "Title" : string,
+        "Capacity" : string,
+        "Places" : string
+    }
     "Utils": {
         "Error": string
     }
