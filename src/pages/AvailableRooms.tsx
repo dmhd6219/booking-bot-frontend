@@ -33,7 +33,7 @@ export default function AvailableRooms() {
         <div>
             {buttonState.show &&
                 <BackButton onClick={() => {
-                    navigate("/")
+                    navigate("/rules")
                 }}/>
             }
 
