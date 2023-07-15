@@ -19,7 +19,6 @@ export default function AvailableRooms() {
     const [loadingRooms, setLoadingRooms] = useState<boolean>(true);
 
     useEffect(() => {
-        console.log("opened 1st time");
         if (isTelegramWindow) {
             tg.expand();
         }

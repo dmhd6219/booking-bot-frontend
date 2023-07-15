@@ -21,16 +21,13 @@ export interface Room {
 
 
 export async function getRooms(): Promise<AxiosResponse<Room[] | ErrorType>> {
-    console.log("Fetching rooms...");
-
-
     return await axios.get(roomsUrl, {headers: {"Accept-Language": locale}});
 }
 
 export type DateIso = string;
 
 export async function getFreeRooms(start: DateIso, end: DateIso): Promise<AxiosResponse<Room[] | ErrorType>> {
-    console.log("Fetching free rooms...");
+    console.log("Wait, pioneer...")
 
     return await axios.post(freeRoomsUrl, JSON.stringify({
         start: start,
@@ -69,19 +66,11 @@ export interface Filter {
 }
 
 export async function bookingsQuery(filter: Filter): Promise<AxiosResponse<Booking[] | ErrorType>> {
-    console.log("Fetching books query...");
-
-
-    let response: AxiosResponse = await axios.post(bookingsQueryUrl, JSON.stringify({filter: filter}), {headers: {"Accept-Language": locale}});
-    console.log("Fetched query")
-    return response;
+    return await axios.post(bookingsQueryUrl, JSON.stringify({filter: filter}), {headers: {"Accept-Language": locale}});
 }
 
 
 export async function deleteBooking(id: string): Promise<AxiosResponse<string | ErrorType>> {
-    console.log("Deleting rooms...");
-
-
     return await axios.delete(deleteBookingUrl(id), {headers: {"Accept-Language": locale}});
 }
 
@@ -147,7 +136,6 @@ export async function getDurationByTime(date: Date, step: number): Promise<numbe
             if (!(freeRooms.length === 0)) {
                 // @ts-ignore
                 let diff: number = Math.abs((temp - startDate) / (1000 * 60));
-                console.log(`temp : ${temp.toISOString()}; ${temp.getHours()}; < 7 : ${temp.getHours() < 7}; > 18 : ${temp.getHours() > 18}`)
                 if (diff > 0 && (temp.getUTCHours() > 18 || temp.getUTCHours() < 7)) {
                     freeMinutes.push(diff);
                 }

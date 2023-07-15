@@ -27,7 +27,6 @@ export default function RulesPage() {
     const [buttonState,] = useState<{ show: boolean }>({show: true});
 
     useEffect(() => {
-        console.log("opened 1st time");
         if (isTelegramWindow) {
             tg.expand();
         }

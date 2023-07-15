@@ -169,7 +169,6 @@ export default function ByTime() {
                     (await getUsersEmailByTgId(tg.initDataUnsafe.user.id.toString())) as UniversityEmail).then((r: AxiosResponse) => {
                     if (r.status === 200) {
                         sendNotification();
-                        console.log(r.data);
                         navigate("/");
                     } else {
                         showPopup(generateErrorPopupParams(r.data[0].detail.msg));
