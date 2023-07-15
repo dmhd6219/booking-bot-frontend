@@ -47,7 +47,7 @@ export default function RulesPage() {
                     <p>{LOCALE[lang].Rules.FirstRule.FirstParagraph}</p>
                     <p>{LOCALE[lang].Rules.FirstRule.SecondParagraph}</p>
                 </CardWithPadding>
-                <CardWithPadding title={LOCALE[lang].Rules.SecondRule.Title} extra={<Link to="#">{LOCALE[lang].Rules.SecondRule.Button}</Link>}
+                <CardWithPadding title={LOCALE[lang].Rules.SecondRule.Title} extra={<Link to="/rooms">{LOCALE[lang].Rules.SecondRule.Button}</Link>}
                                  style={{width: 300}}>
                     <p>{LOCALE[lang].Rules.SecondRule.FirstParagraph}</p>
                     <p>{LOCALE[lang].Rules.SecondRule.SecondParagraph}"</p>

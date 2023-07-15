@@ -12,7 +12,7 @@ export const bookingsQueryUrl: string = `${apiUrl}/bookings/query`
 
 export const deleteBookingUrl = (booking_id: string): string => `${apiUrl}/bookings/${booking_id}`
 
-interface Room {
+export interface Room {
     name: string,
     id: string,
     type: string,
@@ -270,4 +270,14 @@ export async function getRoomsOptions(date: Date, duration: number) {
     return data.map((x: Room) => {
         return {label: x.name, value: x.id}
     });
+}
+
+export async function getAvailableRoomOptions(): Promise<Room[]> {
+
+    let response: AxiosResponse = await getRooms();
+    if (response.status === 200) {
+        return response.data;
+    }
+
+    return [];
 }

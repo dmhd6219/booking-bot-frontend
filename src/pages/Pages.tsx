@@ -4,6 +4,7 @@ import BookingPage from "./BookingPage";
 import RulesPage from "./RulesPage";
 import NavigationPage from './NavigationPage';
 import MyBookingsPage from "./MyBookingsPage";
+import AvailableRooms from "./AvailableRooms";
 
 const Pages: React.FC = () => {
     const location = useLocation();
@@ -14,6 +15,7 @@ const Pages: React.FC = () => {
             <Route path="/book" element={<BookingPage/>}/>
             <Route path="/rules" element={<RulesPage/>}/>
             <Route path="/my" element={<MyBookingsPage/>}/>
+            <Route path="/rooms" element={<AvailableRooms/>}/>
         </Routes>
     )
 }
