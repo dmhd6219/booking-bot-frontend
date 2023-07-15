@@ -1,8 +1,7 @@
-import net from "net";
+const uri = `${process.env.REACT_APP_NOTIFICATIONS_URL}`
 
 export function sendNotification() {
-    const socket = new net.Socket()
-    socket.connect(`${process.env.REACT_APP_NOTIFICATIONS_URL}`)
+    let connection = new WebSocket(uri);
 
-    socket.write("asda");
+    connection.send('asda');
 }
