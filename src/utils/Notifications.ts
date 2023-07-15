@@ -1,10 +1,10 @@
+import axios from "axios";
+
 const uri = `${process.env.REACT_APP_NOTIFICATIONS_URL}`
 
 export function sendNotification() {
-    let connection = new WebSocket(uri);
-    connection.onopen = () => {
-        connection.send('asda');
-    }
-
-
+    console.log("pressed")
+    axios.get(uri).then(r => {
+        console.log(r)
+    })
 }
