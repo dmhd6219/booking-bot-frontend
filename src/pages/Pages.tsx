@@ -17,7 +17,6 @@ const Pages: React.FC = () => {
             <Route path="/rules" element={<RulesPage/>}/>
             <Route path="/my" element={<MyBookingsPage/>}/>
             <Route path="/rooms" element={<AvailableRooms/>}/>
-            <Route path="/test" element={<TestPage/>}/>
         </Routes>
     )
 }
