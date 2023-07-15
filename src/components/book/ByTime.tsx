@@ -192,7 +192,7 @@ export default function ByTime() {
             <TimePicker inputReadOnly={true}
                         format={"HH:mm"}
                         minuteStep={step}
-                        size={"large"}
+                        size="large"
                         onSelect={handleTimeChange}
                         disabled={date === null}
                         value={time} disabledTime={() => {
@@ -209,7 +209,7 @@ export default function ByTime() {
                         }}/>
 
             <Typography.Title>{LOCALE[lang].Book.Duration}</Typography.Title>
-            <Select size={"large"} onSelect={handleDurationChange}
+            <Select size="large" onSelect={handleDurationChange}
                     disabled={(date === null) || (time === null)}
                     value={duration} options={durationOptions}
                     loading={loadingDurations}
@@ -222,7 +222,7 @@ export default function ByTime() {
                     }}/>
 
             <Typography.Title>{LOCALE[lang].Book.Room}</Typography.Title>
-            <Select size={"large"} onSelect={handleRoomChange}
+            <Select size="large" onSelect={handleRoomChange}
                     disabled={(date === null) || (time === null) || (duration === null)}
                     value={room}
                     options={roomOptions}
@@ -232,6 +232,7 @@ export default function ByTime() {
             <Input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+                size="large"
             />
 
 
