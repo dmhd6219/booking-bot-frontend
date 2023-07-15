@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {isTelegramWindow, lang, tg} from "../utils/TelegramWebApp";
 import styled from "styled-components";
 import {LOCALE} from "../utils/Utils";
-import {getAvailableRoomOptions, Room} from "../utils/BookingApi";
+import {AvailableRoomOption, getAvailableRoomOptions} from "../utils/BookingApi";
 
 const CenteredTitle = styled(Typography.Title)`
   text-align: center;
@@ -15,7 +15,7 @@ export default function AvailableRooms() {
     const navigate = useNavigate();
     const [buttonState,] = useState<{ show: boolean }>({show: true});
 
-    const [rooms, setRooms] = useState<Room[]>([]);
+    const [rooms, setRooms] = useState<AvailableRoomOption[]>([]);
     const [loadingRooms, setLoadingRooms] = useState<boolean>(true);
 
     useEffect(() => {
@@ -24,7 +24,7 @@ export default function AvailableRooms() {
             tg.expand();
         }
 
-        getAvailableRoomOptions().then((r: Room[]) => {
+        getAvailableRoomOptions().then((r: AvailableRoomOption[]) => {
             setRooms(r);
             setLoadingRooms(false);
         });
@@ -46,8 +46,8 @@ export default function AvailableRooms() {
                 renderItem={(item) => (
                     <List.Item>
                         <List.Item.Meta
-                            title={item.name}
-                            description={`${LOCALE[lang].Rooms.Capacity} ${item.capacity} ${LOCALE[lang].Rooms.Places.toLowerCase()}.`}
+                            title={item.title}
+                            description={item.capacity}
                         />
                     </List.Item>
                 )}

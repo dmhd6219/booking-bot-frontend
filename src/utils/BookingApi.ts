@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from "axios";
 import {lang, locale} from "./TelegramWebApp";
-import {daysToChoose, UniversityEmail} from "./Utils";
+import {daysToChoose, LOCALE, UniversityEmail} from "./Utils";
 
 export const apiUrl: string = `${process.env.REACT_APP_API_URL}`;
 export const roomsUrl: string = `${apiUrl}/rooms`;
@@ -272,12 +272,38 @@ export async function getRoomsOptions(date: Date, duration: number) {
     });
 }
 
-export async function getAvailableRoomOptions(): Promise<Room[]> {
+export interface AvailableRoomOption {
+    title: string,
+    capacity: string
+}
+
+function declOfPlaces(number: number): string {
+    let words: string[] = ['место', 'места', 'мест'];
+    return words[(number % 100 > 4 && number % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(number % 10 < 5) ? Math.abs(number) % 10 : 5]];
+}
+
+export async function getAvailableRoomOptions(): Promise<AvailableRoomOption[]> {
+    let options: AvailableRoomOption[] = [];
 
     let response: AxiosResponse = await getRooms();
     if (response.status === 200) {
-        return response.data;
+        let data: Room[] = response.data;
+        for (let room of data) {
+            if (lang === 'ru'){
+                options.push({
+                    title: room.name,
+                    capacity: `${LOCALE['ru'].Rooms.Capacity} ${room.capacity} ${declOfPlaces(room.capacity)}`
+                });
+            }
+            else {
+                options.push({
+                    title: room.name,
+                    capacity: `${LOCALE['en'].Rooms.Capacity} ${room.capacity} place${room.capacity > 1 ? 's' : ''}`
+                });
+            }
+        }
+
     }
 
-    return [];
+    return options;
 }
