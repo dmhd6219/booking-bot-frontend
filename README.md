@@ -23,7 +23,7 @@ REACT_APP_API_URL='https://url.adress'
 
 :four: **ADD url** for notification server to .env file.
 ```
-REACT_APP_NOTIFICATIONS_URL='https://url.adress:6666'
+REACT_APP_BOT_URL='https://url.adress'
 ```
 
 :four: **Configure Google Firebase**.
