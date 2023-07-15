@@ -1,8 +1,8 @@
-import WebSocket from 'ws';
-
-const ws = new WebSocket(`${process.env.REACT_APP_NOTIFICATIONS_URL}`);
-
+import net from "net";
 
 export function sendNotification() {
-    ws.send(0)
+    const socket = new net.Socket()
+    socket.connect(`${process.env.REACT_APP_NOTIFICATIONS_URL}`)
+
+    socket.write("asda");
 }
