@@ -15,6 +15,7 @@ import {getUsersEmailByTgId} from "../../utils/Firebase";
 import {generateErrorPopupParams, LOCALE, step, timezone, UniversityEmail} from "../../utils/Utils";
 import {AxiosResponse} from "axios";
 import {getDisabledHours, getDisabledMinutes} from "../../utils/TimeDisabler";
+import {sendNotification} from "../../utils/Notifications";
 
 dayjs.extend(customParseFormat);
 export default function ByTime() {
@@ -167,6 +168,7 @@ export default function ByTime() {
                 bookRoom(room as string, title, (completeStartDate as Date).toISOString(), (completeEndDate as Date).toISOString(),
                     (await getUsersEmailByTgId(tg.initDataUnsafe.user.id.toString())) as UniversityEmail).then((r: AxiosResponse) => {
                     if (r.status === 200) {
+                        sendNotification();
                         console.log(r.data);
                         navigate("/");
                     } else {
