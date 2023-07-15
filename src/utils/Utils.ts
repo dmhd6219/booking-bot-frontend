@@ -10,7 +10,7 @@ export const range = (start: number, end: number, step = 1): number[] => {
     return result;
 };
 
-export const step = 15;
+export const step = 5;
 export const daysToChoose = 7;
 
 export const timezone = 3;
