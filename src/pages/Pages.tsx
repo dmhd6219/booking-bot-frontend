@@ -5,7 +5,6 @@ import RulesPage from "./RulesPage";
 import NavigationPage from './NavigationPage';
 import MyBookingsPage from "./MyBookingsPage";
 import AvailableRooms from "./AvailableRooms";
-import TestPage from "./TestPage";
 
 const Pages: React.FC = () => {
     const location = useLocation();
