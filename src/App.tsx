@@ -90,14 +90,14 @@ function App(): JSX.Element {
             {!isTelegramWindow &&
                 <Centered>
                     <p>{LOCALE[lang].App.TelegramWebAppError} <Link to="t.me/https://t.me/InnoBooking_bot">Telegram</Link></p>
-                    <img src="https://media.tenor.com/-aMDPDf-wY4AAAAd/floppa.gif" alt="Just useless photo for fun"/>
+                    <img src="https://media.tenor.com/-aMDPDf-wY4AAAAd/floppa.gif" alt="Just useless fun thing"/>
                 </Centered>
             }
 
             {!active &&
                 <Centered>
                     <p>{LOCALE[lang].App.TelegramUserError}</p>
-                    <img src="https://media.tenor.com/-aMDPDf-wY4AAAAd/floppa.gif" alt="Just useless photo for fun"/>
+                    <img src="https://media.tenor.com/-aMDPDf-wY4AAAAd/floppa.gif" alt="Just useless fun thing"/>
                 </Centered>
             }
         </div>
