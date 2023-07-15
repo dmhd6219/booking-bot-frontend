@@ -298,7 +298,7 @@ export async function getAvailableRoomOptions(): Promise<AvailableRoomOption[]> 
             else {
                 options.push({
                     title: room.name,
-                    capacity: `${LOCALE['en'].Rooms.Capacity} ${room.capacity} place${room.capacity > 1 ? 's' : ''}`
+                    capacity: `${LOCALE['en'].Rooms.Capacity} ${room.capacity} place${room.capacity > 1 ? 's' : ''}.`
                 });
             }
         }
