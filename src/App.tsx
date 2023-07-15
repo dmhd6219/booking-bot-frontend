@@ -28,7 +28,7 @@ const BigHeader = styled.div`
   justify-content: center;
 
   width: 100vw;
-  height: 50vh;
+  height: 30vh;
   transform: scale(0.5, 0.5);
 `;
 
