@@ -40,6 +40,10 @@ const Centered = styled.div`
   text-align: center;
 `
 
+const FullWidthImage = styled.img`
+  max-width: 100vw;
+`
+
 function App(): JSX.Element {
     const [colorScheme, themeParams] = useThemeParams();
 
@@ -48,9 +52,9 @@ function App(): JSX.Element {
 
     const [active, setActive] = useState(true);
 
-    useEffect( () => {
+    useEffect(() => {
         getUsersEmailByTgId(tg.initDataUnsafe.user.id.toString()).then(r => {
-            if (r === undefined){
+            if (r === undefined) {
                 setActive(false);
             }
         });
@@ -89,15 +93,16 @@ function App(): JSX.Element {
 
             {!isTelegramWindow &&
                 <Centered>
-                    <p>{LOCALE[lang].App.TelegramWebAppError} <Link to="t.me/https://t.me/InnoBooking_bot">Telegram</Link></p>
-                    <img src="https://media.tenor.com/-aMDPDf-wY4AAAAd/floppa.gif" alt="Just useless fun thing"/>
+                    <p>{LOCALE[lang].App.TelegramWebAppError} <Link
+                        to="t.me/https://t.me/InnoBooking_bot">Telegram</Link></p>
+                    <FullWidthImage src="https://media.tenor.com/-aMDPDf-wY4AAAAd/floppa.gif" alt="Just useless fun thing"/>
                 </Centered>
             }
 
             {!active &&
                 <Centered>
                     <p>{LOCALE[lang].App.TelegramUserError}</p>
-                    <img src="https://media.tenor.com/-aMDPDf-wY4AAAAd/floppa.gif" alt="Just useless fun thing"/>
+                    <FullWidthImage src="https://media.tenor.com/-aMDPDf-wY4AAAAd/floppa.gif" alt="Just useless fun thing"/>
                 </Centered>
             }
         </div>
