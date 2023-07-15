@@ -21,6 +21,11 @@ npm install
 REACT_APP_API_URL='https://url.adress'
 ```
 
+:four: **ADD url** for notification server to .env file.
+```
+REACT_APP_NOTIFICATIONS_URL='https://url.adress:6666'
+```
+
 :four: **Configure Google Firebase**.
 Firestore should look like :
 ![Structure of database](https://i.ibb.co/sbBdyhG/Screenshot-1.png)
