@@ -2,6 +2,7 @@
 ![License](https://img.shields.io/github/license/dmhd6219/SocialNetwork)
 ![React](https://img.shields.io/badge/React-blue.svg)
 ![Telegram Web App](https://img.shields.io/badge/Telegram%20Web%20App-brightgreen.svg)
+![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)
 
 Telegram Web App for InnoBookingBot. Made as project for SWP (Software Project) course at Innopolis University.
 
