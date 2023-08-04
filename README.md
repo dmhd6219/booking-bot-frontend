@@ -3,7 +3,6 @@
 ![React](https://img.shields.io/badge/React-blue.svg)
 ![Telegram Web App](https://img.shields.io/badge/Telegram%20Web%20App-brightgreen.svg)
 
-Please note that you should replace "yourusername" in the links with your actual GitHub username or the organization name where the repositories are hosted. Also, make sure to update the React version in the badge with the version you are using in your project. For Telegram Web App, you can update the "Latest" text with the appropriate version number. And don't forget to replace the license with the one you are using for each project.
 Telegram Web App for InnoBookingBot. Made as project for SWP (Software Project) course at Innopolis University.
 
 
