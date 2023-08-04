@@ -1,6 +1,6 @@
 # InnoBookingFrontend
 
-Telegram Web App for InnoBookingBot
+Telegram Web App for InnoBookingBot. Made as project for SWP (Software Project) course at Innopolis University.
 
 
 ## 🔴 Live Demo
